@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <form action="{{ route('login.post') }}" method="POST" class="space-y-4">
+    <form action="{{ route('login.user') }}" method="POST" class="space-y-4">
         @csrf
         <div>
             <label class="block text-sm font-medium text-gray-700">Email</label>

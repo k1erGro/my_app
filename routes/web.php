@@ -1,6 +1,9 @@
 <?php
 
+
+
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\AdminPanelMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -10,15 +13,18 @@ Route::get('/', function () {
 });
 
 
-Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/register', [AuthController::class, 'registerPost'])->name('register.post');
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-});
+Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
 
+Route::get('/register', RegisterController::class)->name('register');
+Route::post('/register', RegisterUserController::class)->name('register.user');
+Route::get('/login', LoginController::class)->name('login');
+Route::post('/login', LoginUserController::class)->name('login.user');
+Route::post('/logout', LogoutController::class)->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+});
+});
 
 Route::middleware(AdminPanelMiddleware::class)->prefix('admin')->group(function () {
     Route::get('/index', [UserController::class, 'index'])->name('admin.index');
