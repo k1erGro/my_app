@@ -24,7 +24,7 @@
 
 <main class="max-w-4xl mx-auto p-4">
     <div class="bg-white rounded-xl shadow-lg p-8">
-        <h1 class="text-3xl font-bold mb-4">Добро пожаловать, {{ auth()->user()->name }}!</h1>
+        <h1 class="text-3xl font-bold mb-4">Добро пожаловать, {{ $firstName }}!</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <div class="p-4 bg-blue-50 rounded-lg">

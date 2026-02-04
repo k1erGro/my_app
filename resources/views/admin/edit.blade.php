@@ -28,9 +28,15 @@
                 </div>
 
                 <div>
+                    @if($user->hasMedia('avatars'))
+                        <label class="block text-sm font-medium text-gray-700">Аватар</label>
+                        <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="Аватар" class="h-24 w-24 rounded-full object-cover">                        <input type="file" name="avatar" value="{{ old('avatar') }}" accept="image/jpeg,image/png,image/jpg"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    @else
                     <label class="block text-sm font-medium text-gray-700">Аватар</label>
                     <input type="file" name="avatar" value="{{ old('avatar') }}" accept="image/jpeg,image/png,image/jpg"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    @endif
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">

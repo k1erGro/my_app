@@ -25,12 +25,14 @@ class UserController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
-            $data['avatar'] = $path;
-        }
+
         $data['password'] = Hash::make($data['password']);
-        User::create($data);
+        $data['phone'] = auth()->user()->setNumberAttribute($data['phone']);
+        $users = User::create($data);
+        if ($request->hasFile('avatar')) {
+            $users->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+        }
+
         return redirect()->route('admin.index');
     }
 
@@ -48,8 +50,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
-            $data['avatar'] = $path;
+            $user->clearMediaCollection('avatars')->addMediaFromRequest('avatar')->toMediaCollection('avatars');
         }
         $data['password'] = Hash::make($data['password']);
         $user->update($data);

@@ -18,8 +18,8 @@
 
         <div class="bg-white shadow-xl rounded-lg overflow-hidden">
             <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-10 flex items-center">
-                @if($user->avatar)
-                    <img src="{{ asset('storage/' . $user->avatar) }}" class="h-24 w-24 rounded-full object-cover">
+                @if($user->hasMedia('avatars'))
+                    <img src="{{ $user->getFirstMediaUrl('avatars') }}" alt="Аватар" class="h-24 w-24 rounded-full object-cover">
                 @else
                     <div class="h-24 w-24 bg-indigo-600 rounded-full flex items-center justify-center text-white">
                         {{ strtoupper(substr($user->name, 0, 1)) }}
