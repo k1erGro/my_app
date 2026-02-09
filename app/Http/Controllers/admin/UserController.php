@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRequest;
+use App\Http\Requests\Admin\UpdatePasswordRequest;
 use App\Http\Requests\Admin\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('admin.index', compact('users'));
     }
 
@@ -27,7 +28,6 @@ class UserController extends Controller
         $data = $request->validated();
 
         $data['password'] = Hash::make($data['password']);
-        $data['phone'] = auth()->user()->setNumberAttribute($data['phone']);
         $users = User::create($data);
         if ($request->hasFile('avatar')) {
             $users->addMediaFromRequest('avatar')->toMediaCollection('avatars');
@@ -52,7 +52,6 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $user->clearMediaCollection('avatars')->addMediaFromRequest('avatar')->toMediaCollection('avatars');
         }
-        $data['password'] = Hash::make($data['password']);
         $user->update($data);
         return redirect()->route('admin.index');
     }
@@ -60,6 +59,15 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        return redirect()->route('admin.index');
+    }
+
+    public function update_password(User $user, UpdatePasswordRequest $request)
+    {
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        $user->update($data);
+
         return redirect()->route('admin.index');
     }
 }

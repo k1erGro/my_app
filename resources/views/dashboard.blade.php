@@ -11,7 +11,7 @@
     <div class="max-w-4xl mx-auto flex justify-between items-center">
         <span class="font-bold text-xl text-gray-800">My App</span>
         <div>
-            @if(auth()->user()->role == "admin")
+            @if(Auth::guard('web')->user()->is_admin == 1)
                 <a class="text-blue-500 hover:text-red-700 font-medium" href="{{ route('admin.index') }}">Админ панель</a>
             @endif
             <form action="{{ route('logout') }}" method="POST">

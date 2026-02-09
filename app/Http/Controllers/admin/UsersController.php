@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class UsersController extends Controller
 {
     /**
      * Handle the incoming request.
      */
     public function __invoke(Request $request)
     {
-        $firstName = auth()->user()->getFirstName();
-        return view('dashboard', compact('firstName'));
+        $users = User::paginate(10);
+        return view('admin.index', compact('users'));
     }
 }

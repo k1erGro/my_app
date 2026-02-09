@@ -22,19 +22,19 @@
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="px-5 py-5">
                         <a href="{{ route('admin.show', $user->id) }}">
-                            <p class="font-medium">{{ $user->name }}</p>
+                            <p class="font-medium">{{ $user->getLastName() }} {{ $user->getFirstName() }}</p>
                         </a>
-                        <p class="text-xs text-gray-500">{{ $user->email }}</p>
+                        <p class="text-xs text-gray-500">{{ $user->getEmail() }}</p>
                     </td>
-                    <td class="px-5 py-5 text-sm">{{ $user->phone }}</td>
+                    <td class="px-5 py-5 text-sm">{{ $user->getPhone() }}</td>
                     <td class="px-5 py-5 text-sm">
-                    <span class="px-2 py-1 rounded text-xs {{ $user->role == 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700' }}">
-                        {{ $user->role }}
+                    <span class="px-2 py-1 rounded text-xs {{ $user->getRole() == 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700' }}">
+                        {{ $user->getRole() }}
                     </span>
                     </td>
                     <td class="px-5 py-5 text-right text-sm">
-                        <a href="{{ route('admin.edit', $user->id) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
-                        <form method="POST" action="{{ route('admin.destroy', $user->id) }}">
+                        <a href="{{ route('admin.edit', $user->getKey()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                        <form method="POST" action="{{ route('admin.destroy', $user->getKey()) }}">
                             @csrf
                             @method('delete')
                             <button class="text-red-600 hover:text-red-900">Удалить</button>
@@ -44,5 +44,8 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    <div>
+        {{ $users->links() }}
     </div>
 @endsection

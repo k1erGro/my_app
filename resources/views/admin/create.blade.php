@@ -14,10 +14,24 @@
                 @csrf
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">ФИО</label>
-                    <input type="text" name="name" value="{{ old('name') }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('name') border-red-500 @enderror">
-                    @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <label class="block text-sm font-medium text-gray-700">Фамилия</label>
+                    <input type="text" name="last_name" value="{{ old('last_name') }}" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
+                    @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Имя</label>
+                    <input type="text" name="first_name" value="{{ old('first_name') }}" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('first_name') border-red-500 @enderror">
+                    @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Отчество</label>
+                    <input type="text" name="surname" value="{{ old('surname') }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('surname') border-red-500 @enderror">
+                    @error('surname') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
@@ -50,13 +64,13 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Дата рождения</label>
-                        <input type="date" name="birthday" value="{{ old('birthday') }}" required
+                        <input type="date" name="birthday" value="{{ old('birthday') }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('birthday') border-red-500 @enderror">
                         @error('birthday') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                        <input type="text" name="address" value="{{ old('address') }}" required
+                        <input type="text" name="address" value="{{ old('address') }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('address') border-red-500 @enderror">
                         @error('address') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>

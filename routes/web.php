@@ -26,12 +26,14 @@ Route::middleware(['auth'])->group(function () {
 });
 });
 
-Route::middleware(AdminPanelMiddleware::class)->prefix('admin')->group(function () {
-    Route::get('/index', [UserController::class, 'index'])->name('admin.index');
-    Route::get('/show/{user}', [UserController::class, 'show'])->name('admin.show');
-    Route::get('/create', [UserController::class, 'create'])->name('admin.create');
-    Route::post('/store', [UserController::class, 'store'])->name('admin.store');
-    Route::get('/edit/{user}', [UserController::class, 'edit'])->name('admin.edit');
-    Route::patch('/update/{user}', [UserController::class, 'update'])->name('admin.update');
-    Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('admin.destroy');
+Route::middleware(AdminPanelMiddleware::class)->namespace('App\Http\Controllers\admin')->prefix('admin')->group(function () {
+    Route::get('/index', UsersController::class)->name('admin.index');
+    Route::get('/show/{user}', ShowUserController::class)->name('admin.show');
+    Route::get('/create', CreateUserController::class)->name('admin.create');
+    Route::post('/store', StoreUserController::class)->name('admin.store');
+    Route::get('/edit/{user}', EditUserController::class)->name('admin.edit');
+    Route::patch('/update/{user}', UpdateUserController::class)->name('admin.update');
+    Route::delete('/destroy/{user}', DestroyUserController::class)->name('admin.destroy');
+
+    Route::patch('/update_password/{user}', UpdatePasswordUserController::class)->name('admin.update_password');
 });

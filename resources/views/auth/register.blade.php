@@ -17,8 +17,20 @@
         @csrf
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">ФИО</label>
-            <input type="text" name="name" value="{{ old('name') }}" required
+            <label class="block text-sm font-medium text-gray-700">Фамилия</label>
+            <input type="text" name="last_name" value="{{ old('last_name') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Имя</label>
+            <input type="text" name="first_name" value="{{ old('first_name') }}" required
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Отчество (если есть)</label>
+            <input type="text" name="surname" value="{{ old('surname') }}"
                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
         </div>
 
