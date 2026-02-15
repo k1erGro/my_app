@@ -26,6 +26,7 @@
 /storage/pail
 /storage/media-library
 /vendor
+/vendor/*
 Homestead.json
 Homestead.yaml
 Thumbs.db

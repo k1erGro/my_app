@@ -10,14 +10,29 @@
 <nav class="bg-white shadow-sm p-4 mb-8">
     <div class="max-w-4xl mx-auto flex justify-between items-center">
         <span class="font-bold text-xl text-gray-800">My App</span>
-        <div>
-            @if(Auth::guard('web')->user()->is_admin == 1)
-                <a class="text-blue-500 hover:text-red-700 font-medium" href="{{ route('admin.index') }}">Админ панель</a>
+        <div class="flex">
+
+
+            @if(auth()->user()->hasMedia('avatars'))
+                <a href="{{ route('profile') }}"><img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Аватар" class="h-10 w-10 rounded-full object-cover"></a>
+            @else
+                <a href="{{ route('profile') }}">
+                    <div class="h-12 w-12 bg-indigo-600 rounded-full flex items-center justify-center text-white">
+                        {{ strtoupper(substr(auth()->user()->getFirstName(), 0, 1)) }}
+                    </div>
+                </a>
             @endif
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Выйти</button>
-            </form>
+
+            <div class="ml-5">
+                @if(Auth::guard('web')->user()->is_admin === true)
+                    <a class="text-blue-500 hover:text-red-700 font-medium" href="{{ route('admin.index') }}">Админ панель</a>
+                @endif
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Выйти</button>
+                </form>
+            </div>
+
         </div>
     </div>
 </nav>

@@ -26,7 +26,7 @@
                         </a>
                         <p class="text-xs text-gray-500">{{ $user->getEmail() }}</p>
                     </td>
-                    <td class="px-5 py-5 text-sm">{{ $user->getPhone() }}</td>
+                    <td class="px-5 py-5 text-sm">{{ $user->getPhone() ?? 'Не указано' }}</td>
                     <td class="px-5 py-5 text-sm">
                     <span class="px-2 py-1 rounded text-xs {{ $user->getRole() == 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700' }}">
                         {{ $user->getRole() }}

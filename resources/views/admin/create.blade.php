@@ -12,26 +12,24 @@
         <div class="bg-white shadow-md rounded-lg p-8">
             <form action="{{ route('admin.store') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                 @csrf
-
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Фамилия</label>
-                    <input type="text" name="last_name" value="{{ old('last_name') }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
-                    @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <input type="text" name="l_name" value="{{ old('l_name') }}" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('l_name') border-red-500 @enderror">
+                    @error('l_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Имя</label>
-                    <input type="text" name="first_name" value="{{ old('first_name') }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('first_name') border-red-500 @enderror">
-                    @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <input type="text" name="f_name" value="{{ old('f_name') }}" required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('f_name') border-red-500 @enderror">
+                    @error('f_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Отчество</label>
-                    <input type="text" name="surname" value="{{ old('surname') }}"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('surname') border-red-500 @enderror">
-                    @error('surname') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <input type="text" name="m_name" value="{{ old('m_name') }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                 </div>
 
                 <div>
@@ -65,8 +63,8 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Дата рождения</label>
                         <input type="date" name="birthday" value="{{ old('birthday') }}"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('birthday') border-red-500 @enderror">
-                        @error('birthday') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Адрес</label>

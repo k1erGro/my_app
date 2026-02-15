@@ -24,9 +24,9 @@ class User extends Authenticatable implements HasMedia
      * @var list<string>
      */
     protected $fillable = [
-        'last_name',
-        'first_name',
-        'surname',
+        'l_name',
+        'f_name',
+        'm_name',
         'email',
         'password',
         'avatar',
@@ -56,47 +56,53 @@ class User extends Authenticatable implements HasMedia
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'birdthday' => 'datetime',
+            'birthday' => 'date',
         ];
     }
 
    public function getLastName(): string
    {
-       return $this->last_name;
+       return $this->l_name;
    }
    public function getFirstName(): string
    {
-       return $this->first_name;
+       return $this->f_name;
    }
+
+   public function getMiddleName(): ?string
+   {
+       return $this->m_name;
+   }
+
+   public function getFullName(): string
+   {
+       return $this->l_name . ' ' . $this->f_name . ' ' . $this->m_name;
+   }
+
    public function getEmail(): string
    {
        return $this->email;
    }
-   public function getBirthday(): string
+   public function getBirthday(): ?string
    {
-       return $this->birthday ?? 'Не найдено';
+       return $this->birthday;
    }
-   public function getPhone(): string
+   public function getPhone(): ?string
    {
-       return $this->phone ?? 'Не найдено';
+       return $this->phone;
    }
-   public function getAddress(): string
+   public function getAddress(): ?string
    {
-       return $this->address ?? 'Не найдено';
+       return $this->address;
    }
    public function getRole(): string
    {
        return $this->role;
    }
-    public function setNumberAttribute($value): string
-    {
-        $phone = '+7 ' . $value;
-        return $phone;
-    }
 
-    public function getIsAdminAttribute(): string
+    public function getIsAdminAttribute(): bool
     {
-        return $this->role == 'admin';
+        return $this->getRole() === 'admin';
     }
     public function registerMediaConversions(?Media $media = null): void
     {

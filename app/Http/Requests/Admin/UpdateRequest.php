@@ -23,16 +23,16 @@ class UpdateRequest extends FormRequest
     {
         $userId = $this->route('user')?->id ?? $this->user;
         return [
-            'last_name' => 'required|max:255',
-            'first_name' => 'required|max:255',
-            'surname' => 'nullable|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $userId,
-            'password' => 'nullable',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'birthday' => 'date|before:today',
-            'phone' => 'nullable',
-            'address' => 'nullable',
-            'role' => 'required',
+            'l_name' => 'string|required|max:50',
+            'f_name' => 'string|required|max:50',
+            'm_name' => 'string|nullable|max:50',
+            'email' => 'string|required|email|max:255|unique:users,email,' . $userId,
+            'password' => 'string|nullable',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'birthday' => 'nullable|date|before:today',
+            'phone' => 'string|nullable',
+            'address' => 'string|nullable',
+            'role' => 'string',
         ];
     }
 }

@@ -15,10 +15,20 @@ class StoreUserController extends Controller
      */
     public function __invoke(StoreRequest $request)
     {
-        $data = $request->validated();
-
-        $data['password'] = Hash::make($data['password']);
-        $users = User::create($data);
+        $password = $request->string('password');
+        $userData = [
+            'f_name' => $request->string('f_name'),
+            'l_name' => $request->string('l_name'),
+            'm_name' => $request->string('m_name'),
+            'email' => $request->string('email'),
+            'password' => Hash::make($password),
+            'avatar' => $request->file('avatar'),
+            'birthday' => $request->date('birthday'),
+            'phone' => $request->string('phone'),
+            'address' => $request->string('address'),
+            'role' => $request->string('role'),
+        ];
+        $users = User::create($userData);
         if ($request->hasFile('avatar')) {
             $users->addMediaFromRequest('avatar')->toMediaCollection('avatars');
         }
