@@ -12,21 +12,20 @@
         <span class="font-bold text-xl text-gray-800">My App</span>
         <div class="flex">
 
-
-            @if(auth()->user()->hasMedia('avatars'))
-                <a href="{{ route('profile') }}"><img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Аватар" class="h-10 w-10 rounded-full object-cover"></a>
-            @else
-                <a href="{{ route('profile') }}">
-                    <div class="h-12 w-12 bg-indigo-600 rounded-full flex items-center justify-center text-white">
-                        {{ strtoupper(substr(auth()->user()->getFirstName(), 0, 1)) }}
-                    </div>
-                </a>
-            @endif
+            <a href="{{ route('profile') }}">
+                @if(auth()->user()->hasMedia('avatars'))
+                    <img src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Аватар" class="h-10 w-10 rounded-full object-cover">
+                @else
+                        <div class="h-12 w-12 bg-indigo-600 rounded-full flex items-center justify-center text-white">
+                            {{ strtoupper(substr(auth()->user()->getFirstName(), 0, 1)) }}
+                        </div>
+                @endif
+            </a>
 
             <div class="ml-5">
-                @if(Auth::guard('web')->user()->is_admin === true)
+                @can('view', auth()->user())
                     <a class="text-blue-500 hover:text-red-700 font-medium" href="{{ route('admin.index') }}">Админ панель</a>
-                @endif
+                @endcan
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Выйти</button>

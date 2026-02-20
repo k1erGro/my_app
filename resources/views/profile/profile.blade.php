@@ -17,7 +17,7 @@
                         </svg>
                     </button>
                 </div>
-                <h2 class="text-xl font-bold text-gray-800">{{ auth()->user()->getFullName() }}</h2>
+                <h2 class="text-xl font-bold text-gray-800">{{ auth()->user()->fullName }}</h2>
                 <p class="text-gray-500 text-sm mb-4">{{ auth()->user()->getEmail() }}</p>
                 <div class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold uppercase rounded-full">
                     {{ auth()->user()->getRole() }}
@@ -25,10 +25,17 @@
 
                 <hr class="my-6 border-gray-100">
 
-                <div class="space-y-3">
+                <div class="space-y-3 mb-5">
                     <a href="{{ route("profile.edit", auth()->user()) }}" class="w-full py-2 px-4 bg-gray-50 text-gray-700 rounded-xl hover:bg-gray-100 transition font-medium">
                         Редактировать профиль
                     </a>
+                </div>
+                <div class="space-y-3">
+                    <form method="POST" action="{{ route("admin.destroy", auth()->user()) }}">
+                        @csrf
+                        @method('delete')
+                        <input class="py-2 px-4 bg-red-500 text-white rounded-xl hover:bg-red-600 transition font-medium" type="submit" value="Удалить профиль">
+                    </form>
                 </div>
             </div>
         </div>
@@ -55,14 +62,14 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Дата рождения</label>
-                            <p class="text-gray-800 font-medium">{{ auth()->user()->getBirthday() }}</p>
+                            <p class="text-gray-800 font-medium">{{ auth()->user()->getBirthday() ?? 'Не указано' }}</p>
                         </div>
                         <div class="md:col-span-2">
                             <hr class="border-gray-50">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Телефон</label>
-                            <p class="text-gray-800 font-medium">{{ auth()->user()->getPhone() }}</p>
+                            <p class="text-gray-800 font-medium">{{ auth()->user()->getPhone() ?? 'Не указано' }}</p>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">E-mail</label>
@@ -70,7 +77,7 @@
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Адрес проживания</label>
-                            <p class="text-gray-800 font-medium">{{ auth()->user()->getAddress() }}</p>
+                            <p class="text-gray-800 font-medium">{{ auth()->user()->getAddress() ?? 'Не указано' }}</p>
                         </div>
                     </div>
                 </div>
