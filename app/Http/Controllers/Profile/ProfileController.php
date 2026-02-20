@@ -10,8 +10,8 @@ class ProfileController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(User $user)
+    public function __invoke()
     {
-        return view('profile.profile', compact('user'));
+        return view('profile.profile');
     }
 }

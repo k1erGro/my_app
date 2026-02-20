@@ -29,7 +29,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Отчество</label>
-                    <input type="text" name="m_name" value="{{ $user->getMiddleName() }}"
+                    <input type="text" name="m_name" value="{{ $user->getMiddleName() ?? 'Не указано' }}"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('m_name') border-red-500 @enderror">
                     @error('m_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
@@ -56,7 +56,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Телефон</label>
-                        <input type="text" name="phone" value="{{ $user->getPhone() ?? "Не указано" }}"
+                        <input type="text" name="phone" value="{{ $user->getPhone() ?? 'Не указано' }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                     </div>
                     <div>
@@ -70,13 +70,13 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Дата рождения</label>
-                        <input type="date" name="birthday" value="{{ $user->getBirthday()  }}"
+                        <input type="date" name="birthday" value="{{ $user->getBirthday() ?? 'Не указано' }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('birthday') border-red-500 @enderror">
                         @error('birthday') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                        <input type="text" name="address" value="{{ $user->getAddress() ?? "Не указано" }}"
+                        <input type="text" name="address" value="{{ $user->getAddress() ?? 'Не указано' }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('address') border-red-500 @enderror">
                         @error('address') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>

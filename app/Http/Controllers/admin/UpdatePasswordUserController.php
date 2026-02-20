@@ -16,11 +16,7 @@ class UpdatePasswordUserController extends Controller
     public function __invoke(User $user, UpdatePasswordRequest $request)
     {
         $this->authorize('update', $user);
-        $password = $request->string('password');
-        $userData = [
-            'password' => Hash::make($password),
-        ];
-        $user->update($userData);
+        $user->update(['password' => Hash::make($request->string('password'))]);
 
         return redirect()->route('admin.index');
     }

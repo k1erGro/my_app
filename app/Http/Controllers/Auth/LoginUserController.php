@@ -18,7 +18,7 @@ class LoginUserController extends Controller
             'email' => $request->string('email'),
             'password' => $request->string('password')
         ];
-        Auth::attempt(['email' => $userData['email'], 'password' => $userData['password']]);
+        Auth::attempt($userData);
         $request->session()->regenerate();
         return redirect()->route('dashboard');
     }

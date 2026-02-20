@@ -42,7 +42,7 @@
 
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500 uppercase tracking-wide">Номер телефона</dt>
-                        <dd class="mt-1 text-lg text-gray-900 font-semibold">{{ $user->getPhone() ?? "Не указано" }}</dd>
+                        <dd class="mt-1 text-lg text-gray-900 font-semibold">{{ $user->getPhone() ?? 'Не указано' }}</dd>
                     </div>
 
                     <div class="sm:col-span-1">

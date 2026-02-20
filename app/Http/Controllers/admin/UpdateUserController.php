@@ -17,23 +17,22 @@ class UpdateUserController extends Controller
     {
 
         $this->authorize('update', $user);
-        $password = $request->string('password');
-        $userData = [
+        if ($request->hasFile('avatar')) {
+            $user->clearMediaCollection('avatars')->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+        }
+        $user->update([
             'f_name' => $request->string('f_name'),
             'l_name' => $request->string('l_name'),
             'm_name' => $request->string('m_name'),
             'email' => $request->string('email'),
-            'password' => Hash::make($password),
+            'password' => Hash::make($request->string('password')),
             'avatar' => $request->file('avatar'),
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
             'role' => $request->string('role'),
-        ];
-        if ($request->hasFile('avatar')) {
-            $user->clearMediaCollection('avatars')->addMediaFromRequest('avatar')->toMediaCollection('avatars');
-        }
-        $user->update($userData);
+        ]);
+
         return redirect()->route('admin.index');
     }
 }

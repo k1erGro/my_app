@@ -16,7 +16,7 @@ class AdminPanelMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('web')->user()->is_admin == 1){
+        if(Auth::guard('web')->user()->is_admin === true){
             return $next($request);
         }
         else{
