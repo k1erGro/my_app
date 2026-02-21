@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateRequest;
 use App\Models\User;
@@ -25,14 +26,13 @@ class UpdateUserController extends Controller
             'l_name' => $request->string('l_name'),
             'm_name' => $request->string('m_name'),
             'email' => $request->string('email'),
-            'password' => Hash::make($request->string('password')),
+            'password' => $request->string('password'),
             'avatar' => $request->file('avatar'),
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
-            'role' => $request->string('role'),
+            'role' => UserRole::from($request->string('role')),
         ]);
-
         return redirect()->route('admin.index');
     }
 }
