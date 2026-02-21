@@ -20,7 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $model->IsAdmin;
+        return $model->is_admin;
     }
 
     /**
@@ -36,7 +36,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->IsAdmin || $user->getKey() === $model->getKey();
+        return $user->is_admin || $user->getKey() === $model->getKey();
     }
 
     /**
@@ -44,7 +44,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->IsAdmin || $user->getKey() === $model->getKey();
+        return $user->is_admin || $user->getKey() === $model->getKey();
     }
 
     /**
