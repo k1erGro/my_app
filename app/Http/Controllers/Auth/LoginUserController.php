@@ -14,11 +14,10 @@ class LoginUserController extends Controller
      */
     public function __invoke(LoginRequest $request)
     {
-        $userData = [
+        Auth::attempt([
             'email' => $request->string('email'),
             'password' => $request->string('password')
-        ];
-        Auth::attempt($userData);
+        ]);
         $request->session()->regenerate();
         return redirect()->route('dashboard');
     }
