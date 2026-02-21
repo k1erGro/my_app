@@ -3,20 +3,22 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\UserInterface;
+use App\Enums\UserRole;
+use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 
-
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, UserInterface
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, InteractsWithMedia;
+    use HasFactory, Notifiable, InteractsWithMedia, UserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -55,8 +57,8 @@ class User extends Authenticatable implements HasMedia
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
             'birthday' => 'date',
+            'role' => UserRole::class,
         ];
     }
 
@@ -72,11 +74,6 @@ class User extends Authenticatable implements HasMedia
    public function getMiddleName(): ?string
    {
        return $this->m_name;
-   }
-
-   public function getFullName(): string
-   {
-       return $this->l_name . ' ' . $this->f_name . ' ' . $this->m_name;
    }
 
    public function getEmail(): string
@@ -95,15 +92,11 @@ class User extends Authenticatable implements HasMedia
    {
        return $this->address;
    }
-   public function getRole(): string
+   public function getRole()
    {
        return $this->role;
    }
 
-    public function getIsAdminAttribute(): bool
-    {
-        return $this->getRole() === 'admin';
-    }
     public function registerMediaConversions(?Media $media = null): void
     {
         $this
