@@ -11,8 +11,14 @@
     <aside class="w-64 bg-slate-800 text-white p-6">
         <h1 class="text-2xl font-bold mb-8 text-blue-400">Admin Panel</h1>
         <nav class="space-y-2">
-            <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+            <a href="{{ route('admin.index') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                 Пользователи
+            </a>
+            <a href="{{ route('admin.category.index') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Категории
+            </a>
+            <a href="{{ route('admin.product.index') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Товары
             </a>
         </nav>
     </aside>

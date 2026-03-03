@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin\Users;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 
-class ShowUserController extends Controller
+class EditUserController extends Controller
 {
     /**
      * Handle the incoming request.
      */
     public function __invoke(User $user)
     {
-        return view('admin.show', compact('user'));
+        return view('admin.user.edit', compact('user'));
     }
 }
