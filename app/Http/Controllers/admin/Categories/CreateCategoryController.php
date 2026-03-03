@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers\admin\Categories;
+
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use Illuminate\Http\Request;
+
+class CreateCategoryController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
+    {
+        $categories = Category::with('children')->whereNull('parent_id')->get();
+        return view('admin.category.create', compact('categories'));
+    }
+}
