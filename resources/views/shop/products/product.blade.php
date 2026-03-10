@@ -3,14 +3,29 @@
 @section('content')
     <div class="bg-white">
         <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-            <nav class="flex mb-8 text-sm font-medium text-gray-500">
-                <a href="/" class="hover:text-blue-600">Главная</a>
-                <svg class="w-5 h-5 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
-                <a href="{{ route('catalog.index') }}" class="hover:text-blue-600">Каталог</a>
-                <svg class="w-5 h-5 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
-                <span class="text-gray-900">{{ $product->getName() }}</span>
-            </nav>
-
+            <div class="flex justify-between">
+                <nav class="flex mb-8 text-sm font-medium text-gray-500">
+                    <a href="/" class="hover:text-blue-600">Главная</a>
+                    <svg class="w-5 h-5 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
+                    <a href="{{ route('catalog.index') }}" class="hover:text-blue-600">Каталог</a>
+                    <svg class="w-5 h-5 mx-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
+                    <span class="text-gray-900">{{ $product->getName() }}</span>
+                </nav>
+                @can('view', Auth::user())
+                    <div class="flex space-x-3">
+                        <a href="{{ route('admin.product.edit', $product) }}" class="h-10 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition shadow-sm text-sm font-medium">
+                            Редактировать
+                        </a>
+                        <form method="POST" action="{{ route('admin.product.destroy', $product) }}" onsubmit="return confirm('Вы уверены, что хотите удалить этот товар?')">
+                            @csrf
+                            @method('delete')
+                            <button class="inline-flex items-center h-10 px-4 py-2 bg-white border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition shadow-sm text-sm font-medium">
+                                Удалить
+                            </button>
+                        </form>
+                    </div>
+                @endcan
+            </div>
             <div class="lg:grid lg:grid-cols-2 lg:gap-x-12 lg:items-start">
                 <div class="flex flex-col">
                     <div class="w-full aspect-w-1 aspect-h-1 bg-gray-100 rounded-2xl overflow-hidden border border-gray-100 shadow-inner">

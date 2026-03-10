@@ -3,8 +3,13 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Создать аккаунт</h2>
 
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
-        <form action="{{ route('register.user') }}" method="POST" class="space-y-4">
+        <form action="{{ route('register') }}" method="POST" class="space-y-4">
             @csrf
 
             <div>

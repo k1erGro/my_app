@@ -2,9 +2,13 @@
 @section('content')
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-8">{{ $title }}</h1>
-
+        @can('view', Auth::user())
+            <a href="{{ route('admin.category.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                + Добавить категорию
+            </a>
+        @endcan
         @if($categories)
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($categories as $category)
                     <div
                         class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -24,6 +28,16 @@
                                 Перейти
                                 <svg class="w-4 h-4 ml-2" ...></svg>
                             </a>
+                            @can('view', Auth::user())
+                                <div>
+                                    <a href="{{ route('admin.category.edit', $category->getSlug()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                                    <form method="POST" action="{{ route('admin.category.destroy', $category->getKey()) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="text-red-600 hover:text-red-900">Удалить</button>
+                                    </form>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                 @endforeach
@@ -68,6 +82,16 @@
                                     {{ $product->getPrice() }} ₽
                                 </p>
                             </div>
+                            @can('view', Auth::user())
+                                <div>
+                                    <a href="{{ route('admin.product.edit', $product) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                                    <form method="POST" action="{{ route('admin.product.destroy', $product->getKey()) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="text-red-600 hover:text-red-900">Удалить</button>
+                                    </form>
+                                </div>
+                            @endcan
                         </div>
 
                     </div>

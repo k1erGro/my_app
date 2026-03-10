@@ -28,8 +28,8 @@
                     </td>
                     <td class="px-5 py-5 text-sm">{{ $user->getPhone() ?? 'Не указано' }}</td>
                     <td class="px-5 py-5 text-sm">
-                    <span class="px-2 py-1 rounded text-xs {{ $user->getRole() == 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700' }}">
-                        {{ $user->getRole() }}
+                    <span class="px-2 py-1 rounded text-xs {{ $user->getRole()->value == 2 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700' }}">
+                        {{ $user->getRole()->value === 1 ? 'Пользователь' : 'Администратор'}}
                     </span>
                     </td>
                     <td class="px-5 py-5 text-right text-sm">

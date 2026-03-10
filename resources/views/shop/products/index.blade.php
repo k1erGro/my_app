@@ -1,15 +1,16 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 mt-5 py-8">
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
             <div>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Товары</h1>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 mt-5 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             @foreach($products as $product)
+
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group flex flex-col transition hover:shadow-lg hover:border-gray-200">
 
                     <div class="aspect-w-16 aspect-h-10 bg-gray-50 flex items-center justify-center overflow-hidden border-b border-gray-100">
@@ -39,6 +40,16 @@
                                 {{ $product->getPrice() }} ₽
                             </p>
                         </div>
+                        @can('view', Auth::user())
+                            <div>
+                                <a href="{{ route('admin.product.edit', $product) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                                <form method="POST" action="{{ route('admin.product.destroy', $product->getKey()) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="text-red-600 hover:text-red-900">Удалить</button>
+                                </form>
+                            </div>
+                        @endcan
                     </div>
 
                 </div>

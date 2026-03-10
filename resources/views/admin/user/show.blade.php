@@ -28,7 +28,7 @@
                 <div class="ml-6 text-white">
                     <h3 class="text-2xl font-bold">{{ $user->getFirstName() }}</h3>
                     <span class="inline-block mt-1 px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-medium uppercase tracking-wider">
-                    {{ $user->getRole() }}
+                    {{ $user->getRole()->value === 1 ? 'Пользователь' : 'Администратор'}}
                 </span>
                 </div>
             </div>
