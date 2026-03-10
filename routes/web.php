@@ -33,18 +33,21 @@ use App\Http\Controllers\Profile\EditProfileController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Product\CatalogProductController;
 use App\Http\Middleware\AdminPanelMiddleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 Route::get('/', function () {
-    return view('welcome');
-});
-
+    return view('shop.welcome');
+})->name('shop.index');
 
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
-    Route::get('/register', RegisterController::class)->name('register');
-    Route::post('/register', RegisterUserController::class)->name('register.user');
-    Route::get('/login', LoginController::class)->name('login');
-    Route::post('/login', LoginUserController::class)->name('login.user');
+    Route::get('/register', ShowRegisterController::class)->name('show.register');
+    Route::post('/register', RegisterController::class)->name('register');
+    Route::get('/login', ShowLoginController::class)->name('show.login');
+    Route::post('/login', LoginController::class)->name('login');
     Route::post('/logout', LogoutController::class)->name('logout');
 });
 
@@ -52,6 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/profile', ProfileController::class)->name('profile');
     Route::get('/profile/edit/{user}', EditProfileController::class)->name('profile.edit');
+    Route::patch('/profile/update/{user}', UpdateUserController::class)->name('profile.update');
+    Route::get('/profile/edit-password/{user}', EditProfileController::class)->name('profile.edit.password');
+    Route::patch('/profile/update-password/{user}', UpdatePasswordUserController::class)->name('profile.update_password');
+    Route::delete('/profile/destroy/{user}', DestroyUserController::class)->name('profile.destroy');
 });
 
 Route::middleware(AdminPanelMiddleware::class)->prefix('admin')->group(function () {
@@ -61,6 +68,10 @@ Route::middleware(AdminPanelMiddleware::class)->prefix('admin')->group(function 
     Route::get('/create', CreateUserController::class)->name('admin.create');
     Route::post('/store', StoreUserController::class)->name('admin.store');
     Route::get('/edit/{user}', EditUserController::class)->name('admin.edit');
+    Route::patch('/admin/update/{user}', UpdateUserController::class)->name('admin.update');
+    Route::get('/edit_password/{user}', EditUserController::class)->name('admin.edit_password');
+    Route::patch('/admin/update_password/{user}', UpdatePasswordUserController::class)->name('admin.update_password');
+    Route::delete('/admin/destroy/{user}', DestroyUserController::class)->name('admin.destroy');
 
     // Категории
     Route::get('/category', IndexCategoryController::class)->name('admin.category.index');
@@ -80,15 +91,9 @@ Route::middleware(AdminPanelMiddleware::class)->prefix('admin')->group(function 
     Route::delete('/product/destroy/{product}', DestroyProductController::class)->name('admin.product.destroy');
 });
 
-Route::patch('/admin/update/{user}', UpdateUserController::class)->name('admin.update');
-Route::patch('/admin/update_password/{user}', UpdatePasswordUserController::class)->name('admin.update_password');
-Route::delete('/admin/destroy/{user}', DestroyUserController::class)->name('admin.destroy');
+
 
 Route::prefix('shop')->group(function () {
-
-    Route::get('/', function () {
-        return view('shop.welcome');
-    })->name('shop.index');
 
     Route::get('/catalog', CategoryController::class)->name('catalog.index');
     Route::get('/catalog/{category:slug?}', CategoryController::class)->name('catalog.show');
