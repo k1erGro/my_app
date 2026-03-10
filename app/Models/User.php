@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\UserInterface;
-use App\Enums\UserRole;
+use App\Enums\RoleEnum;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,7 +58,8 @@ class User extends Authenticatable implements HasMedia, UserInterface
         return [
             'email_verified_at' => 'datetime',
             'birthday' => 'date',
-            'role' => UserRole::class,
+            'password' => 'hashed',
+            'role' => RoleEnum::class,
         ];
     }
 
@@ -101,7 +102,14 @@ class User extends Authenticatable implements HasMedia, UserInterface
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
+            ->fit(Fit::Contain, 100, 100)
             ->nonQueued();
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatars')
+            ->singleFile()
+            ->useFallbackUrl(asset('img/default-avatar.jpg'))
+            ->useFallbackPath(public_path('img/default-avatar.jpg'));
     }
 }
