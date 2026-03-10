@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdatePasswordRequest extends FormRequest
 {
@@ -21,9 +22,15 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'password' => 'required|string|confirmed:password_confirmation',
-            'password_confirmation' => 'required|string',
+        $rules = [
+            'password' => 'required|string|confirmed',
         ];
+        if (!Auth::user()->isAdmin()) {
+            $rules['old_password'] = 'required|string|current_password';
+        } else {
+            $rules['old_password'] = 'nullable';
+        }
+
+        return $rules;
     }
 }

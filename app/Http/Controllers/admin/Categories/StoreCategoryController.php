@@ -21,6 +21,6 @@ class StoreCategoryController extends Controller
         if ($request->hasFile('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_images');
         }
-        return redirect()->route('admin.category.index');
+        return redirect()->back();
     }
 }

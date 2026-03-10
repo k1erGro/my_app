@@ -36,7 +36,7 @@ class StoreProductController extends Controller
         if ($request->hasFile('product_image')) {
             $product->addMediaFromRequest('product_image')->toMediaCollection('products');
         }
-        return redirect()->route('admin.product.index');
+        return redirect()->back();
 
     }
 }

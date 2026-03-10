@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\admin\Users;
 
-use App\Enums\UserRole;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateUserController extends Controller
 {
@@ -29,7 +30,7 @@ class UpdateUserController extends Controller
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
-            'role' => UserRole::from($request->string('role')),
+            'role' => RoleEnum::from($request->integer('role')),
         ]);
         return redirect()->route('admin.index');
     }

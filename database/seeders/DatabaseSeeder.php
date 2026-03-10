@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'birthday' => '2000-01-01',
             'phone' => '+7 (123) 456-78-90',
             'address' => 'test address',
-            'role' => 'admin',
+            'role' => 2,
         ]);
 
         $this->call(CategorySeeder::class);

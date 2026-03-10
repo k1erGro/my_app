@@ -23,6 +23,6 @@ class UpdateCategoryController extends Controller
         if ($request->hasFile('image')) {
             $category->clearMediaCollection('category_images')->addMediaFromRequest('image')->toMediaCollection('category_images');
         }
-        return redirect()->route('admin.category.index');
+        return redirect()->back();
     }
 }

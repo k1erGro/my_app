@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->string('role')->default('user');
+            $table->integer('role')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

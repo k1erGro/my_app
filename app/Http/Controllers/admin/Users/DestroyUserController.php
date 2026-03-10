@@ -15,6 +15,6 @@ class DestroyUserController extends Controller
     {
         $this->authorize('delete', $user);
         $user->delete();
-        return Auth::user()->getAuthIdentifier() !== $user->getKey() ? redirect()->route('admin.index') : redirect()->route('register');
+        return Auth::user()->getAuthIdentifier() !== $user->getKey() ? redirect()->route('admin.index') : redirect()->route('show.login');
     }
 }

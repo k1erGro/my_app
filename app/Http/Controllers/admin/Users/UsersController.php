@@ -13,7 +13,7 @@ class UsersController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $users = User::paginate(10);
+        $users = User::paginate(8);
         return view('admin.user.index', compact('users'));
     }
 }

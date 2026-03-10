@@ -2,30 +2,24 @@
 
 namespace App\Traits;
 
-use App\Enums\UserRole;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Hash;
 
 trait UserTrait
 {
-    public function fullName(): Attribute
+    public function getFullName(): string
     {
-        return Attribute::make(
-            get: fn () => "{$this->l_name} {$this->f_name} {$this->m_name}",
-        );
+        return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
     }
 
-    public function isAdmin(): Attribute
+    public function isAdmin(): bool
     {
-        return Attribute::make(
-            get: fn () => $this->getRole() === UserRole::ADMIN,
-        );
+        return  $this->getRole() === RoleEnum::ADMIN;
     }
 
-    public function password(): Attribute
+    public function setPassword(string $password): void
     {
-        return Attribute::make(
-            set: fn (string $value) => Hash::make($value),
-        );
+        $this->password = $password;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin\Users;
 
-use App\Enums\UserRole;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRequest;
 use App\Models\User;
@@ -24,7 +24,7 @@ class StoreUserController extends Controller
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
-            'role' => UserRole::from($request->string('role')),
+            'role' => RoleEnum::from($request->integer('role')),
         ]);
         if ($request->hasFile('avatar')) {
             $users->addMediaFromRequest('avatar')->toMediaCollection('avatars');

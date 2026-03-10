@@ -12,7 +12,7 @@ interface UserInterface
     public function getPhone();
     public function getAddress();
     public function getRole();
-    public function fullName();
+    public function getFullName();
     public function isAdmin();
-    public function password();
+    public function setPassword(string $password);
 }

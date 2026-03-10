@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'm_name' => fake()->firstName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= 'password',
+            'password' => 'qwe123',
             'birthday' => fake()->dateTimeBetween('-50 years', '-18 years')->format('Y-m-d'),
             'phone' => fake()->numerify('+7 (###) ###-##-##'),
             'address' => fake()->address(),

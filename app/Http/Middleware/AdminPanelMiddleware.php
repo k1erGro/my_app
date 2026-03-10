@@ -16,12 +16,11 @@ class AdminPanelMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('web')->user()->is_admin === true){
+        if(Auth::guard('web')->user()->isAdmin() === true){
             return $next($request);
         }
-        else{
-            return redirect()->route('dashboard');
-        }
-        return $next($request);
+
+        return redirect()->route('dashboard');
+
     }
 }
