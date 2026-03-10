@@ -34,4 +34,10 @@ class RegisterRequest extends FormRequest
             'address' => 'string|nullable',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'Пользователь с такой почтой уже зарегистрирован',
+        ];
+    }
 }
