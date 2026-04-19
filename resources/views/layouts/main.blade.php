@@ -6,7 +6,7 @@
     <title>My App</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen flex flex-col">
 <nav class="bg-white shadow-sm p-4 mb-8 z-50">
     <div class="max-w-5xl mx-auto flex justify-between items-center">
         <a href="{{ route('shop.index') }}">
@@ -43,8 +43,45 @@
         </div>
     </div>
 </nav>
+<main class="flex-grow">
+    @yield('content')
+</main>
+<footer class="bg-white border-t border-gray-200 mt-7">
+    <div class="max-w-5xl mx-auto px-4 py-10">
 
-@yield('content')
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
 
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">My App</h2>
+                <p class="mt-3 text-gray-500">
+                    Комплектующие и готовые решения для геймеров и профессионалов.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-gray-700 mb-3">Навигация</h3>
+                <ul class="space-y-2">
+                    <li><a href="{{ route('catalog.index') }}" class="text-gray-500 hover:text-blue-600 transition">Каталог</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-blue-600 transition">Сборка ПК</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-blue-600 transition">Контакты</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-gray-700 mb-3">Контакты</h3>
+                <ul class="space-y-2 text-gray-500">
+                    <li>Email: support@myapp.ru</li>
+                    <li>Телефон: +7 (999) 123-45-67</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200 text-center text-xs text-gray-400">
+            © {{ date('Y') }} My App. Все права защищены.
+        </div>
+
+    </div>
+</footer>
 </body>
 </html>

@@ -25,7 +25,7 @@
                     </td>
 
                     @if($category->hasMedia('category_images'))
-                        <td class="px-5 py-5">
+                        <td class="w-10 px-5 py-5">
                             <img src="{{ $category->getFirstMediaUrl('category_images') }}" alt="{{ $category->getName() }}">
                         </td>
                     @endif

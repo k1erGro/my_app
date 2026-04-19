@@ -10,13 +10,14 @@
         @if($categories)
             <div class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($categories as $category)
-                    <div
-                        class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div class="aspect-square bg-gray-100 flex items-center justify-center">
+                    <div class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <a href="{{ route('catalog.show', $category->getSlug()) }}">
+
+                        <div class="aspect-square bg-white flex items-center justify-center">
                             @if($category->hasMedia('category_images'))
-                                <img class="w-full" src="{{ $category->getFirstMediaUrl('category_images') }}"
+                                <img src="{{ $category->getFirstMediaUrl('category_images') }}"
                                      alt="{{ $category->getName() }}"
-                                     class="w-24 h-24 object-contain group-hover:scale-110 transition-transform">
+                                     class="w-50 h-50 object-contain group-hover:scale-110 transition-transform">
                             @else
                                 <p>Картинка не найдена</p>
                             @endif
@@ -39,7 +40,9 @@
                                 </div>
                             @endcan
                         </div>
+                    </a>
                     </div>
+
                 @endforeach
 
         @elseif($products)
@@ -81,6 +84,14 @@
                                 <p class="text-2xl font-extrabold text-blue-600">
                                     {{ $product->getPrice() }} ₽
                                 </p>
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md
+                                            hover:bg-blue-700 active:scale-95 transition duration-200 shadow-sm">
+                                        Купить
+                                    </button>
+                                </form>
                             </div>
                             @can('view', Auth::user())
                                 <div>
@@ -103,4 +114,6 @@
             </div>
         @endif
     </div>
+    </div>
+
 @endsection
