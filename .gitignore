@@ -27,7 +27,6 @@
 /storage/media-library
 /vendor
 /vendor/*
-/public/img
 Homestead.json
 Homestead.yaml
 Thumbs.db
