@@ -34,9 +34,10 @@ class DatabaseSeeder extends Seeder
         $categories = Category::all();
 
         foreach ($categories as $category) {
-            Product::factory(10)->create([
-                'category_id' => $category->id,
-            ]);
+            $products = Product::factory(10)->create();
+            foreach ($products as $product) {
+                $product->categories()->attach($category->id);
+            }
         }
 
     }
