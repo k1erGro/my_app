@@ -11,8 +11,7 @@ interface UserInterface
     public function getBirthday();
     public function getPhone();
     public function getAddress();
-    public function getRole();
     public function getFullName();
-    public function isAdmin();
     public function setPassword(string $password);
+
 }

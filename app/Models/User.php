@@ -13,12 +13,13 @@ use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable implements HasMedia, UserInterface
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, InteractsWithMedia, UserTrait;
+    use HasFactory, HasRoles, Notifiable, InteractsWithMedia, UserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -63,40 +64,76 @@ class User extends Authenticatable implements HasMedia, UserInterface
         ];
     }
 
-   public function getLastName(): string
-   {
-       return $this->l_name;
-   }
-   public function getFirstName(): string
-   {
-       return $this->f_name;
-   }
+    public function getLastName(): string
+    {
+        return $this->l_name;
+    }
 
-   public function getMiddleName(): ?string
-   {
-       return $this->m_name;
-   }
+    public function setLastName(string $l_name): void
+    {
+        $this->l_name = $l_name;
+    }
 
-   public function getEmail(): string
-   {
-       return $this->email;
-   }
-   public function getBirthday(): ?string
-   {
-       return $this->birthday;
-   }
-   public function getPhone(): ?string
-   {
-       return $this->phone;
-   }
-   public function getAddress(): ?string
-   {
-       return $this->address;
-   }
-   public function getRole()
-   {
-       return $this->role;
-   }
+    public function getFirstName(): string
+    {
+        return $this->f_name;
+    }
+
+    public function setFirstName(string $f_name): void
+    {
+        $this->f_name = $f_name;
+    }
+
+    public function getMiddleName(): ?string
+    {
+        return $this->m_name;
+    }
+
+    public function setMiddleName(?string $m_name): void
+    {
+        $this->m_name = $m_name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getBirthday(): ?string
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(string $birthday): void
+    {
+        $this->birthday = $birthday;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
 
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -105,6 +142,7 @@ class User extends Authenticatable implements HasMedia, UserInterface
             ->fit(Fit::Contain, 100, 100)
             ->nonQueued();
     }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatars')

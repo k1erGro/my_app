@@ -13,11 +13,6 @@ trait UserTrait
         return $this->getLastName() . ' ' . $this->getFirstName() . ' ' . $this->getMiddleName();
     }
 
-    public function isAdmin(): bool
-    {
-        return  $this->getRole() === RoleEnum::ADMIN;
-    }
-
     public function setPassword(string $password): void
     {
         $this->password = $password;

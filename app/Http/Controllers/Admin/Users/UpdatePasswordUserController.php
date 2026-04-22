@@ -16,6 +16,6 @@ class UpdatePasswordUserController extends Controller
         $this->authorize('update', $user);
         $user->update(['password' => $request->string('password')]);
 
-        return redirect()->route('admin.index');
+        return redirect()->route('profile');
     }
 }

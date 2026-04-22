@@ -40,6 +40,10 @@ class Category extends Model implements HasMedia
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
+    public function getParent()
+    {
+        return $this->parent;
+    }
 
     public function children()
     {

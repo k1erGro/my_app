@@ -2,9 +2,18 @@
 
 namespace App\Enums;
 
-enum RoleEnum: int
+enum RoleEnum: string
 {
-    case ADMIN = 2;
-    case USER = 1;
-    case GUEST = 0;
+    case ADMIN = 'admin';
+    case USER = 'user';
+    case GUEST = 'guest';
+
+    public function label(): string
+    {
+        return match ($this) {
+            static::ADMIN => 'Admin',
+            static::USER => 'User',
+            static::GUEST => 'Guest',
+        };
+    }
 }

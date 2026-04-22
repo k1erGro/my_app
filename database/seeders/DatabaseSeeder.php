@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +19,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        $this->call([
+            RoleAndPermissionSeeder::class,
+        ]);
+        $users = User::factory(10)->create();
+
+        foreach ($users as $user) {
+            $user->assignRole('User');
+        }
 
         User::factory()->create([
             'l_name' => 'Admin',
@@ -26,8 +36,17 @@ class DatabaseSeeder extends Seeder
             'birthday' => '2000-01-01',
             'phone' => '+7 (123) 456-78-90',
             'address' => 'test address',
-            'role' => 2,
-        ]);
+        ])->assignRole(RoleEnum::ADMIN);
+
+        User::factory()->create([
+            'l_name' => 'Admin',
+            'f_name' => 'Admin',
+            'email' => 'kirillnik522@gmail.com',
+            'password' => 'qwe123',
+            'birthday' => '2000-01-01',
+            'phone' => '+7 (123) 456-78-90',
+            'address' => 'test address',
+        ])->assignRole(RoleEnum::USER);
 
         $this->call(CategorySeeder::class);
 
@@ -39,6 +58,7 @@ class DatabaseSeeder extends Seeder
                 $product->categories()->attach($category->id);
             }
         }
+
 
     }
 }

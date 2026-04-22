@@ -37,4 +37,9 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
 }

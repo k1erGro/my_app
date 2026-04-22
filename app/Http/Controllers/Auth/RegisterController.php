@@ -25,7 +25,7 @@ class RegisterController extends Controller
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
-        ]));
+        ])->assignRole('User'));
         return redirect()->route('shop.index');
     }
 }
