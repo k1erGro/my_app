@@ -13,7 +13,7 @@
                     <p class="text-gray-500 text-sm mb-4">{{ Auth::user()->getEmail() }}</p>
                     <div
                         class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold uppercase rounded-full">
-                        {{ Auth::user()->getRole()->value == 2 ? 'Администратор' : 'Пользователь' }}
+                        {{ Auth::user()->hasRole('Admin') ? 'Администратор' : 'Пользователь'}}
                     </div>
 
                     <hr class="my-6 border-gray-100">

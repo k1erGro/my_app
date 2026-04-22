@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container mx-auto py-8 px-4">
+    <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-8">Ваша корзина</h1>
 
         @if($items->isEmpty())
@@ -27,22 +27,22 @@
                                 <tr>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <img src="{{ $item->product->getFirstMediaUrl('product_images') }}" class="w-16 h-16 object-cover rounded mr-4" alt="">
+                                            <img src="{{ $item->getProduct()->getFirstMediaUrl('product_images') }}" class="w-16 h-16 object-cover rounded mr-4" alt="">
                                             <div>
-                                                <p class="font-bold text-gray-800">{{ $item->product->name }}</p>
+                                                <p class="font-bold text-gray-800">{{ $item->getProduct()->getName() }}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center border rounded-lg w-max">
-                                            <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                            <form action="{{ route('cart.update', $item->getKey()) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="action" value="minus">
                                                 <button type="submit" class="px-3 py-1 hover:bg-gray-100">-</button>
                                             </form>
-                                            <span class="px-4 py-1 border-x">{{ $item->quantity }}</span>
-                                            <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                            <span class="px-4 py-1 border-x">{{ $item->getQuantity() }}</span>
+                                            <form action="{{ route('cart.update', $item->getKey()) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="action" value="plus">
@@ -51,10 +51,10 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 font-medium">
-                                        {{ $item->product->price * $item->quantity }} ₽
+                                        {{ $item->getProduct()->getPrice() * $item->getQuantity() }} ₽
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
+                                        <form action="{{ route('cart.destroy', $item->getKey()) }}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="text-red-500 hover:text-red-700">
@@ -77,7 +77,7 @@
                         <h2 class="text-xl font-bold mb-4">Итого</h2>
                         <div class="flex justify-between mb-2">
                             <span>Товары ({{ $items->sum('quantity') }})</span>
-                            <span>{{ $items->sum(fn($i) => $i->product->price * $i->quantity) }} ₽</span>
+                            <span>{{ $items->sum(fn($i) => $i->getProduct()->getPrice() * $i->getQuantity()) }} ₽</span>
                         </div>
                         <div class="flex justify-between mb-4">
                             <span>Доставка</span>
@@ -86,7 +86,7 @@
                         <hr class="mb-4">
                         <div class="flex justify-between text-lg font-bold mb-6">
                             <span>К оплате</span>
-                            <span>{{ $items->sum(fn($i) => $i->product->price * $i->quantity) }} ₽</span>
+                            <span>{{ $items->sum(fn($i) => $i->getProduct()->getPrice() * $i->getQuantity()) }} ₽</span>
                         </div>
                         <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
                             Оформить заказ

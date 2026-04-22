@@ -42,7 +42,7 @@
             </div>
             <div class="p-4 bg-green-50 rounded-lg">
                 <p class="text-sm text-green-600 font-semibold uppercase">Ваша роль</p>
-                <p class="text-lg text-gray-800">{{ Auth::user()->getRole()->value === 1 ? 'Пользователь' : 'Админ' }}</p>
+                <p class="text-lg text-gray-800">{{ Auth::user()->hasrole('Admin') ? 'Администратор' : 'Пользователь' }}</p>
             </div>
         </div>
 

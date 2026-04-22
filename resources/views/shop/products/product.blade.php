@@ -57,7 +57,7 @@
                     <div class="mt-10 flex sm:flex-col1">
                         <form method="POST" action="{{ route('cart.add') }}">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="product_id" value="{{ $product->getKey() }}">
                             <button type="submit" class="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-xl py-4 px-8 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition shadow-lg uppercase tracking-wider">
                                 Добавить в корзину
                             </button>

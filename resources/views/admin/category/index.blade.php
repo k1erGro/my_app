@@ -32,7 +32,7 @@
 
                     @if($category->getParentId() !== null)
                         <td class="px-5 py-5">
-                            <p class="font-medium">{{  $category->parent->getName() }}</p>
+                            <p class="font-medium">{{  $category->getParent()->getName() }}</p>
                         </td>
                     @else
                         <td class="px-5 py-5">

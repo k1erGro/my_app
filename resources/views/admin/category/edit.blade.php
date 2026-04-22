@@ -3,7 +3,7 @@
 
     <div class="max-w-2xl mx-auto">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Добавить новую категорию</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Обновить категорию</h2>
             <a href="{{ route('admin.category.index') }}" class="text-gray-500 hover:text-gray-700 flex items-center">
                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Назад к списку
@@ -30,9 +30,9 @@
                         <option value="">Без родительской категории</option>
                         @foreach($categories as $item)
 
-                            @if($item->id !== $category->id)
-                                <option value="{{ $item->id }}"
-                                    {{ (old('parent_id', $category->parent_id) == $item->id) ? 'selected' : '' }}>
+                            @if($item->getKey() !== $category->getKey())
+                                <option value="{{ $item->getKey() }}"
+                                    {{ (old('parent_id', $category->getParentId()) == $item->getKey()) ? 'selected' : '' }}>
                                     {{ $item->getName() }}
                                 </option>
                             @endif
@@ -45,7 +45,7 @@
                 <div>
                     @if($category->hasMedia('category_images'))
                         <label class="block text-sm font-medium text-gray-700">Картинка</label>
-                        <img src="{{ $category->getFirstMediaUrl('category_images') }}" name="category_image" alt="">
+                        <img class="h-20" src="{{ $category->getFirstMediaUrl('category_images') }}" name="category_image" alt="">
                         <input type="file" name="image" accept="image/jpeg,image/png,image/jpg" value="{{ old('image') }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                     @else

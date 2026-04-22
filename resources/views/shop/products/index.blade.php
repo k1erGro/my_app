@@ -39,6 +39,14 @@
                             <p class="text-2xl font-extrabold text-blue-600">
                                 {{ $product->getPrice() }} ₽
                             </p>
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->getKey() }}">
+                                <button class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md
+                                            hover:bg-blue-700 active:scale-95 transition duration-200 shadow-sm">
+                                    Купить
+                                </button>
+                            </form>
                         </div>
                         @can('view', Auth::user())
                             <div>

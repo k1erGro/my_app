@@ -26,7 +26,7 @@
             </a>
         </nav>
         <div class="">
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('shop.index') }}"
                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                 Назад
             </a>

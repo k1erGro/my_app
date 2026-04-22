@@ -23,9 +23,9 @@
                             В каталог
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route('product.index') }}"
                            class="px-8 py-3 text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition md:py-4 md:text-lg md:px-10 text-center">
-                            Сборка ПК
+                            Товары
                         </a>
                     </div>
                 </div>

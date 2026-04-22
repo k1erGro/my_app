@@ -48,7 +48,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Категория</label>
                     <select name="category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required>
-                        <option value="{{ $product->category_id }}">{{ $product->category->getName() }}</option>
+                        <option value="{{ $product->getCategories()->first()->getKey() }}">{{ $product->getCategories()->first()->getName() }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->getKey() }}">{{$category->getName()}}</option>
                         @endforeach
@@ -59,7 +59,7 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Характеристики товара</label>
 
                     <div id="specs-wrapper" class="space-y-3">
-                        @foreach($product->specs as $key => $value)
+                        @foreach($product->getSpecs() as $key => $value)
                             <div class="row flex items-center gap-3 animate-fadeIn">
                                 <div class="flex-1">
                                     <input type="text" name="specs_keys[]" value="{{ $key }}" placeholder="Свойство" required

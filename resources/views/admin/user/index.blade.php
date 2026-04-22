@@ -21,15 +21,15 @@
             @foreach($users as $user)
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="px-5 py-5">
-                        <a href="{{ route('admin.show', $user->id) }}">
+                        <a href="{{ route('admin.show', $user->getKey()) }}">
                             <p class="font-medium">{{ $user->getLastName() }} {{ $user->getFirstName() }}</p>
                         </a>
                         <p class="text-xs text-gray-500">{{ $user->getEmail() }}</p>
                     </td>
                     <td class="px-5 py-5 text-sm">{{ $user->getPhone() ?? 'Не указано' }}</td>
                     <td class="px-5 py-5 text-sm">
-                    <span class="px-2 py-1 rounded text-xs {{ $user->getRole()->value == 2 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700' }}">
-                        {{ $user->getRole()->value === 1 ? 'Пользователь' : 'Администратор'}}
+                    <span class="px-2 py-1 rounded text-xs {{ $user->hasrole('Admin') ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700' }}">
+                        {{ $user->hasrole('Admin') ? 'Администратор' : 'Пользователь' }}
                     </span>
                     </td>
                     <td class="px-5 py-5 text-right text-sm">

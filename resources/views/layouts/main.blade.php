@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>My App</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
 <nav class="bg-white shadow-sm p-4 mb-8 z-50">
@@ -29,7 +28,7 @@
                 </div>
             </a>
             <div>
-                @can('view', Auth::user())
+                @can('login-to-admin-panel')
                     <a class="text-blue-500 hover:text-red-700 font-medium" href="{{ route('admin.index') }}">Админ панель</a>
                 @endcan
                 <form action="{{ route('logout') }}" method="POST">
@@ -62,8 +61,7 @@
                 <h3 class="font-semibold text-gray-700 mb-3">Навигация</h3>
                 <ul class="space-y-2">
                     <li><a href="{{ route('catalog.index') }}" class="text-gray-500 hover:text-blue-600 transition">Каталог</a></li>
-                    <li><a href="#" class="text-gray-500 hover:text-blue-600 transition">Сборка ПК</a></li>
-                    <li><a href="#" class="text-gray-500 hover:text-blue-600 transition">Контакты</a></li>
+
                 </ul>
             </div>
 
