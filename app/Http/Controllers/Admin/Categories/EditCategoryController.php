@@ -13,7 +13,7 @@ class EditCategoryController extends Controller
      */
     public function __invoke(Category $category)
     {
-        $categories = Category::with('children')->whereNull('parent_id')->get();
+        $categories = Category::all();
         return view('admin.category.edit', compact('category', 'categories'));
     }
 }

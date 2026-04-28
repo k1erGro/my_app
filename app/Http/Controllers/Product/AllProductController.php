@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class AllProductController extends Controller
+class ProductController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Product $product)
+    public function __invoke(Request $request)
     {
-        return view('shop.products.product', compact('product'));
+        $products = Product::paginate(10);
+        return view('shop.products.index', compact('products'));
     }
 }

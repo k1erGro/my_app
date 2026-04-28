@@ -16,7 +16,6 @@ class StoreCategoryController extends Controller
     {
         $category =  Category::create([
             'name' => $request->string('name'),
-            'parent_id' => $request->integer('parent_id'),
         ]);
         if ($request->hasFile('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('category_images');

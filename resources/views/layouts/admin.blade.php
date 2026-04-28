@@ -24,6 +24,22 @@
                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                 Товары
             </a>
+            <a href="{{ route('admin.subCategory.index') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Подкатегории
+            </a>
+            <a href="{{ route('admin.property.index') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Характеристики
+            </a>
+            <a href="{{ route('admin.address.index') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Адреса
+            </a>
+            <a href="{{ route('admin.orders.index') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Заказы
+            </a>
         </nav>
         <div class="">
             <a href="{{ route('shop.index') }}"
@@ -31,6 +47,7 @@
                 Назад
             </a>
         </div>
+
     </aside>
 
     <main class="flex-1 p-10">

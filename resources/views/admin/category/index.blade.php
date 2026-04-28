@@ -13,7 +13,6 @@
             <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 text-left text-sm uppercase font-semibold">
                 <th class="px-5 py-3">Название категории</th>
                 <th class="px-5 py-3">Картинка категории</th>
-                <th class="px-5 py-3">Родитель категории</th>
                 <th class="px-5 py-3 text-right">Действия</th>
             </tr>
             </thead>
@@ -30,15 +29,6 @@
                         </td>
                     @endif
 
-                    @if($category->getParentId() !== null)
-                        <td class="px-5 py-5">
-                            <p class="font-medium">{{  $category->getParent()->getName() }}</p>
-                        </td>
-                    @else
-                        <td class="px-5 py-5">
-                            <p class="font-medium">Нет родительской категории</p>
-                        </td>
-                    @endif
 
                     <td class="px-5 py-5 text-right text-sm">
                         <a href="{{ route('admin.category.edit', $category->getSlug()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>

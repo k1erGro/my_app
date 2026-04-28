@@ -18,7 +18,6 @@ class UpdateCategoryController extends Controller
         $category->update([
             'name' => $request->string('name'),
             'slug' => Str::slug($request->string('name')),
-            'parent_id' => $request->integer('parent_id') == 0 ? null : $request->integer('parent_id'),
         ]);
         if ($request->hasFile('image')) {
             $category->clearMediaCollection('category_images')->addMediaFromRequest('image')->toMediaCollection('category_images');
