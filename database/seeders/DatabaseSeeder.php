@@ -7,10 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,15 +46,13 @@ class DatabaseSeeder extends Seeder
         ])->assignRole(RoleEnum::USER);
 
         $this->call(CategorySeeder::class);
+        $this->call(SubCategorySeeder::class);
+        $this->call(PropertySeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(AddressSeeder::class);
+        $this->call(OrderSeeder::class);
 
-        $categories = Category::all();
 
-        foreach ($categories as $category) {
-            $products = Product::factory(10)->create();
-            foreach ($products as $product) {
-                $product->categories()->attach($category->id);
-            }
-        }
 
 
     }

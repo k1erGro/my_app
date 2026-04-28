@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class AllProductController extends Controller
+class ProductController extends Controller
 {
     /**
      * Handle the incoming request.

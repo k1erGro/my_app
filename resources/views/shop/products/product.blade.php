@@ -73,18 +73,21 @@
                     <section aria-labelledby="details-heading" class="mt-12 border-t border-gray-200 pt-8">
                         <h2 id="details-heading" class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">Характеристики</h2>
 
-                        <div class="grid grid-cols-1 gap-y-3">
-                            @if(!empty($product->getSpecs()))
-                                @foreach($product->getSpecs() as $key => $value)
-                                    <div class="flex justify-between py-2 border-b border-gray-50 text-sm">
-                                        <span class="text-gray-500">{{ $key }}</span>
-                                        <span class="text-gray-900 font-semibold text-right">{{ $value }}</span>
-                                    </div>
-                                @endforeach
+                            @if(!empty($data))
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                                    @foreach($data as $property => $value)
+                                        <div class="flex justify-between border-b border-gray-200 pb-2 transition hover:bg-gray-100 px-2 rounded">
+                                            <span class="text-gray-500 text-sm font-medium">{{ $property }}</span>
+                                            <span class="text-gray-500 text-sm font-medium">{{ $value }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
                             @else
-                                <p class="text-gray-400 italic text-sm">Характеристики не указаны</p>
+                                <div class="text-center py-6 bg-white rounded-xl border border-dashed border-gray-300">
+                                    <p class="text-gray-400 text-sm italic">Характеристики не указаны</p>
+                                </div>
                             @endif
-                        </div>
+
                     </section>
                 </div>
             </div>

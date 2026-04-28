@@ -53,15 +53,15 @@
             <div class="bg-gray-50 p-8 border-t border-gray-100">
                 <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center">
                     <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Технические характеристики
+                    Характеристики
                 </h3>
 
-                @if(!empty($product->getSpecs()) && is_array($product->getSpecs()))
+                @if(!empty($data))
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                        @foreach($product->getSpecs() as $key => $value)
+                        @foreach($data as $property => $value)
                             <div class="flex justify-between border-b border-gray-200 pb-2 transition hover:bg-gray-100 px-2 rounded">
-                                <span class="text-gray-500 text-sm font-medium">{{ $key }}</span>
-                                <span class="text-gray-900 text-sm font-bold">{{ $value }}</span>
+                                <span class="text-gray-500 text-sm font-medium">{{ $property }}</span>
+                                <span class="text-gray-500 text-sm font-medium">{{ $value }}</span>
                             </div>
                         @endforeach
                     </div>

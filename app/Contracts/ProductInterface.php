@@ -2,14 +2,13 @@
 
 namespace App\Contracts;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface ProductInterface
 {
-    public function categories(): BelongsToMany;
+    public function categories(): BelongsTo;
     public function getName(): string;
     public function getDescription(): string;
     public function getPrice(): string;
     public function getSlug(): string;
-    public function getSpecs(): array;
 }

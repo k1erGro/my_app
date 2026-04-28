@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container mx-auto px-4 mt-5 py-8">
+    <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
             <div>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Товары</h1>
@@ -26,7 +26,7 @@
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition truncate">
-                                <a href="{{ route('catalog.product', $product) }}">
+                                <a href="{{ route('product.show', $product) }}">
                                     {{ $product->getName() }}
                                 </a>
                             </h3>

@@ -7,6 +7,9 @@ use App\Contracts\UserInterface;
 use App\Enums\RoleEnum;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Image\Enums\Fit;
@@ -134,6 +137,15 @@ class User extends Authenticatable implements HasMedia, UserInterface
         $this->address = $address;
     }
 
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function getCart(): Cart
+    {
+        return $this->cart;
+    }
 
     public function registerMediaConversions(?Media $media = null): void
     {

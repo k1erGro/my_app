@@ -1,5 +1,4 @@
 @extends('layouts.main')
-
 @section('content')
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-8">Ваша корзина</h1>
@@ -88,9 +87,17 @@
                             <span>К оплате</span>
                             <span>{{ $items->sum(fn($i) => $i->getProduct()->getPrice() * $i->getQuantity()) }} ₽</span>
                         </div>
-                        <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-                            Оформить заказ
-                        </button>
+                        <form action="{{ route('orders.store') }}" method="post">
+                            @csrf
+                            @foreach($items as $item)
+                                <input name="product_id[]" type="text" value="{{ $item->getProduct()->getKey() }}">
+                                <input name="quantity[]" type="hidden" value="{{ $item->getQuantity() }}">
+                                <input name="price[]" type="hidden" value="{{ $item->getProduct()->getPrice() }}">
+                            @endforeach
+                            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                                Оформить заказ
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

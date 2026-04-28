@@ -47,8 +47,146 @@
                     </select>
                 </div>
 
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Подкатегория</label>
+                    <select name="subCategory_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border" required>
+                        <option value="0">Выберете подкатегорию</option>
+                        @foreach($subCategories as $subCategory)
+                            <option value="{{ $subCategory->getKey() }}">{{$subCategory->getName()}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Характеристики товара</label>
+
+
+                    <div class="flex items-center gap-3 animate-fadeIn">
+                        <div class="flex-1">
+                            <select name="properties[]"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                @foreach($properties as $property)
+                                    <option
+                                        value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" name="property_values[]"
+                                   value="" required
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                        </div>
+
+                        <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3 animate-fadeIn">
+                        <div class="flex-1">
+                            <select name="properties[]"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                @foreach($properties as $property)
+                                    <option
+                                        value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" name="property_values[]"
+                                   value="" required
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                        </div>
+
+                        <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3 animate-fadeIn">
+                        <div class="flex-1">
+                            <select name="properties[]"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                @foreach($properties as $property)
+                                    <option
+                                        value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" name="property_values[]"
+                                   value="" required
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                        </div>
+
+                        <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3 animate-fadeIn">
+                        <div class="flex-1">
+                            <select name="properties[]"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                @foreach($properties as $property)
+                                    <option
+                                        value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" name="property_values[]"
+                                   value="" required
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                        </div>
+
+                        <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3 animate-fadeIn">
+                        <div class="flex-1">
+                            <select name="properties[]"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                                    required>
+                                @foreach($properties as $property)
+                                    <option
+                                        value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" name="property_values[]"
+                                   value="" required
+                                   class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                        </div>
+
+                        <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+
 
                     <div id="specs-wrapper" class="space-y-3">
                     </div>

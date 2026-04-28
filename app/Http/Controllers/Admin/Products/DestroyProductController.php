@@ -13,7 +13,8 @@ class DestroyProductController extends Controller
      */
     public function __invoke(Product $product)
     {
+        $product->propertyValues()->delete();
         $product->delete();
-        return redirect()->back();
+        return redirect()->route('admin.product.index');
     }
 }
