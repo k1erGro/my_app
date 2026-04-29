@@ -44,7 +44,7 @@ class Product extends Model implements ProductInterface, HasMedia
 
     public function subCategories(): BelongsTo
     {
-        return $this->belongsTo(SubCategory::class, 'subCategory_id', 'id');
+        return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
     }
 
     public function getSubCategories(): SubCategory

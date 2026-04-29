@@ -23,7 +23,7 @@ class UpdateProductController extends Controller
             'price' => $request->string('price'),
             'description' => $request->string('description'),
             'category_id' => $request->integer('category_id'),
-            'subCategory_id' => $request->integer('subCategory_id'),
+            'sub_сategory_id' => $request->integer('subCategory_id'),
         ]);
 
 
