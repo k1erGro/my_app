@@ -70,10 +70,9 @@
                     <select name="subCategory_id"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
                             required>
-                        <option
-                            value="{{ $product->getSubCategories()->getKey() }}">{{ $product->getSubCategories()->getName() }}</option>
+                        <option value="{{ $product->getSubCategories()->getKey() }}">{{ $product->getSubCategories()->getName() }}</option>
                         @foreach($subCategories as $subCategory)
-                            <option value="{{ $subCategory->getKey() }}">{{$subCategory->getName()}}</option>
+                            <option value="{{ $subCategory->getKey() }}">{{ $subCategory->getName() }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -81,46 +80,45 @@
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Характеристики товара</label>
 
-                    @foreach($product->getPropertyValues() as $propertyValue)
-
-                        <div class="flex items-center gap-3 animate-fadeIn">
-                            <div class="flex-1">
-                                <select name="properties[]"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                                        required>
-                                    <option
-                                        value="{{ $propertyValue->getProperty()->getKey() }}">{{ $propertyValue->getProperty()->getName() }}</option>
-                                    @foreach($properties as $property)
-                                        <option
-                                            value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" name="property_values[]"
-                                       value="{{ $propertyValue->getValue() }}" required
-                                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
-                            </div>
-                            <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="遭19L7 7m0 0l7-7m-7 7h18"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
-                        </div>
-
-                    @endforeach
                     <div id="specs-wrapper" class="space-y-3">
-
+                        @foreach($product->getPropertyValues() as $propertyValue)
+                            <div class="flex items-center gap-3 animate-fadeIn spec-item">
+                                <div class="flex-1">
+                                    <select name="properties[]"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm"
+                                            required>
+                                        <option value="{{ $propertyValue->getProperty()->getKey() }}">
+                                            {{ $propertyValue->getProperty()->getName() }}
+                                        </option>
+                                        @foreach($properties as $property)
+                                            @if($property->getKey() !== $propertyValue->getProperty()->getKey())
+                                                <option value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="text" name="property_values[]"
+                                           value="{{ $propertyValue->getValue() }}" required
+                                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                                </div>
+                                <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        @endforeach
                     </div>
 
-                        <button type="button" id="add-spec"
-                                class="mt-3 inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm font-medium rounded-md hover:bg-blue-50 transition">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                            Добавить поле
-                        </button>
+                    <button type="button" id="add-spec"
+                            class="mt-3 inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm font-medium rounded-md hover:bg-blue-50 transition">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Добавить поле
+                    </button>
                 </div>
-
 
                 <div class="pt-4">
                     <button type="submit"
