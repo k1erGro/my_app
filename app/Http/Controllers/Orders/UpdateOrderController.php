@@ -14,7 +14,7 @@ class UpdateOrderController extends Controller
     public function __invoke(Request $request, Order $order)
     {
         $order->update([
-            'address' => $request->string('address'),
+            'address_id' => $request->string('address_id'),
             'delivery_date' => $request->date('delivery_date'),
             'status' => 'in progress',
         ]);

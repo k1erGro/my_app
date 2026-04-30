@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Order\OrderRequest;
+use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -17,7 +17,7 @@ class StoreOrderController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(OrderRequest $request)
+    public function __invoke(StoreOrderRequest $request)
     {
         $addresses = Address::all();
         $total_price = array_sum(array_map(function ($quantity, $price) { return $quantity * $price; }, $request->input('quantity'), $request->input('price')));

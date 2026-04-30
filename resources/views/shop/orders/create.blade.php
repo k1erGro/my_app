@@ -18,9 +18,9 @@
                 @method('patch')
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                    <select name="address" value="{{ old('address') }}" required>
+                    <select name="address_id" value="{{ old('address_id') }}" required>
                         @foreach($addresses as $address)
-                            <option value="{{ $address->getName() }}">{{ $address->getName() }}</option>
+                            <option value="{{ $address->getKey() }}">{{ $address->getName() }}</option>
                         @endforeach
                     </select>
                 </div>
