@@ -14,7 +14,7 @@ class EditPasswordController extends Controller
      */
     public function __invoke(Request $request, User $user)
     {
-        $checkRole = Auth::user()->isAdmin();
+        $checkRole = Auth::user()->hasRole('Admin');
         return view('admin.user.edit_password', compact('user', 'checkRole'));
     }
 }
