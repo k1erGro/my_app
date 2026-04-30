@@ -7,7 +7,8 @@
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
                     <div class="relative inline-block">
-                        <img class="h-24 w-24 rounded-full object-cover" src="{{ Auth::user()->getFirstMediaUrl('avatars', 'preview') }}" alt="Аватар">
+                        <img class="h-24 w-24 rounded-full object-cover"
+                             src="{{ Auth::user()->getFirstMediaUrl('avatars', 'preview') }}" alt="Аватар">
                     </div>
                     <h2 class="text-xl font-bold text-gray-800">{{ Auth::user()->getFullName() }}</h2>
                     <p class="text-gray-500 text-sm mb-4">{{ Auth::user()->getEmail() }}</p>
@@ -41,6 +42,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
@@ -88,7 +90,8 @@
                     </div>
 
                     <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex items-center justify-between">
-                        <span class="text-xs text-gray-400">Аккаунт создан: {{ Auth::user()->created_at->format('d.m.Y') }}</span>
+                        <span
+                            class="text-xs text-gray-400">Аккаунт создан: {{ Auth::user()->created_at->format('d.m.Y') }}</span>
                     </div>
                 </div>
             </div>

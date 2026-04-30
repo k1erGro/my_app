@@ -90,7 +90,7 @@
                         <form action="{{ route('orders.store') }}" method="post">
                             @csrf
                             @foreach($items as $item)
-                                <input name="product_id[]" type="text" value="{{ $item->getProduct()->getKey() }}">
+                                <input name="product_id[]" type="hidden" value="{{ $item->getProduct()->getKey() }}">
                                 <input name="quantity[]" type="hidden" value="{{ $item->getQuantity() }}">
                                 <input name="price[]" type="hidden" value="{{ $item->getProduct()->getPrice() }}">
                             @endforeach
