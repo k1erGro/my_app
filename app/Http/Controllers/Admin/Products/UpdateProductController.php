@@ -26,13 +26,18 @@ class UpdateProductController extends Controller
             'sub_сategory_id' => $request->integer('subCategory_id'),
         ]);
 
+        $addressesProducts = array_combine($request->array('address_ids'), $request->array('product_quantities'));
+        foreach ($addressesProducts as $addressId => $productQuantity) {
+            $data[$addressId] = ['product_quantity' => $productQuantity];
+        }
+        $product->addresses()->sync($data);
 
-        $data = array_combine($request->array('properties'), $request->array('property_values'));
 
+        $properties_values = array_combine($request->array('properties'), $request->array('property_values'));
         $product->propertyValues()->delete();
 
-        if (!empty($data)) {
-            foreach ($data as $propertyId => $propertyValue) {
+        if (!empty($properties_values)) {
+            foreach ($properties_values as $propertyId => $propertyValue) {
                 $product->propertyValues()->create(
                     [
                         'property_id' => $propertyId,

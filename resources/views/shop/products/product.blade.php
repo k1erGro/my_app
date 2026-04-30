@@ -1,5 +1,4 @@
 @extends('layouts.main')
-
 @section('content')
     <div class="bg-white">
         <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -52,6 +51,16 @@
                         <div class="text-base text-gray-700 space-y-4 leading-relaxed">
                             {{ $product->getDescription() ?? 'Не указано' }}
                         </div>
+                    </div>
+
+                    <div class="mt-10 ">
+                        <h2 id="details-heading" class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">В наличии</h2>
+
+                            @foreach($product->getAddresses() as $address)
+                                <div class="text-base text-gray-700 space-y-4 leading-relaxed">
+                                  {{ $address->getName() }} - {{ $address->pivot->product_quantity }} шт
+                                </div>
+                          @endforeach
                     </div>
 
                     <div class="mt-10 flex sm:flex-col1">

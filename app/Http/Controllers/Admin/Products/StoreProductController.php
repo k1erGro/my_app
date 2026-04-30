@@ -20,8 +20,15 @@ class StoreProductController extends Controller
             'price' => $request->string('price'),
             'description' => $request->string('description'),
             'category_id' => $request->integer('category_id'),
-            'subCategory_id' => $request->integer('subCategory_id'),
+            'sub_category_id' => $request->integer('sub_category_id'),
         ]);
+
+        $addressesProducts = array_combine($request->array('address_ids'), $request->array('product_quantities'));
+        foreach ($addressesProducts as $addressId => $productQuantity) {
+            $data[$addressId] = ['product_quantity' => $productQuantity];
+        }
+        $product->addresses()->sync($data);
+
         $data = array_combine($request->array('properties'), $request->array('property_values'));
 
         if (!empty($data)) {

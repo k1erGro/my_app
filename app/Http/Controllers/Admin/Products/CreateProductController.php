@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\Property;
 use App\Models\SubCategory;
@@ -18,6 +19,7 @@ class CreateProductController extends Controller
         $categories = Category::all();
         $subCategories = SubCategory::all();
         $properties = Property::all();
-        return view('admin.product.create', compact('categories', 'properties', 'subCategories'));
+        $addresses = Address::all();
+        return view('admin.product.create', compact('categories', 'properties', 'subCategories', 'addresses'));
     }
 }

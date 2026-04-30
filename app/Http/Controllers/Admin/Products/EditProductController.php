@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Property;
@@ -22,6 +23,7 @@ class EditProductController extends Controller
         $subCategories = SubCategory::all();
         $propertyValues = PropertyValue::with('property')->get();
         $properties = Property::all();
-        return view('admin.product.edit', compact('product', 'categories', 'propertyValues', 'properties', 'subCategories'));
+        $addresses = Address::all();
+        return view('admin.product.edit', compact('product', 'categories', 'propertyValues', 'properties', 'subCategories', 'addresses'));
     }
 }

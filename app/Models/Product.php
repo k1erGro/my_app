@@ -25,7 +25,7 @@ class Product extends Model implements ProductInterface, HasMedia
         'description',
         'price',
         'category_id',
-        'subCategory_id',
+        'sub_category_id',
     ];
 
     protected $casts = [
@@ -70,6 +70,16 @@ class Product extends Model implements ProductInterface, HasMedia
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    public function addresses(): BelongsToMany
+    {
+        return $this->belongsToMany(Address::class, 'address_products', 'product_id', 'address_id')->withPivot('product_quantity');
+    }
+
+    public function getAddresses(): Collection
+    {
+        return $this->addresses;
     }
 
     public function getName(): string

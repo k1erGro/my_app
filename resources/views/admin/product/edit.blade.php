@@ -38,6 +38,48 @@
                     @error('description') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">В наличии</label>
+
+                    <div id="specs-wrapper-address" class="space-y-3">
+                        @foreach($product->getAddresses() as $address)
+                            <div class="flex items-center gap-3 animate-fadeIn spec-item">
+                                <div class="flex-1">
+                                    <select name="address_ids[]"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm"
+                                            required>
+                                        <option value="{{ $address->getKey() }}">
+                                            {{ $address->getName() }}
+                                        </option>
+                                        @foreach($addresses as $item)
+                                            <option value="{{ $item->getKey() }}">{{ $item->getName() }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="text" name="product_quantities[]"
+                                           value="{{ $address->pivot->product_quantity }}" required
+                                           class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                                </div>
+                                <button type="button" class="remove-btn-address text-red-500 hover:text-red-700 transition p-2">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <button type="button" id="add-spec-address"
+                            class="mt-3 inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm font-medium rounded-md hover:bg-blue-50 transition">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Добавить поле
+                    </button>
+                </div>
+
                 <div>
                     @if($product->hasMedia('products'))
                         <label class="block text-sm font-medium text-gray-700">Картинка</label>
@@ -67,7 +109,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Подкатегория</label>
-                    <select name="subCategory_id"
+                    <select name="sub_category_id"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
                             required>
                         <option value="{{ $product->getSubCategories()->getKey() }}">{{ $product->getSubCategories()->getName() }}</option>
