@@ -30,3 +30,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/docker
+/config/tinker.php
+/resources/views/errors/
+/resources/views/vendor
+/sail
