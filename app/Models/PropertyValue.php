@@ -20,9 +20,19 @@ class PropertyValue extends Model
         return $this->value;
     }
 
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
     }
 
     public function property(): BelongsTo

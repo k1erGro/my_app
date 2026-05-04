@@ -13,19 +13,24 @@ class CartItem extends Model
         'quantity',
     ];
 
-    public function getCartId()
+    public function getCartId(): int
     {
         return $this->cart_id;
     }
 
-    public function getProductId()
+    public function getProductId(): int
     {
         return $this->product_id;
     }
 
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
     }
 
     public function cart(): BelongsTo

@@ -63,9 +63,14 @@ class Order extends Model
         return $this->address;
     }
 
-    public function getTotalPrice(): int
+    public function getTotalPrice(): string
     {
         return $this->total_price;
+    }
+
+    public function setTotalPrice(string $total_price): void
+    {
+        $this->total_price = $total_price;
     }
 
     public function getDeliveryDate(): ?string
@@ -73,8 +78,18 @@ class Order extends Model
         return $this->delivery_date;
     }
 
+    public function setDeliveryDate(string $delivery_date): void
+    {
+        $this->delivery_date = $delivery_date;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
     }
 }

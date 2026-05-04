@@ -41,4 +41,8 @@ class AddressProduct extends Pivot
         return $this->product_quantity;
     }
 
+    public function setProductQuantity(int $product_quantity): void
+    {
+        $this->productQuantity = $product_quantity;
+    }
 }

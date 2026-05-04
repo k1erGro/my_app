@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Decimal\Decimal;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
@@ -14,6 +15,10 @@ class OrderProduct extends Pivot
         'product_id',
         'price',
         'quantity',
+    ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
     ];
 
     public function product(): BelongsTo
@@ -36,13 +41,23 @@ class OrderProduct extends Pivot
         return $this->order;
     }
 
-    public function getPrice(): int
+    public function getPrice(): string
     {
         return $this->price;
+    }
+
+    public function setPrice(string $price): void
+    {
+        $this->price = $price;
     }
 
     public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): void
+    {
+        $this->quantity = $quantity;
     }
 }

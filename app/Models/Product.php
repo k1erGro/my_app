@@ -32,6 +32,16 @@ class Product extends Model implements ProductInterface, HasMedia
         'price' => 'decimal:2',
     ];
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
     public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -87,9 +97,19 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     public function getPrice(): string
@@ -97,9 +117,19 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->price;
     }
 
+    public function setPrice(string $price): void
+    {
+        $this->price = $price;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function registerMediaConversions(?Media $media = null): void

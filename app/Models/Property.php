@@ -21,13 +21,28 @@ class Property extends Model
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
     }
 
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
     public function propertyValues(): hasMany
     {
         return $this->hasMany(PropertyValue::class);
+    }
+
+    public function getPropertyValues(): PropertyValue
+    {
+        return $this->propertyValues;
     }
 }
