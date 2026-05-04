@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('property_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('property_id')->constrained('properties');
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('property_id')->constrained('properties')->restrictOnDelete();
+            $table->foreignId('product_id')->constrained('products')->restrictOnDelete();
             $table->string('value');
             $table->timestamps();
         });

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('delivery_date')->nullable();
             $table->foreignId('address_id')->constrained('addresses');
             $table->string('status')->default('draft');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

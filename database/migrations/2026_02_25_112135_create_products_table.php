@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->decimal('price', 10, 2);
             $table->longText('description')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->restrictOnDelete();
+            $table->foreignId('sub_category_id')->constrained('sub_categories')->restrictOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

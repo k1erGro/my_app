@@ -6,11 +6,12 @@ use App\Traits\SlugTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 class Address extends Model
 {
-    use HasFactory, SlugTrait;
+    use HasFactory, SlugTrait, softDeletes;
 
     protected $fillable = [
         'name',

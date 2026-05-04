@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -16,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class SubCategory extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SlugTrait;
+    use HasFactory, InteractsWithMedia, SlugTrait, SoftDeletes;
 
     protected $fillable = [
         'name',

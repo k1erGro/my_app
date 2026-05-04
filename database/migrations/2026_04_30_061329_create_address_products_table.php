@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('address_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('address_id')->constrained('addresses');
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('address_id')->constrained('addresses')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->integer('product_quantity')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
