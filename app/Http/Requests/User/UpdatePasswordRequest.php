@@ -25,7 +25,7 @@ class UpdatePasswordRequest extends FormRequest
         $rules = [
             'password' => 'required|string|confirmed',
         ];
-        if (!Auth::user()->isAdmin()) {
+        if (!Auth::user()->hasRole('Admin')) {
             $rules['old_password'] = 'required|string|current_password';
         } else {
             $rules['old_password'] = 'nullable';
