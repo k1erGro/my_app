@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -35,7 +36,7 @@ class UserSeeder extends Seeder
                 'birthday' => $user['birthday'],
                 'phone' => $user['phone'],
                 'address' => $user['address']
-            ]);
+            ])->assignRole(RoleEnum::USER);
         }
     }
 }

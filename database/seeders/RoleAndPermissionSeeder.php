@@ -96,7 +96,6 @@ class RoleAndPermissionSeeder extends Seeder
 
             'create-orders',
             'edit-orders',
-            'delete-orders',
 
             'create-reviews',
             'edit-reviews',
@@ -113,7 +112,6 @@ class RoleAndPermissionSeeder extends Seeder
 
             'create-orders',
             'edit-orders',
-            'delete-orders',
 
             'create-reviews',
             'edit-reviews',
@@ -125,7 +123,6 @@ class RoleAndPermissionSeeder extends Seeder
 
             'create-orders',
             'edit-orders',
-            'delete-orders',
 
             'create-addresses',
             'edit-addresses',
