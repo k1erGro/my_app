@@ -7,7 +7,11 @@
             + Добавить подкатегорию
         </a>
     </div>
-
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>
@@ -46,7 +50,7 @@
                         <form method="POST" action="{{ route('admin.subCategory.destroy', $subCategory->getKey()) }}">
                             @csrf
                             @method('delete')
-                            <button class="text-red-600 hover:text-red-900">Удалить</button>
+                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
                         </form>
                     </td>
                 </tr>

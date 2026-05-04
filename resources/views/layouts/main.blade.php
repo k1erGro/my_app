@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>My App</title>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
@@ -12,18 +13,20 @@
             <span class="font-bold text-xl text-gray-800">My App</span>
         </a>
         <div class="flex items-center gap-4">
-            <a href="{{ route('cart.show') }}" class="relative inline-block text-gray-700 hover:text-blue-600">
+            <a href="{{ route('cart.show') }}" class="flex items-center flex-col relative inline-block text-gray-700 hover:text-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                 </svg>
+                <p>Корзина</p>
             </a>
-            <a href="{{ route('orders.index') }}" class="relative inline-block text-gray-700 hover:text-blue-600">
+            <a href="{{ route('orders.index') }}" class="flex items-center flex-col relative inline-block text-gray-700 hover:text-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
+                <p>Заказы</p>
             </a>
             @if (Auth::check())
                 <a href="{{ route('profile') }}">

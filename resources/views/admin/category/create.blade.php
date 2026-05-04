@@ -23,18 +23,6 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Название категории</label>
-
-                    <select name="parent_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        <option>Без родительской категории</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->getKey() }}">{{ $category->getName() }}</option>
-                        @endforeach
-                    </select>
-                    @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
                     <label class="block text-sm font-medium text-gray-700">Картинка</label>
                     <input type="file" name="image" accept="image/jpeg,image/png,image/jpg" value="{{ old('image') }}" required
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">

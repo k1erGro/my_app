@@ -29,6 +29,9 @@ use App\Http\Controllers\Admin\Property\EditPropertyController;
 use App\Http\Controllers\Admin\Property\IndexPropertyController;
 use App\Http\Controllers\Admin\Property\StorePropertyController;
 use App\Http\Controllers\Admin\Property\UpdatePropertyController;
+use App\Http\Controllers\Admin\Reviews\DestroyReviewController;
+use App\Http\Controllers\Admin\Reviews\IndexReviewController;
+use App\Http\Controllers\Admin\Reviews\ShowReviewController;
 use App\Http\Controllers\Admin\SubCategories\CreateSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\DestroySubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\EditSubcategoryController;
@@ -59,6 +62,8 @@ use App\Http\Controllers\Orders\UpdateOrderController;
 use App\Http\Controllers\Product\AllProductController;
 use App\Http\Controllers\Product\CatalogProductController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Review\StoreReviewController;
+use App\Http\Controllers\Review\UpdateReviewController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
@@ -142,6 +147,11 @@ Route::middleware(RoleMiddleware::using('Admin'))->prefix('admin')->group(functi
     Route::get('/orders', AdminIndexOrderController::class)->name('admin.orders.index');
     Route::get('/edit-orders/{order}', AdminEditOrderController::class)->name('admin.orders.edit');
     Route::patch('/update-orders/{order}', AdminUpdateOrderController::class)->name('admin.orders.update');
+
+    // Отзывы
+    Route::get('/reviews', IndexReviewController::class)->name('admin.reviews.index');
+    Route::get('/show-review/{review}', ShowReviewController::class)->name('admin.reviews.show');
+    Route::delete('/destroy-review/{review}', DestroyReviewController::class)->name('admin.reviews.destroy');
 });
 
 
@@ -153,12 +163,15 @@ Route::prefix('shop')->group(function () {
     Route::get('/catalog/sub-category/{subCategory:slug}', CatalogProductController::class)->name('catalog.product');
 
     Route::get('/product', AllProductController::class)->name('product.index');
-    Route::get('/product/{product:slug}', ShowProductController::class)->name('product.show');
+    Route::get('/product/{product:slug}', \App\Http\Controllers\Product\ProductController::class)->name('product.show');
 
     Route::get('/orders', OrdersController::class)->name('orders.index');
     Route::post('/store-order', StoreOrderController::class)->name('orders.store');
     Route::patch('/update-order/{order}', UpdateOrderController::class)->name('orders.update');
     Route::get('/orders/{order}', ShowOrderController::class)->name('orders.show');
+
+    Route::post('/store-review', StoreReviewController::class)->name('review.store');
+    Route::patch('/update-review/{review}', UpdateReviewController::class)->name('review.update');
 });
 
 Route::post('/cart/add', CartAddController::class)->name('cart.add');

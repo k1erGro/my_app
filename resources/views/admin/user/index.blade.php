@@ -37,7 +37,7 @@
                         <form method="POST" action="{{ route('admin.destroy', $user->getKey()) }}">
                             @csrf
                             @method('delete')
-                            <button class="text-red-600 hover:text-red-900">Удалить</button>
+                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
                         </form>
                     </td>
                 </tr>

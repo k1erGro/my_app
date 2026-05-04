@@ -24,12 +24,25 @@
                             @endif
                         </div>
                         <div class="p-4 border-t border-gray-100">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $product->getName() }}</h3>
-                            <a href="{{ route('catalog.show', $product->getSlug()) }}"
-                               class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
-                                Перейти
-                                <svg class="w-4 h-4 ml-2" ...></svg>
-                            </a>
+                            <div class="flex justify-between">
+                                <h3 class="text-lg font-semibold text-gray-800">{{ $product->getName() }}</h3>
+                                <div class="bg-yellow-200 p-1 rounded-2xl">
+                                    {{ round($product->getReviews()->avg('rating'), 1) }}
+                                </div>
+                            </div>
+                            <div class="flex items-end justify-between border-t border-gray-100 pt-4 mt-auto">
+                                <p class="text-2xl font-extrabold text-blue-600">
+                                    {{ $product->getPrice() }} ₽
+                                </p>
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->getKey() }}">
+                                    <button class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md
+                                            hover:bg-blue-700 active:scale-95 transition duration-200 shadow-sm">
+                                        Купить
+                                    </button>
+                                </form>
+                            </div>
 
                             <div>
                                 @can('edit-categories')

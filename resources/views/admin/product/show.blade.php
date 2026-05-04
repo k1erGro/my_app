@@ -1,29 +1,20 @@
 @extends('layouts.admin')
-
 @section('content')
     <div class="max-w-4xl mx-auto">
-        <div class="flex items-center justify-between mb-6">
-            <nav class="flex text-gray-500 text-sm" aria-label="Breadcrumb">
-                <a href="{{ route('admin.product.index') }}" class="hover:text-blue-600 transition">Товары</a>
-                <svg class="w-5 h-5 mx-2" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
-                <span class="text-gray-800 font-medium">{{ $product->getName() }}</span>
-            </nav>
-
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800">Профиль пользователя</h2>
+                <p class="text-gray-500">ID товара: #{{ $product->getKey() }}</p>
+            </div>
             <div class="flex space-x-3">
-                <a href="{{ route('admin.product.edit', $product) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition shadow-sm text-sm font-medium">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                <a href="{{ route('admin.product.index') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition">
+                    К списку
+                </a>
+                <a href="{{ route('admin.product.edit', $product->getSlug()) }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
                     Редактировать
                 </a>
-                <form method="POST" action="{{ route('admin.product.destroy', $product) }}" onsubmit="return confirm('Вы уверены, что хотите удалить этот товар?')">
-                    @csrf
-                    @method('delete')
-                    <button class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-red-600 rounded-md hover:bg-red-50 transition shadow-sm text-sm font-medium">
-                        Удалить
-                    </button>
-                </form>
             </div>
         </div>
-
         <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
             <div class="md:flex">
                 <div class="md:w-1/3 bg-gray-50 flex items-center justify-center p-8 border-r border-gray-100">
