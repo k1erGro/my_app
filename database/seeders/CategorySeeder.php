@@ -15,10 +15,16 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Компьютеры и ноутбуки', 'image' => public_path('img/seeds/computers.jpg')],
-            ['name' => 'Компоненты ПК', 'image' => public_path('img/seeds/pc_components.jpg')],
-            ['name' => 'Периферия', 'image' => public_path('img/seeds/periphery.jpg')],
-            ['name' => 'Смартфоны', 'image' => public_path('img/seeds/smartphones.jpg')],
+            ['name' => 'Бытовая техника', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Красота и здоровье', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Смартфоны и планшеты', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Фототехника', 'image' => public_path('img/seeds/...')],
+            ['name' => 'ТВ и консоли', 'image' => public_path('img/seeds/...')],
+            ['name' => 'ПК и ноутбуки', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Комплектующие для пк', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Периферия', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Аудиотехника', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Сетевое оборудование', 'image' => public_path('img/seeds/...')],
         ];
 
         foreach ($categories as $item) {

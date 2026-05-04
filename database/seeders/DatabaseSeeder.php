@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             $user->assignRole('User');
         }
 
+
+
         User::factory()->create([
             'l_name' => 'Admin',
             'f_name' => 'Admin',
