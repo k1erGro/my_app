@@ -16,15 +16,19 @@ class ProductController extends Controller
      */
     public function __invoke(Product $product)
     {
-        foreach ($product->getPropertyValues() as $propertyValue) {
-            $values[] = $propertyValue->getValue();
+        $data = [];
+        if (!$product->getPropertyValues()->isEmpty() && !$product->getPropertyValues()->isEmpty()) {
+            foreach ($product->getPropertyValues() as $propertyValue) {
+                $values[] = $propertyValue->getValue();
+            }
+
+            foreach ($product->getPropertyValues() as $propertyValue) {
+                $property[] = Property::where("id", $propertyValue->property_id)->first()->getName();
+            }
+
+            $data = array_combine($property, $values);
         }
 
-        foreach ($product->getPropertyValues() as $propertyValue) {
-            $property[] = Property::where("id", $propertyValue->property_id)->first()->getName();
-        }
-
-        $data = array_combine($property, $values);
         $hasReview = Review::where('user_id', Auth::user()->getKey())->where('product_id', $product->getKey())->exists();
 
         return view('shop.products.product', compact('product', 'data', 'hasReview'));
