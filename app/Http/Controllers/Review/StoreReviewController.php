@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers\Review;
+
+use App\Http\Controllers\Controller;
+use App\Models\Rating;
+use App\Models\Review;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class StoreReviewController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     */
+    public function __invoke(Request $request)
+    {
+        Review::create([
+            'user_id' => Auth::user()->getKey(),
+            'product_id' => $request->integer('product_id'),
+            'review' => $request->string('review'),
+            'rating' => $request->float('rating'),
+        ]);
+        return redirect()->back();
+    }
+}

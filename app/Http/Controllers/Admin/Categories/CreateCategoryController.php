@@ -13,7 +13,6 @@ class CreateCategoryController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $categories = Category::with('children')->whereNull('parent_id')->get();
-        return view('admin.category.create', compact('categories'));
+        return view('admin.category.create');
     }
 }

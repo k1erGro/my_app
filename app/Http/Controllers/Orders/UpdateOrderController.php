@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Orders;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateOrderController extends Controller
 {
@@ -18,6 +19,6 @@ class UpdateOrderController extends Controller
             'delivery_date' => $request->date('delivery_date'),
             'status' => 'in progress',
         ]);
-        return redirect()->route('admin.orders.index');
+        return Auth::user()->hasRole('Admin') ? redirect()->route('admin.orders.index'): redirect()->route('orders.index');
     }
 }

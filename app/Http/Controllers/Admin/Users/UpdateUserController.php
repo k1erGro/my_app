@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin\Users;
 
 use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UpdateRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 

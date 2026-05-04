@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Property;
 use App\Models\PropertyValue;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShowProductController extends Controller
 {
@@ -23,6 +25,6 @@ class ShowProductController extends Controller
         }
         $data = array_combine($property, $values);
 
-        return view('shop.products.product', compact('product', 'data'));
+        return view('admin.product.show', compact('product', 'data'));
     }
 }

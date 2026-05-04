@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductSeeder::class);
         $this->call(AddressSeeder::class);
         $this->call(OrderSeeder::class);
-
+        $this->call(ReviewSeeder::class);
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rating;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 

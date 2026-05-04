@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Review;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UpdatePasswordRequest extends FormRequest
+class ReviewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +21,10 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'password' => 'required|string|confirmed',
+        return [
+            'product_id' => 'required|integer|exists:products,id',
+            'review' => 'required|string',
+            'rating' => 'required|integer|between:1,5',
         ];
-        if (!Auth::user()->hasRole('Admin')) {
-            $rules['old_password'] = 'required|string|current_password';
-        } else {
-            $rules['old_password'] = 'nullable';
-        }
-
-        return $rules;
     }
 }

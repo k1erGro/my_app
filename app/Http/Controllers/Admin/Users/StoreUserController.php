@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin\Users;
 
 use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreRequest;
+use App\Http\Requests\User\StoreRequest;
 use App\Models\User;
 
 class StoreUserController extends Controller
