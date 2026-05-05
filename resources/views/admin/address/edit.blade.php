@@ -25,7 +25,7 @@
                 <div class="pt-4">
                     <button type="submit"
                             class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-bold shadow-lg">
-                        Редактировать категорию
+                        Редактировать адрес магазина
                     </button>
                 </div>
             </form>

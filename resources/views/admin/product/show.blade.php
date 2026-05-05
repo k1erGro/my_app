@@ -3,7 +3,7 @@
     <div class="max-w-4xl mx-auto">
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h2 class="text-3xl font-bold text-gray-800">Профиль пользователя</h2>
+                <h2 class="text-3xl font-bold text-gray-800">Карточка товара</h2>
                 <p class="text-gray-500">ID товара: #{{ $product->getKey() }}</p>
             </div>
             <div class="flex space-x-3">

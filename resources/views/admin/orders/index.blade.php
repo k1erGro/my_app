@@ -2,9 +2,6 @@
 @section('content')
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Список заказов</h2>
-{{--        <a href="{{ route('admin.orders.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">--}}
-{{--            + Добавить адрес--}}
-{{--        </a>--}}
     </div>
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden">

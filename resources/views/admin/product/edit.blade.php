@@ -62,9 +62,11 @@
                                            value="{{ $address->pivot->product_quantity }}" required
                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
                                 </div>
-                                <button type="button" class="remove-btn-address text-red-500 hover:text-red-700 transition p-2">
+                                <button type="button"
+                                        class="remove-btn-address text-red-500 hover:text-red-700 transition p-2">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M6 18L18 6M6 6l12 12"></path>
                                     </svg>
                                 </button>
                             </div>
@@ -74,7 +76,8 @@
                     <button type="button" id="add-spec-address"
                             class="mt-3 inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm font-medium rounded-md hover:bg-blue-50 transition">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 4v16m8-8H4"></path>
                         </svg>
                         Добавить поле
                     </button>
@@ -99,8 +102,12 @@
                     <select name="category_id"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
                             required>
-                        <option
-                            value="{{ $product->getCategories()->getKey() }}">{{ $product->getCategories()->getName() }}</option>
+                        @if(!is_null($product->getCategories()))
+                            <option
+                                value="{{ $product->getCategories()->getKey() }}">{{ $product->getCategories()->getName() }}</option>
+                        @else
+                            <option>Нет категории</option>
+                        @endif
                         @foreach($categories as $category)
                             <option value="{{ $category->getKey() }}">{{$category->getName()}}</option>
                         @endforeach
@@ -112,7 +119,12 @@
                     <select name="sub_category_id"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
                             required>
-                        <option value="{{ $product->getSubCategories()->getKey() }}">{{ $product->getSubCategories()->getName() }}</option>
+                        @if(!is_null($product->getSubCategories()))
+                            <option
+                                value="{{ $product->getSubCategories()->getKey() }}">{{ $product->getSubCategories()->getName() }}</option>
+                        @else
+                            <option>Нет категории</option>
+                        @endif
                         @foreach($subCategories as $subCategory)
                             <option value="{{ $subCategory->getKey() }}">{{ $subCategory->getName() }}</option>
                         @endforeach
@@ -134,7 +146,8 @@
                                         </option>
                                         @foreach($properties as $property)
                                             @if($property->getKey() !== $propertyValue->getProperty()->getKey())
-                                                <option value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
+                                                <option
+                                                    value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -146,7 +159,8 @@
                                 </div>
                                 <button type="button" class="remove-btn text-red-500 hover:text-red-700 transition p-2">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M6 18L18 6M6 6l12 12"></path>
                                     </svg>
                                 </button>
                             </div>
@@ -156,7 +170,8 @@
                     <button type="button" id="add-spec"
                             class="mt-3 inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm font-medium rounded-md hover:bg-blue-50 transition">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 4v16m8-8H4"></path>
                         </svg>
                         Добавить поле
                     </button>

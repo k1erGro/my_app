@@ -11,11 +11,14 @@
                 <th class="px-5 py-3">ID отзыва</th>
                 <th class="px-5 py-3">Рейтинг</th>
                 <th class="px-5 py-3">Отзыв</th>
+                <th class="px-5 py-3">Пользователь</th>
+                <th class="px-5 py-3">Продукт</th>
                 <th class="px-5 py-3 text-right">Действия</th>
             </tr>
             </thead>
             <tbody class="text-gray-700">
             @foreach($reviews as $review)
+
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="px-5 py-5">
                         <p class="font-medium">{{ $review->getKey() }}</p>
@@ -26,17 +29,31 @@
                     </td>
 
                     <td class="px-5 py-5">
-                        <p class="font-medium">{{ $review->getReview() }}</p>
+                        <a href="{{ route('admin.reviews.show', $review->getKey()) }}">
+                            <p class="font-medium">{{ $review->getReview() }}</p>
+                        </a>
+                    </td>
+
+                    <td class="px-5 py-5">
+                        <p class="font-medium">{{ $review->getUser()->getFullName() }}</p>
+                    </td>
+
+                    <td class="px-5 py-5">
+                        <p class="font-medium">{{ $review->getProduct()->getName() }}</p>
                     </td>
 
                     <td class="px-5 py-5 text-right text-sm">
                         <form method="POST" action="{{ route('admin.reviews.destroy', $review->getKey()) }}">
                             @csrf
                             @method('delete')
-                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
+                            <button class="text-red-600 hover:text-red-900"
+                                    onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
+                            </button>
                         </form>
                     </td>
+
                 </tr>
+
             @endforeach
             </tbody>
         </table>

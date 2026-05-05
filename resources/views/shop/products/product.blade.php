@@ -171,66 +171,68 @@
                         @endforeach
                     </div>
                 @endif
-
-                @if(!$hasReview)
-                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Написать отзыв</h3>
-                        <form action="{{ route('review.store') }}" method="POST" class="space-y-4">
-                            @csrf
-                            <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <div class="md:col-span-1">
-                                    <select name="rating" class="w-full rounded-xl border-gray-200 py-3">
-                                        @for($i = 5; $i >= 1; $i--)
-                                            <option value="{{ $i }}">{{ $i }} звезд</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="md:col-span-3">
+                @if(Auth::check())
+                    @if(!$hasReview)
+                        <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">Написать отзыв</h3>
+                            <form action="{{ route('review.store') }}" method="POST" class="space-y-4">
+                                @csrf
+                                <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div class="md:col-span-1">
+                                        <select name="rating" class="w-full rounded-xl border-gray-200 py-3">
+                                            @for($i = 5; $i >= 1; $i--)
+                                                <option value="{{ $i }}">{{ $i }} звезд</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="md:col-span-3">
                                     <textarea required name="review" placeholder="Ваш отзыв..."
                                               class="w-full rounded-xl border-gray-200 p-4 border"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <button type="submit"
-                                    class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest">
-                                Опубликовать
-                            </button>
-                        </form>
-                    </div>
-                @endif
-
-                @if($hasReview)
-                    <div id="edit-review-form"
-                         class="hidden mt-6 bg-blue-50 rounded-3xl p-8 border border-blue-100 transition-all">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-bold text-blue-900">Редактирование отзыва</h3>
-                            <button onclick="toggleEditForm()"
-                                    class="text-blue-400 hover:text-blue-600 font-medium text-sm">Отмена
-                            </button>
+                                <button type="submit"
+                                        class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest">
+                                    Опубликовать
+                                </button>
+                            </form>
                         </div>
-                        <form action="{{ route('review.update', $product->getKey()) }}" method="POST" class="space-y-4">
-                            @csrf
-                            @method('patch')
-                            <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                <div class="md:col-span-1">
-                                    <select name="rating" class="w-full rounded-xl border-blue-200 py-3">
-                                        @for($i = 5; $i >= 1; $i--)
-                                            <option value="{{ $i }}">{{ $i }} звезд</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="md:col-span-3">
+                    @endif
+
+                    @if($hasReview)
+                        <div id="edit-review-form"
+                             class="hidden mt-6 bg-blue-50 rounded-3xl p-8 border border-blue-100 transition-all">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-bold text-blue-900">Редактирование отзыва</h3>
+                                <button onclick="toggleEditForm()"
+                                        class="text-blue-400 hover:text-blue-600 font-medium text-sm">Отмена
+                                </button>
+                            </div>
+                            <form action="{{ route('review.update', $product->getKey()) }}" method="POST"
+                                  class="space-y-4">
+                                @csrf
+                                @method('patch')
+                                <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                    <div class="md:col-span-1">
+                                        <select name="rating" class="w-full rounded-xl border-blue-200 py-3">
+                                            @for($i = 5; $i >= 1; $i--)
+                                                <option value="{{ $i }}">{{ $i }} звезд</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="md:col-span-3">
                                     <textarea id="edit-review-textarea" required name="review"
                                               class="w-full rounded-xl border-blue-200 p-4 focus:ring-blue-500 border"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <button type="submit"
-                                    class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest shadow-md shadow-blue-200">
-                                Сохранить изменения
-                            </button>
-                        </form>
-                    </div>
+                                <button type="submit"
+                                        class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest shadow-md shadow-blue-200">
+                                    Сохранить изменения
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 @endif
             </section>
         </div>
