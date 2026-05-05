@@ -48,7 +48,7 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function getCategories(): Category
+    public function getCategories(): ?Category
     {
         return $this->categories;
     }
@@ -58,7 +58,7 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
     }
 
-    public function getSubCategories(): SubCategory
+    public function getSubCategories(): ?SubCategory
     {
         return $this->subCategories;
     }

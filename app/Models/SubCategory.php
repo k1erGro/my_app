@@ -50,7 +50,7 @@ class SubCategory extends Model implements HasMedia
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }

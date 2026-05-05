@@ -5,9 +5,7 @@ namespace App\Models;
 use App\Traits\SlugTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\Image\Enums\Fit;
@@ -18,6 +16,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Category extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, SlugTrait, softDeletes;
+
+    protected $table = 'categories';
 
     protected $fillable = [
         'name',

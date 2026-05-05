@@ -58,7 +58,7 @@ class Order extends Model
         return $this->belongsTo(Address::class);
     }
 
-    public function getAddress(): Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
