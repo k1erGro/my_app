@@ -14,6 +14,9 @@ class DestroyProductController extends Controller
     public function __invoke(Product $product)
     {
         $product->propertyValues()->delete();
+        foreach ($product->getReviews() as $review) {
+            $review->delete();
+        }
         $product->delete();
         return redirect()->route('admin.product.index');
     }

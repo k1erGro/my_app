@@ -17,6 +17,8 @@ class ProductController extends Controller
     public function __invoke(Product $product)
     {
         $data = [];
+        $hasReview = false;
+
         if (!$product->getPropertyValues()->isEmpty() && !$product->getPropertyValues()->isEmpty()) {
             foreach ($product->getPropertyValues() as $propertyValue) {
                 $values[] = $propertyValue->getValue();
@@ -28,8 +30,10 @@ class ProductController extends Controller
 
             $data = array_combine($property, $values);
         }
+        if (Auth::check()) {
+            $hasReview = Review::where('user_id', Auth::user()->getKey())->where('product_id', $product->getKey())->exists();
+        }
 
-        $hasReview = Review::where('user_id', Auth::user()->getKey())->where('product_id', $product->getKey())->exists();
 
         return view('shop.products.product', compact('product', 'data', 'hasReview'));
     }

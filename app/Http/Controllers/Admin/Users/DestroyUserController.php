@@ -14,6 +14,9 @@ class DestroyUserController extends Controller
     public function __invoke(User $user)
     {
         $this->authorize('delete', $user);
+        foreach ($user->getReviews() as $review) {
+            $review->delete();
+        }
         $user->delete();
         return Auth::user()->getAuthIdentifier() !== $user->getKey() ? redirect()->route('admin.index') : redirect()->route('show.login');
     }
