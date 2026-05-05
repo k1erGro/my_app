@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->decimal('total_price', 10, 2);
             $table->date('delivery_date')->nullable();
-            $table->foreignId('address_id')->constrained('addresses');
+            $table->foreignId('address_id')->nullable()->constrained('addresses');
             $table->string('status')->default('draft');
             $table->softDeletes();
             $table->timestamps();

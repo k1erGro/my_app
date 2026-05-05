@@ -26,7 +26,6 @@ class StoreOrderController extends Controller
         $order = Order::create([
             'user_id' => Auth::user()->getKey(),
             'total_price' => $total_price,
-            'address_id' => 1,
         ]);
 
 
