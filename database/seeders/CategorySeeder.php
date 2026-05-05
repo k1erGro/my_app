@@ -15,16 +15,16 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Бытовая техника', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Красота и здоровье', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Смартфоны и планшеты', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Фототехника', 'image' => public_path('img/seeds/...')],
-            ['name' => 'ТВ и консоли', 'image' => public_path('img/seeds/...')],
-            ['name' => 'ПК и ноутбуки', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Комплектующие для пк', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Периферия', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Аудиотехника', 'image' => public_path('img/seeds/...')],
-            ['name' => 'Сетевое оборудование', 'image' => public_path('img/seeds/...')],
+            ['name' => 'Бытовая техника', 'image' => public_path('img/seeds/category/fridges.jpg')],
+            ['name' => 'Красота и здоровье', 'image' => public_path('img/seeds/category/beauty.png')],
+            ['name' => 'Смартфоны и планшеты', 'image' => public_path('img/seeds/category/spartphones.jpg')],
+            ['name' => 'Фототехника', 'image' => public_path('img/seeds/category/photographic_equipment.jpg')],
+            ['name' => 'ТВ и консоли', 'image' => public_path('img/seeds/category/TV_console.jpg')],
+            ['name' => 'ПК и ноутбуки', 'image' => public_path('img/seeds/category/pc_laptops.jpg')],
+            ['name' => 'Комплектующие для пк', 'image' => public_path('img/seeds/category/accessories_for_pc.png')],
+            ['name' => 'Периферия', 'image' => public_path('img/seeds/category/periphery.jpg')],
+            ['name' => 'Аудиотехника', 'image' => public_path('img/seeds/category/audio_equipment.png')],
+            ['name' => 'Сетевое оборудование', 'image' => public_path('img/seeds/category/network_equipment.png')],
         ];
 
         foreach ($categories as $item) {
