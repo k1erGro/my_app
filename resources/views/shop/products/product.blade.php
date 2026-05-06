@@ -145,9 +145,8 @@
                                         <div>
                                             <span
                                                 class="block text-gray-900 font-bold">{{ $review->getUser()->getFirstName() }}</span>
-                                            <span class="text-xs text-gray-400">Покупатель</span>
                                         </div>
-                                        @if(Auth::id() === $review->getUser()->id)
+                                        @if(Auth::user()->getKey() === $review->getUser()->getKey())
                                             <button onclick="toggleEditForm()"
                                                     class="text-gray-400 hover:text-blue-600 transition"
                                                     title="Редактировать">
@@ -182,7 +181,7 @@
                                     <div class="md:col-span-1">
                                         <select name="rating" class="w-full rounded-xl border-gray-200 py-3">
                                             @for($i = 5; $i >= 1; $i--)
-                                                <option value="{{ $i }}">{{ $i }} звезд</option>
+                                                <option value="{{ $i }}">{{ $i }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -208,50 +207,109 @@
                                         class="text-blue-400 hover:text-blue-600 font-medium text-sm">Отмена
                                 </button>
                             </div>
-                            <form action="{{ route('review.update', $product->getKey()) }}" method="POST"
-                                  class="space-y-4">
-                                @csrf
-                                @method('patch')
-                                <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                    <div class="md:col-span-1">
-                                        <select name="rating" class="w-full rounded-xl border-blue-200 py-3">
-                                            @for($i = 5; $i >= 1; $i--)
-                                                <option value="{{ $i }}">{{ $i }} звезд</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="md:col-span-3">
+                            @foreach($product->getReviews()->where('user_id', Auth::user()->getKey()) as $review)
+                                <form action="{{ route('review.update', $review->getKey()) }}" method="POST"
+                                      class="space-y-4">
+                                    @csrf
+                                    @method('patch')
+                                    <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
+                                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                        <div class="md:col-span-1">
+                                            <select name="rating" class="w-full rounded-xl border-blue-200 py-3">
+                                                @for($i = 5; $i >= 1; $i--)
+                                                    <option value="{{ $i }}">{{ $i }} звезд</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                        <div class="md:col-span-3">
                                     <textarea id="edit-review-textarea" required name="review"
                                               class="w-full rounded-xl border-blue-200 p-4 focus:ring-blue-500 border"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <button type="submit"
-                                        class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest shadow-md shadow-blue-200">
-                                    Сохранить изменения
-                                </button>
-                            </form>
+                                    <button type="submit"
+                                            class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest shadow-md shadow-blue-200">
+                                        Сохранить изменения
+                                    </button>
+                                </form>
+                            @endforeach
                         </div>
                     @endif
                 @endif
             </section>
+
+            <section aria-labelledby="questions-heading" class="mt-12 border-t border-gray-200 pt-8">
+                <h2 id="questions-heading" class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">
+                    Вопрос-ответ
+                </h2>
+
+                @if(!$product->getQuestions()->isEmpty())
+                    <div class="space-y-6 mb-10">
+                        @foreach($product->getQuestions() as $question)
+                            <div class="bg-white p-6 border border-gray-100 rounded-2xl shadow-sm question-item" data-question-id="{{ $question->getKey() }}">
+
+                                <div class="question-title font-bold text-2xl mb-5">{{ $question->getTitle() }}</div>
+
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex items-center space-x-3">
+                                        <img class="h-12 w-12 rounded-full object-cover"
+                                             src="{{ $question->getUser()->getFirstMediaUrl('avatars', 'preview') }}" alt="Аватар">
+                                        <span class="block text-gray-900 font-bold">{{ $question->getUser()->getFirstName() }}</span>
+                                        @if(Auth::user()->getKey() === $question->getUser()->getKey())
+                                            <button class="edit-question-btn text-gray-400 hover:text-blue-600 transition" title="Редактировать">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="question-text">{{ $question->getDescription() }}</div>
+
+                                <div class="edit-question-form hidden mt-4 pt-4 border-t border-gray-200">
+                                    <form action="{{ route('question.update', $question->getKey()) }}" method="POST" class="space-y-4">
+                                        @csrf
+                                        @method('patch')
+                                        <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
+                                        <input required name="title" type="text" placeholder="Заголовок вопроса" class="w-full rounded-xl border-gray-200 p-4 border" value="{{ $question->getTitle() }}">
+                                        <textarea name="description" class="w-full rounded-xl border-gray-300 p-4 border" rows="3">{{ $question->getDescription() }}</textarea>
+                                        <div class="flex space-x-3">
+                                            <button type="submit" class="bg-blue-600 text-white rounded-xl py-2 px-6 font-bold hover:bg-blue-700 transition text-sm">
+                                                Сохранить
+                                            </button>
+                                            <button type="button" class="cancel-edit-btn text-gray-500 hover:text-gray-700 font-medium text-sm">
+                                                Отмена
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <a href="{{ route('question.show', $question->getKey()) }}" class="inline-block mt-3 text-blue-600 hover:text-blue-800 text-sm">
+                                    Посмотреть ответы
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                @if(Auth::check())
+                    <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Задать вопрос</h3>
+                        <form action="{{ route('question.store') }}" method="POST" class="space-y-4">
+                            @csrf
+                            <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
+                            <input required name="title" type="text" placeholder="Заголовок вопроса" class="w-full rounded-xl border-gray-200 p-4 border">
+                            <textarea required name="description" placeholder="Вопрос" class="w-full rounded-xl border-gray-200 p-4 border"></textarea>
+                            <button type="submit" class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest">
+                                Опубликовать
+                            </button>
+                        </form>
+                    </div>
+                @endif
+            </section>
+
         </div>
     </div>
-    <script>
-        function toggleEditForm() {
-            const form = document.getElementById('edit-review-form');
-            const content = document.getElementById('review-text-content');
-            const textarea = document.getElementById('edit-review-textarea');
-
-            if (form.classList.contains('hidden')) {
-                let currentText = content.innerText.replace(/^"|"$/g, '');
-                textarea.value = currentText;
-
-                form.classList.remove('hidden');
-                form.scrollIntoView({behavior: 'smooth', block: 'center'});
-            } else {
-                form.classList.add('hidden');
-            }
-        }
-    </script>
+    <script src="{{ asset('js/script.js') }}"></script>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\Image\Enums\Fit;
@@ -32,6 +33,16 @@ class Product extends Model implements ProductInterface, HasMedia
     protected $casts = [
         'price' => 'decimal:2',
     ];
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
 
     public function reviews(): HasMany
     {

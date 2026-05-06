@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\Address\EditAddressController;
 use App\Http\Controllers\Admin\Address\IndexAddressController;
 use App\Http\Controllers\Admin\Address\StoreAddressController;
 use App\Http\Controllers\Admin\Address\UpdateAddressController;
+use App\Http\Controllers\Admin\Answer\DeleteAnswerController;
+use App\Http\Controllers\Admin\Answer\ListAnswerController;
+use App\Http\Controllers\Admin\Answer\ShowAnswerController;
 use App\Http\Controllers\Admin\Categories\CreateCategoryController;
 use App\Http\Controllers\Admin\Categories\DestroyCategoryController;
 use App\Http\Controllers\Admin\Categories\EditCategoryController;
@@ -29,6 +32,8 @@ use App\Http\Controllers\Admin\Property\EditPropertyController;
 use App\Http\Controllers\Admin\Property\IndexPropertyController;
 use App\Http\Controllers\Admin\Property\StorePropertyController;
 use App\Http\Controllers\Admin\Property\UpdatePropertyController;
+use App\Http\Controllers\Admin\Question\DeleteQuestionController;
+use App\Http\Controllers\Admin\Question\ListQuestionController;
 use App\Http\Controllers\Admin\Reviews\DestroyReviewController;
 use App\Http\Controllers\Admin\Reviews\IndexReviewController;
 use App\Http\Controllers\Admin\Reviews\ShowReviewController;
@@ -47,21 +52,27 @@ use App\Http\Controllers\Admin\Users\StoreUserController;
 use App\Http\Controllers\Admin\Users\UpdatePasswordUserController;
 use App\Http\Controllers\Admin\Users\UpdateUserController;
 use App\Http\Controllers\Admin\Users\UsersController;
+use App\Http\Controllers\Answer\StoreAnswerController;
+use App\Http\Controllers\Answer\UpdateAnswerController;
 use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Cart\CartAddController;
 use App\Http\Controllers\Cart\CartDestroyController;
 use App\Http\Controllers\Cart\CartShowController;
 use App\Http\Controllers\Cart\CartUpdateController;
+use App\Http\Controllers\Catalog\CategoryController;
 use App\Http\Controllers\Catalog\CategoryShowController;
 use App\Http\Controllers\Catalog\SubCategoryController;
-use App\Http\Controllers\Catalog\CategoryController;
+use App\Http\Controllers\Orders\OrdersController;
 use App\Http\Controllers\Orders\ShowOrderController;
 use App\Http\Controllers\Orders\StoreOrderController;
-use App\Http\Controllers\Orders\OrdersController;
 use App\Http\Controllers\Orders\UpdateOrderController;
 use App\Http\Controllers\Product\AllProductController;
 use App\Http\Controllers\Product\CatalogProductController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Question\ShowQuestionController;
+use App\Http\Controllers\Question\StoreQuestionController;
+use App\Http\Controllers\Question\UpdateQuestionController;
 use App\Http\Controllers\Review\StoreReviewController;
 use App\Http\Controllers\Review\UpdateReviewController;
 use Illuminate\Support\Facades\Route;
@@ -152,6 +163,17 @@ Route::middleware(RoleMiddleware::using('Admin'))->prefix('admin')->group(functi
     Route::get('/reviews', IndexReviewController::class)->name('admin.reviews.index');
     Route::get('/show-review/{review}', ShowReviewController::class)->name('admin.reviews.show');
     Route::delete('/destroy-review/{review}', DestroyReviewController::class)->name('admin.reviews.destroy');
+
+    //Вопросы
+    Route::get('/list-questions', ListQuestionController::class)->name('admin.question.list');
+    Route::get('/show-question/{question}', ShowQuestionController::class)->name('admin.question.show');
+    Route::delete('/delete-question/{question}', DeleteQuestionController::class)->name('admin.question.destroy');
+
+    //Ответы
+    Route::get('/list-answers', ListAnswerController::class)->name('admin.answer.list');
+    Route::get('/show-answers/{answer}', ShowAnswerController::class)->name('admin.answer.show');
+    Route::delete('/delete-answer/{answer}', DeleteAnswerController::class)->name('admin.answer.destroy');
+
 });
 
 
@@ -163,7 +185,7 @@ Route::prefix('shop')->group(function () {
     Route::get('/catalog/sub-category/{subCategory:slug}', CatalogProductController::class)->name('catalog.product');
 
     Route::get('/product', AllProductController::class)->name('product.index');
-    Route::get('/product/{product:slug}', \App\Http\Controllers\Product\ProductController::class)->name('product.show');
+    Route::get('/product/{product:slug}', ProductController::class)->name('product.show');
 
     Route::get('/orders', OrdersController::class)->name('orders.index');
     Route::post('/store-order', StoreOrderController::class)->name('orders.store');
@@ -172,6 +194,14 @@ Route::prefix('shop')->group(function () {
 
     Route::post('/store-review', StoreReviewController::class)->name('review.store');
     Route::patch('/update-review/{review}', UpdateReviewController::class)->name('review.update');
+
+    Route::post('/store-question', StoreQuestionController::class)->name('question.store');
+    Route::patch('/update-question/{question}', UpdateQuestionController::class)->name('question.update');
+    Route::get('/show-question/{question}', ShowQuestionController::class)->name('question.show');
+
+    Route::post('/store-answer', StoreAnswerController::class)->name('answer.store');
+    Route::patch('/update-answer/{answer}', UpdateAnswerController::class)->name('answer.update');
+
 });
 
 Route::post('/cart/add', CartAddController::class)->name('cart.add');

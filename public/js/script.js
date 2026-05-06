@@ -82,3 +82,79 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+function toggleEditForm() {
+    const form = document.getElementById('edit-review-form');
+    const content = document.getElementById('review-text-content');
+    const textarea = document.getElementById('edit-review-textarea');
+
+    if (form.classList.contains('hidden')) {
+        let currentText = content.innerText.replace(/^"|"$/g, '');
+        textarea.value = currentText;
+
+        form.classList.remove('hidden');
+        form.scrollIntoView({behavior: 'smooth', block: 'center'});
+    } else {
+        form.classList.add('hidden');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.edit-question-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const questionItem = this.closest('.question-item');
+            if (!questionItem) return;
+
+            const questionText = questionItem.querySelector('.question-text');
+            const editForm = questionItem.querySelector('.edit-question-form');
+
+            if (!editForm.classList.contains('hidden')) return;
+
+            questionText.classList.add('hidden');
+            editForm.classList.remove('hidden');
+        });
+    });
+
+    document.querySelectorAll('.cancel-edit-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const questionItem = this.closest('.question-item');
+            if (!questionItem) return;
+
+            const questionText = questionItem.querySelector('.question-text');
+            const editForm = questionItem.querySelector('.edit-question-form');
+
+            questionText.classList.remove('hidden');
+            editForm.classList.add('hidden');
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.edit-answer-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const answerItem = this.closest('.answer-item');
+            if (!answerItem) return;
+
+            const answerText = answerItem.querySelector('.answer-text');
+            const editForm = answerItem.querySelector('.edit-answer-form');
+
+            if (!editForm.classList.contains('hidden')) return;
+
+            answerText.classList.add('hidden');
+            editForm.classList.remove('hidden');
+        });
+    });
+
+    document.querySelectorAll('.cancel-edit-answer-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const answerItem = this.closest('.answer-item');
+            if (!answerItem) return;
+
+            const answerText = answerItem.querySelector('.answer-text');
+            const editForm = answerItem.querySelector('.edit-answer-form');
+
+            answerText.classList.remove('hidden');
+            editForm.classList.add('hidden');
+        });
+    });
+});

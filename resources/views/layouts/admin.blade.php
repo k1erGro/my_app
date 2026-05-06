@@ -44,6 +44,14 @@
                class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                 Отзывы
             </a>
+            <a href="{{ route('admin.question.list') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Вопросы
+            </a>
+            <a href="{{ route('admin.answer.list') }}"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                Ответы
+            </a>
         </nav>
         <div class="">
             <a href="{{ route('shop.index') }}"
