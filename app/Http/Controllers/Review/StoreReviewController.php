@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Review;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Review\ReviewRequest;
 use App\Models\Rating;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class StoreReviewController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(ReviewRequest $request)
     {
         Review::create([
             'user_id' => Auth::user()->getKey(),
