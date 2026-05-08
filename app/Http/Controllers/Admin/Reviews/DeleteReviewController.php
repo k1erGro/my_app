@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
-class DestroyReviewController extends Controller
+class DeleteReviewController extends Controller
 {
     /**
      * Handle the incoming request.

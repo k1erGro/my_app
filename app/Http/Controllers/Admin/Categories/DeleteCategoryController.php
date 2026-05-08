@@ -8,7 +8,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DestroyCategoryController extends Controller
+class DeleteCategoryController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -19,7 +19,7 @@ class DestroyCategoryController extends Controller
             DB::beginTransaction();
             $category->delete();
             DB::commit();
-        } catch (QueryException $e) {
+        } catch (QueryException) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
         }

@@ -7,7 +7,7 @@ use App\Models\Address;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class DestroyAddressController extends Controller
+class DeleteAddressController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,7 +16,7 @@ class DestroyAddressController extends Controller
     {
         try {
             $address->delete();
-        } catch (QueryException $e) {
+        } catch (QueryException) {
             return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
         }
 

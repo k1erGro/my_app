@@ -8,7 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CartDestroyController extends Controller
+class CartDeleteController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -18,9 +18,7 @@ class CartDestroyController extends Controller
         if (Auth::check()) {
             $cart = Cart::where('user_id', Auth::id())->first();
         }
-        else{
-            $cart = Cart::where('session_id', session()->getId())->first();
-        }
+
 
         if ($cart) {
             $cart->cartItems()->where('id', $id)->delete();

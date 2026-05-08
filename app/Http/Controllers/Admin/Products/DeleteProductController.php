@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class DestroyProductController extends Controller
+class DeleteProductController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -18,6 +18,6 @@ class DestroyProductController extends Controller
             $review->delete();
         }
         $product->delete();
-        return redirect()->route('admin.product.index');
+        return redirect()->back();
     }
 }

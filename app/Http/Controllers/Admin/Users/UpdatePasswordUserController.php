@@ -11,7 +11,7 @@ class UpdatePasswordUserController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(User $user, UpdatePasswordRequest $request)
+    public function __invoke(UpdatePasswordRequest $request, User $user)
     {
         $this->authorize('update', $user);
         $user->update(['password' => $request->string('password')]);

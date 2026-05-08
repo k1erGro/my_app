@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class DestroyUserController extends Controller
+class DeleteUserController extends Controller
 {
     /**
      * Handle the incoming request.

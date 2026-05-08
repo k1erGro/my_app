@@ -61,7 +61,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             </svg>
-                                            {{ $order->getAddress()->getName() ?? 'Адрес не указан' }}
+                                            {{ $order->getAddress()?->getName() ?? 'Адрес не указан' }}
                                         </div>
                                         <div class="flex items-center">
                                             <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor"

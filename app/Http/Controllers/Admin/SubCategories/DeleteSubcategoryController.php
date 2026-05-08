@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Property;
+namespace App\Http\Controllers\Admin\SubCategories;
 
 use App\Http\Controllers\Controller;
-use App\Models\Property;
+use App\Models\SubCategory;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class DestroyPropertyController extends Controller
+class DeleteSubcategoryController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Property $property)
+    public function __invoke(Subcategory $subCategory)
     {
         try {
-            $property->delete();
+            $subCategory->delete();
         } catch (QueryException) {
             return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
         }
-
-        return redirect()->route('admin.property.index');
+        return redirect()->route('admin.subCategory.index');
     }
 }
