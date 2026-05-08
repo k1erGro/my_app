@@ -18,7 +18,7 @@
                 @method('patch')
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Дата доставки</label>
-                    <input type="text" name="delivery_date" value="{{ $order->getDeliveryDate() }}" required
+                    <input type="date" name="delivery_date" value="{{ $order->getDeliveryDate() }}" required
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
                     @error('delivery_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>

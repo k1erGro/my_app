@@ -15,6 +15,7 @@ class Order extends Model
         'user_id',
         'total_price',
         'address_id',
+        'type_delivery',
         'delivery_date',
         'status',
     ];
@@ -61,6 +62,11 @@ class Order extends Model
     public function getAddress(): ?Address
     {
         return $this->address;
+    }
+
+    public function getTypeDelivery(): string
+    {
+        return $this->type_delivery;
     }
 
     public function getTotalPrice(): string

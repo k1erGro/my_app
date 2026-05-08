@@ -99,9 +99,9 @@ function toggleEditForm() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-question-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const questionItem = this.closest('.question-item');
             if (!questionItem) return;
 
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelectorAll('.cancel-edit-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const questionItem = this.closest('.question-item');
             if (!questionItem) return;
 
@@ -129,9 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-answer-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const answerItem = this.closest('.answer-item');
             if (!answerItem) return;
 
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.querySelectorAll('.cancel-edit-answer-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const answerItem = this.closest('.answer-item');
             if (!answerItem) return;
 
@@ -157,4 +157,126 @@ document.addEventListener('DOMContentLoaded', function() {
             editForm.classList.add('hidden');
         });
     });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.edit-review-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const reviewItem = this.closest('.review-item');
+            if (!reviewItem) return;
+
+            const reviewText = reviewItem.querySelector('.review-text');
+            const editForm = reviewItem.querySelector('.edit-review-form');
+
+            if (!editForm.classList.contains('hidden')) return;
+
+            reviewText.classList.add('hidden');
+            editForm.classList.remove('hidden');
+        });
+    });
+
+    document.querySelectorAll('.cancel-edit-review-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const reviewItem = this.closest('.review-item');
+            if (!reviewItem) return;
+
+            const reviewText = reviewItem.querySelector('.review-text');
+            const editForm = reviewItem.querySelector('.edit-review-form');
+
+            reviewText.classList.remove('hidden');
+            editForm.classList.add('hidden');
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radioPickup = document.querySelector('input[name="type_delivery"][value="pickup"]');
+    const radioDelivery = document.querySelector('input[name="type_delivery"][value="delivery"]');
+    if (!radioPickup || !radioDelivery) return;
+
+    const warehouseBlock = document.getElementById('warehouse-block');
+    const warehouseSelect = document.getElementById('warehouse_select');
+
+    const deliveryBlock = document.getElementById('delivery-block');
+    const deliveryDateBlock = document.getElementById('delivery-date-block');
+    const deliveryDateInput = document.getElementById('delivery_date_input');
+    const savedAddressBlock = document.getElementById('saved-address-block');
+    const newAddressBlock = document.getElementById('new-address-block');
+    const savedAddressSelect = document.getElementById('saved_address_select');
+    const deliveryAddressInput = document.getElementById('delivery_address_input');
+    const showNewAddressBtn = document.getElementById('show-new-address-btn');
+    const cancelNewAddressBtn = document.getElementById('cancel-new-address-btn');
+
+    function resetDeliveryAddressUI() {
+        if (savedAddressBlock && newAddressBlock) {
+            savedAddressBlock.style.display = 'block';
+            newAddressBlock.style.display = 'none';
+        }
+        if (savedAddressSelect) savedAddressSelect.value = '';
+        if (deliveryAddressInput) deliveryAddressInput.value = '';
+    }
+
+
+    function showNewAddressForm() {
+        if (savedAddressBlock && newAddressBlock) {
+            savedAddressBlock.style.display = 'none';
+            newAddressBlock.style.display = 'block';
+        }
+        if (deliveryAddressInput) deliveryAddressInput.value = '';
+    }
+
+    function updateDeliveryRequired() {
+        if (!radioDelivery.checked) return;
+
+        const isSavedVisible = savedAddressBlock && savedAddressBlock.style.display !== 'none';
+        if (isSavedVisible) {
+            if (savedAddressSelect) savedAddressSelect.setAttribute('required', 'required');
+            if (deliveryAddressInput) deliveryAddressInput.removeAttribute('required');
+        } else {
+            if (deliveryAddressInput) deliveryAddressInput.setAttribute('required', 'required');
+            if (savedAddressSelect) savedAddressSelect.removeAttribute('required');
+        }
+    }
+
+    if (showNewAddressBtn) {
+        showNewAddressBtn.addEventListener('click', function () {
+            showNewAddressForm();
+            updateDeliveryRequired();
+        });
+    }
+    if (cancelNewAddressBtn) {
+        cancelNewAddressBtn.addEventListener('click', function () {
+            resetDeliveryAddressUI();
+            updateDeliveryRequired();
+        });
+    }
+
+    function toggleFields() {
+        if (radioPickup.checked) {
+            if (warehouseBlock) warehouseBlock.style.display = 'block';
+            if (deliveryBlock) deliveryBlock.style.display = 'none';
+            if (deliveryDateBlock) deliveryDateBlock.style.display = 'none';
+
+            if (warehouseSelect) warehouseSelect.setAttribute('required', 'required');
+            if (deliveryDateInput) deliveryDateInput.removeAttribute('required');
+            if (savedAddressSelect) savedAddressSelect.removeAttribute('required');
+            if (deliveryAddressInput) deliveryAddressInput.removeAttribute('required');
+
+            resetDeliveryAddressUI();
+        } else if (radioDelivery.checked) {
+            if (warehouseBlock) warehouseBlock.style.display = 'none';
+            if (deliveryBlock) deliveryBlock.style.display = 'block';
+            if (deliveryDateBlock) deliveryDateBlock.style.display = 'block';
+
+            if (warehouseSelect) warehouseSelect.removeAttribute('required');
+            if (deliveryDateInput) deliveryDateInput.setAttribute('required', 'required');
+
+            updateDeliveryRequired();
+        }
+    }
+
+    radioPickup.addEventListener('change', toggleFields);
+    radioDelivery.addEventListener('change', toggleFields);
+    toggleFields();
 });

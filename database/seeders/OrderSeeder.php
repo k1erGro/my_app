@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         $orders= [
-            ['user_id' => 11, 'total_price' => 1123, 'delivery_date' => '2026-04-30', 'address_id' => 1, 'status' => 'completed'],
+            ['user_id' => 11, 'total_price' => 1123,'delivery_date' => null, 'address_id' => 1, 'status' => 'completed'],
         ];
 
         $orderProducts = [

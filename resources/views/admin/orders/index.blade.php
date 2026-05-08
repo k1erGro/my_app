@@ -32,7 +32,7 @@
                     </td>
 
                     <td class="px-5 py-5">
-                        <p class="font-medium">{{ $order->getAddress()->getName() === null ? 'Нет адреса' : $order->getAddress()->getName() }}</p>
+                        <p class="font-medium">{{ $order->getAddress()?->getName() === null ? 'Нет адреса' : $order->getAddress()->getName() }}</p>
                     </td>
 
                     <td class="px-5 py-5">

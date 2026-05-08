@@ -16,13 +16,19 @@
         <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
             <div class="bg-gray-50 p-6 border-b border-gray-100">
                 <h2 class="text-2xl font-extrabold text-gray-900">Заказ №{{ $order->getKey() }}</h2>
+                <a href="{{ route('orders.edit', $order->getKey()) }}">Редактировать</a>
+                <form action="{{ route('orders.delete', $order->getKey()) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button  type="submit" onclick="return confirm('Вы уверены, что хотите отменить заказ?')">Отменить заказ</button>
+                </form>
             </div>
 
             <div class="p-6">
                 <div class="grid sm:grid-cols-2 gap-8 mb-8">
                     <div>
                         <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Адрес доставки</h4>
-                        <p class="text-gray-900 font-medium">{{ $order->getAddress()->getName() ?? 'Не указан' }}</p>
+                        <p class="text-gray-900 font-medium">{{ $order->getAddress()?->getName() ?? 'Не указан' }}</p>
                     </div>
                     <div>
                         <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Ожидаемая дата</h4>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Orders;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Address;
+use App\Models\AddressProduct;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
@@ -19,28 +20,50 @@ class StoreOrderController extends Controller
      */
     public function __invoke(StoreOrderRequest $request)
     {
-        $addresses = Address::all();
-        $total_price = array_sum(array_map(function ($quantity, $price) { return $quantity * $price; }, $request->input('quantity'), $request->input('price')));
         $cart = Auth::user()->getCart();
-
-        $order = Order::create([
-            'user_id' => Auth::user()->getKey(),
-            'total_price' => $total_price,
-        ]);
-
-
-        foreach ($cart->getCartItems() as $orders_products) {
-            OrderProduct::create([
-                'order_id' => $order->getKey(),
-                'product_id' => $orders_products->getProduct()->getKey(),
-                'quantity' => $orders_products->getQuantity(),
-                'price' => $orders_products->getProduct()->getPrice(),
-            ]);
+        if (!$cart || $cart->getCartItems()->isEmpty()) {
+            return redirect()->route('cart.show')->with('error', 'Корзина пуста');
         }
 
-        $cart->delete();
+        if (filled($request->cart_item_id)){
+            $cart_item = Auth::user()->getCart()->getCartItems()->where('id', $request->integer('cart_item_id'))->first();
+            $order = Order::create([
+                'user_id' => Auth::user()->getKey(),
+                'total_price' => $request->integer('price')*$request->integer('quantity'),
+            ]);
 
+            OrderProduct::create([
+                'order_id' => $order->getKey(),
+                'product_id' => $cart_item->getProduct()->getKey(),
+                'quantity' => $cart_item->getQuantity(),
+                'price' => $cart_item->getProduct()->getPrice(),
+            ]);
 
-        return view('shop.orders.create', compact('order', 'total_price', 'addresses'));
+            $cart_item->delete();
+
+        } else {
+            $total_price = array_sum(array_map(function ($quantity, $price) {
+                return $quantity * $price;
+            }, $request->input('quantity'), $request->input('price')));
+            $cart = Auth::user()->getCart();
+
+            $order = Order::create([
+                'user_id' => Auth::user()->getKey(),
+                'total_price' => $total_price,
+            ]);
+
+            foreach ($cart->getCartItems() as $orders_products) {
+                OrderProduct::create([
+                    'order_id' => $order->getKey(),
+                    'product_id' => $orders_products->getProduct()->getKey(),
+                    'quantity' => $orders_products->getQuantity(),
+                    'price' => $orders_products->getProduct()->getPrice(),
+                ]);
+            }
+
+            $cart->delete();
+        }
+
+        return redirect()->route('orders.edit', compact('order'));
     }
 }

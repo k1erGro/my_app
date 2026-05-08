@@ -60,4 +60,9 @@ class OrderProduct extends Pivot
     {
         $this->quantity = $quantity;
     }
+
+    public function getProductId(): int
+    {
+        return $this->product_id;
+    }
 }

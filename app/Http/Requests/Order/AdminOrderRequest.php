@@ -23,9 +23,9 @@ class AdminOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'delivery_date' => 'required',
-            'status' => 'required',
-            'address_id' => 'required',
+            'delivery_date' => 'required|date|date_format:Y-m-d',
+            'status' => 'required|string|max:255',
+            'address_id' => 'required|integer',
         ];
     }
 }

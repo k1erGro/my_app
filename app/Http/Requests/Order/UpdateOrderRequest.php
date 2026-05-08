@@ -22,9 +22,6 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'delivery_date' => 'required',
-            'status' => 'required',
-            'address_id' => 'required',
         ];
     }
 }

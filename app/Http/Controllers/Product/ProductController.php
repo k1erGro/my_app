@@ -19,7 +19,7 @@ class ProductController extends Controller
         $data = [];
         $hasReview = false;
 
-        if (!$product->getPropertyValues()->isEmpty() && !$product->getPropertyValues()->isEmpty()) {
+        if (!$product->getPropertyValues()->isEmpty()) {
             foreach ($product->getPropertyValues() as $propertyValue) {
                 $values[] = $propertyValue->getValue();
             }
