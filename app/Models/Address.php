@@ -6,6 +6,7 @@ use App\Traits\SlugTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
@@ -26,6 +27,16 @@ class Address extends Model
     public function getProducts(): Collection
     {
         return $this->products;
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders;
     }
 
     public function getName(): string

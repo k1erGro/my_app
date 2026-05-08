@@ -96,7 +96,7 @@ class Product extends Model implements ProductInterface, HasMedia
 
     public function addresses(): BelongsToMany
     {
-        return $this->belongsToMany(Address::class, 'address_products', 'product_id', 'address_id')->withPivot('product_quantity');
+        return $this->belongsToMany(Address::class, 'addresses_products', 'product_id', 'address_id')->withPivot('product_quantity');
     }
 
     public function getAddresses(): Collection

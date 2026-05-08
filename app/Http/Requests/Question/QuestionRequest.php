@@ -23,8 +23,8 @@ class QuestionRequest extends FormRequest
     {
         return [
             'product_id' => 'required|integer|exists:products,id',
-            'title' => 'required|string',
-            'description' => 'required|string',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:20248',
         ];
     }
 }

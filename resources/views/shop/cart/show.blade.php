@@ -62,7 +62,18 @@
                                                 </svg>
                                             </button>
                                         </form>
-
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('orders.store') }}" method="post">
+                                            @csrf
+                                            <input name="cart_item_id" type="hidden" value="{{ $item->getKey() }}">
+                                            <input name="product_id" type="hidden" value="{{ $item->getProduct()->getKey() }}">
+                                            <input name="quantity" type="hidden" value="{{ $item->getQuantity() }}">
+                                            <input name="price" type="hidden" value="{{ $item->getProduct()->getPrice() }}">
+                                            <button type="submit" class="bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                                                Оформить только этот товар
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

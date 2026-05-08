@@ -24,7 +24,7 @@ class AnswerRequest extends FormRequest
         return [
             'product_id' => 'required|integer|exists:products,id',
             'question_id' => 'required|integer|exists:questions,id',
-            'description' => 'required|string',
+            'description' => 'required|string|max:1024',
         ];
     }
 }

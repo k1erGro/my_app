@@ -1,11 +1,8 @@
 @extends('layouts.main')
 @section('content')
     <div class="max-w-7xl mx-auto px-4 py-8">
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Ваши заказы</h1>
-            <span class="bg-gray-100 text-gray-600 py-1 px-3 rounded-full text-sm font-medium">
-                Всего: {{ $orders->count() }}
-            </span>
+        <div class="flex items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Избранное</h1>
         </div>
 
         @if(!Auth::check())
@@ -17,66 +14,58 @@
                     </svg>
                 </div>
                 <h2 class="text-xl font-semibold text-gray-900">Требуется авторизация</h2>
-                <p class="mt-2 text-gray-500 text-sm">Войдите в профиль, чтобы отслеживать свои покупки.</p>
+                <p class="mt-2 text-gray-500 text-sm">Войдите в профиль, чтобы отслеживать избранное.</p>
                 <a href="{{ route('show.login') }}"
                    class="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition">
                     Авторизоваться
                 </a>
             </div>
         @else
-            <div class="grid gap-6">
-                @foreach($orders as $order)
-                    <a href="{{ route('orders.show', $order->getKey()) }}" class="block group">
-                        <div
-                            class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg hover:border-blue-300 transition-all duration-200">
-                            <div class="p-6">
-                                <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
-                                    <div>
-                                        <span
-                                            class="text-sm text-gray-500 uppercase tracking-wider font-semibold">Заказ</span>
-                                        <h3 class="text-lg font-bold text-gray-900">#{{ $order->getKey() }}</h3>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="text-right">
-                                            <p class="text-sm text-gray-500 text-nowrap">Итого</p>
-                                            <p class="text-lg font-bold text-blue-600">{{ number_format($order->getTotalPrice(), 0, '.', ' ') }}
-                                                ₽</p>
-                                        </div>
-                                        <span
-                                            class="px-3 py-1 rounded-full text-xs font-bold uppercase {{ $order->getStatus() === 'completed' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700' }}">
-                                            {{ $order->getStatus() }}
-                                        </span>
+            <div class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach($favourites as $favorite)
+                    <div
+                        class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <a href="{{ route('product.show', $favorite->getProduct()->getSlug()) }}">
+                            <div class="flex justify-end p-2">
+                                <form action="{{ route('favourites.delete', $favorite->getKey()) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="text-red-700" type="submit">Крестик</button>
+                                </form>
+                            </div>
+                            <div class="aspect-square bg-white flex items-center justify-center">
+                                @if($favorite->getProduct()->hasMedia('products'))
+                                    <img src="{{ $favorite->getProduct()->getFirstMediaUrl('products') }}"
+                                         alt="{{ $favorite->getProduct()->getName() }}"
+                                         class="h-40 object-contain group-hover:scale-110 transition-transform">
+                                @else
+                                    <p>Картинка не найдена</p>
+                                @endif
+                            </div>
+                            <div class="p-4 border-t border-gray-100">
+                                <div class="flex justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-800">{{ $favorite->getProduct()->getName() }}</h3>
+                                    <div class="bg-yellow-200 p-1 rounded-2xl">
+                                        {{ round($favorite->getProduct()->getReviews()->avg('rating'), 1) }}
                                     </div>
                                 </div>
-
-                                <hr class="my-4 border-gray-100">
-
-                                <div class="grid md:grid-cols-2 gap-6">
-                                    <div class="space-y-2 text-sm text-gray-600">
-                                        <div class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor"
-                                                 viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            </svg>
-                                            {{ $order->getAddress()?->getName() ?? 'Адрес не указан' }}
-                                        </div>
-                                        <div class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor"
-                                                 viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                            Доставка: {{ $order->getDeliveryDate() ?? 'Дата не назначена' }}
-                                        </div>
-                                    </div>
-
+                                <div class="flex items-end justify-between border-t border-gray-100 pt-4 mt-auto">
+                                    <p class="text-2xl font-extrabold text-blue-600">
+                                        {{ $favorite->getProduct()->getPrice() }} ₽
+                                    </p>
+                                    <form action="{{ route('cart.add') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $favorite->getProduct()->getKey() }}">
+                                        <button class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md
+                                            hover:bg-blue-700 active:scale-95 transition duration-200 shadow-sm">
+                                            Купить
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+
                 @endforeach
             </div>
         @endif

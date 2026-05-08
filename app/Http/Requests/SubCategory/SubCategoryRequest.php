@@ -22,7 +22,7 @@ class SubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:255',
             'category_id' => 'required|integer|exists:categories,id',
             'category_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];

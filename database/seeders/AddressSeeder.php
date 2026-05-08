@@ -21,7 +21,7 @@ class AddressSeeder extends Seeder
         ];
 
         foreach ($addresses as $address) {
-            Address::create(['name' => $address['name']]);
+            Address::create(['name' => $address['name'], 'is_warehouse' => true]);
         }
 
         $address_products = [

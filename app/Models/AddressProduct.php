@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AddressProduct extends Pivot
 {
     use softDeletes;
-    protected $table = 'address_products';
+    protected $table = 'addresses_products';
 
     protected $fillable = [
         'address_id',

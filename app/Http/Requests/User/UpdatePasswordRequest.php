@@ -23,7 +23,7 @@ class UpdatePasswordRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string|confirmed|max:255|min:8',
         ];
         if (!Auth::user()->hasRole('Admin')) {
             $rules['old_password'] = 'required|string|current_password';

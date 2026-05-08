@@ -46,12 +46,12 @@
 
                             <div>
                                 @can('edit-categories')
-                                    <a href="{{ route('admin.category.edit', $product->getSlug()) }}"
+                                    <a href="{{ route('admin.product.edit', $product->getSlug()) }}"
                                        class="text-blue-600 hover:text-blue-900 ">Изменить</a>
                                 @endcan
                                 @can('delete-categories')
                                     <form method="POST"
-                                          action="{{ route('admin.category.destroy', $product->getKey()) }}">
+                                          action="{{ route('admin.product.destroy', $product->getKey()) }}">
                                         @csrf
                                         @method('delete')
                                         <button class="text-red-600 hover:text-red-900">Удалить</button>

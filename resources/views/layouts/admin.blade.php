@@ -12,46 +12,66 @@
     <aside class="w-64 flex flex-col bg-slate-800 text-white p-6">
         <h1 class="text-2xl font-bold mb-8 text-blue-400">Admin Panel</h1>
         <nav class="space-y-2 flex-grow">
-            <a href="{{ route('admin.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Пользователи
-            </a>
-            <a href="{{ route('admin.category.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Категории
-            </a>
-            <a href="{{ route('admin.product.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Товары
-            </a>
-            <a href="{{ route('admin.subCategory.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Подкатегории
-            </a>
-            <a href="{{ route('admin.property.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Характеристики
-            </a>
-            <a href="{{ route('admin.address.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Адреса
-            </a>
-            <a href="{{ route('admin.orders.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Заказы
-            </a>
-            <a href="{{ route('admin.reviews.index') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Отзывы
-            </a>
-            <a href="{{ route('admin.question.list') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Вопросы
-            </a>
-            <a href="{{ route('admin.answer.list') }}"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                Ответы
-            </a>
+            @can('view-users')
+                <a href="{{ route('admin.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Пользователи
+                </a>
+            @endcan
+            @can('view-categories')
+                <a href="{{ route('admin.category.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Категории
+                </a>
+            @endcan
+            @can('view-products')
+                <a href="{{ route('admin.product.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Товары
+                </a>
+            @endcan
+            @can('view-sub-category')
+                <a href="{{ route('admin.subCategory.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Подкатегории
+                </a>
+            @endcan
+            @can('view-properties')
+                <a href="{{ route('admin.property.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Характеристики
+                </a>
+            @endcan
+            @can('view-addresses')
+                <a href="{{ route('admin.address.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Адреса
+                </a>
+            @endcan
+            @can('view-orders')
+                <a href="{{ route('admin.orders.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Заказы
+                </a>
+            @endcan
+            @can('view-reviews')
+                <a href="{{ route('admin.reviews.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Отзывы
+                </a>
+            @endcan
+            @can('view-questions')
+                <a href="{{ route('admin.questions.list') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Вопросы
+                </a>
+            @endcan
+            @can('view-answers')
+                <a href="{{ route('admin.answers.list') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Ответы
+                </a>
+            @endcan
         </nav>
         <div class="">
             <a href="{{ route('shop.index') }}"
