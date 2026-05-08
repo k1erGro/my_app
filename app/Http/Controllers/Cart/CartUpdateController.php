@@ -17,12 +17,10 @@ class CartUpdateController extends Controller
         $data = $request->validate([
             'action' => 'required|in:plus,minus',
         ]);
-        if (Auth::check()) {
-            $cart = Cart::where('user_id', Auth::id())->first();
-        }
-        else {
-            $cart = Cart::where('session_id', session()->getId())->first();
-        }
+
+        $cart = Cart::where('user_id', Auth::id())->first();
+
+
 
         if ($cart) {
             $item = $cart->cartItems()->where('id', $id)->first();

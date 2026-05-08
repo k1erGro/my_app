@@ -15,28 +15,22 @@ class CartAddController extends Controller
      */
     public function __invoke(Request $request)
     {
+        if (empty($request->input('addresses'))) {
+            return redirect()->back()->with('error', 'Товара нет в наличии!');
+        }
         $data = $request->validate([
             'product_id' => 'required|integer|exists:products,id',
             'quantity' => 'nullable|integer|min:1|max:99',
         ]);
-
-        if (Auth::check()) {
-            $cart = Cart::firstOrCreate([
-                'user_id' => Auth::id(),
-            ]);
-        }
-        else{
-            $cart = Cart::firstOrCreate([
-                'session_id' => session()->getId(),
-            ]);
-        }
+        $cart = Cart::firstOrCreate([
+            'user_id' => Auth::id(),
+        ]);
 
         $cartItem = $cart->cartItems()->where('product_id', $data['product_id'])->first();
 
         if ($cartItem) {
             $cartItem->increment('quantity');
-        }
-        else{
+        } else {
             $cart->cartItems()->create([
                 'product_id' => $data['product_id'],
                 'quantity' => $data['quantity'] ?? 1,
