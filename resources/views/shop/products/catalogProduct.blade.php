@@ -8,8 +8,19 @@
                 + Добавить категорию
             </a>
         @endcan
+        <div class="flex gap-4 mb-6 mt-5">
+            <a href="{{ route('catalog.product', ['subCategory' => $subCategory, 'sort' => 'rating_desc']) }}"
+               class="px-4 py-2 {{ request('sort') == 'rating_desc' ? 'bg-blue-100' : 'bg-white' }} border rounded shadow-sm hover:bg-gray-50">
+                Сначала высокий рейтинг
+            </a>
+            <a href="{{ route('catalog.product', ['subCategory' => $subCategory, 'sort' => 'rating_asc']) }}"
+               class="px-4 py-2 {{ request('sort') == 'rating_asc' ? 'bg-blue-100' : 'bg-white' }} border rounded shadow-sm hover:bg-gray-50">
+                Сначала низкий рейтинг
+            </a>
+        </div>
         <div class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach($subCategory->getProducts() as $product)
+
+            @foreach($products as $product)
                 <div
                     class="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                     <a href="{{ route('product.show', $product->getSlug()) }}">
@@ -26,8 +37,11 @@
                         <div class="p-4 border-t border-gray-100">
                             <div class="flex justify-between">
                                 <h3 class="text-lg font-semibold text-gray-800">{{ $product->getName() }}</h3>
-                                <div class="bg-yellow-200 p-1 rounded-2xl">
-                                    {{ round($product->getReviews()->avg('rating'), 1) }}
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★</span>
+                                    <span class="ml-1 text-sm font-medium text-gray-600">
+                                        {{ round($product->reviews_avg_rating, 1) ?? 0 }}
+                                    </span>
                                 </div>
                             </div>
                             <div class="flex items-end justify-between border-t border-gray-100 pt-4 mt-auto">

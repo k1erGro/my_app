@@ -14,6 +14,15 @@ class CatalogProductController extends Controller
      */
     public function __invoke(Request $request, SubCategory $subCategory)
     {
-        return view('shop.products.catalogProduct', compact('subCategory'));
+        $products = $subCategory->products()
+            ->withAvg('reviews', 'rating')
+            ->when($request->sort === 'rating_desc', fn($q) =>
+            $q->orderByRaw('reviews_avg_rating IS NULL ASC')->orderByDesc('reviews_avg_rating'))
+            ->when($request->sort === 'rating_asc', fn($q) =>
+            $q->orderByRaw('reviews_avg_rating IS NULL ASC')->orderBy('reviews_avg_rating'))
+            ->unless($request->filled('sort'), fn($q) => $q->orderByDesc('id'))
+            ->get();
+
+        return view('shop.products.catalogProduct', compact('subCategory', 'products'));
     }
 }
