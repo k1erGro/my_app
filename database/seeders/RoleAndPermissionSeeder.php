@@ -63,6 +63,11 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'delete-answers']);
         Permission::create(['name' => 'view-answers']);
 
+        Permission::create(['name' => 'create-coupons']);
+        Permission::create(['name' => 'edit-coupons']);
+        Permission::create(['name' => 'delete-coupons']);
+        Permission::create(['name' => 'view-coupons']);
+
         Permission::create(['name' => 'login-to-admin-panel']);
 
 
@@ -77,6 +82,11 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-users',
             'delete-users',
             'view-users',
+
+            'create-coupons',
+            'edit-coupons',
+            'delete-coupons',
+            'view-coupons',
 
             'create-categories',
             'edit-categories',
@@ -129,6 +139,9 @@ class RoleAndPermissionSeeder extends Seeder
             'profile-update',
             'profile-delete',
 
+            'view-coupons',
+
+            'view-orders',
             'create-orders',
             'edit-orders',
             'delete-orders',
@@ -146,6 +159,8 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-properties',
             'delete-properties',
             'view-properties',
+
+            'view-products',
 
             'create-orders',
             'edit-orders',
@@ -182,17 +197,22 @@ class RoleAndPermissionSeeder extends Seeder
             'edit-orders',
             'view-orders',
 
-            'create-addresses',
-            'edit-addresses',
-            'delete-addresses',
             'view-addresses',
 
             'create-products',
+            'edit-products',
+            'delete-products',
+            'view-products',
 
             'create-categories',
             'edit-categories',
             'delete-categories',
             'view-categories',
+
+            'create-coupons',
+            'edit-coupons',
+            'delete-coupons',
+            'view-coupons',
 
             'login-to-admin-panel',
         ]);

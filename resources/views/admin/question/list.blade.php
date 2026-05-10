@@ -38,13 +38,15 @@
                     </td>
 
                     <td class="px-5 py-5 text-right text-sm">
-                        <form method="POST" action="{{ route('admin.question.destroy', $question->getKey()) }}">
-                            @csrf
-                            @method('delete')
-                            <button class="text-red-600 hover:text-red-900"
-                                    onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
-                            </button>
-                        </form>
+                        @can('delete-questions')
+                            <form method="POST" action="{{ route('admin.question.destroy', $question->getKey()) }}">
+                                @csrf
+                                @method('delete')
+                                <button class="text-red-600 hover:text-red-900"
+                                        onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
+                                </button>
+                            </form>
+                        @endcan
                     </td>
 
                 </tr>

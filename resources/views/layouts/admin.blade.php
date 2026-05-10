@@ -72,7 +72,7 @@
                     Ответы
                 </a>
             @endcan
-            @can('view-answers')
+            @can('view-coupons')
                 <a href="{{ route('admin.coupons.list') }}"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                     Купоны

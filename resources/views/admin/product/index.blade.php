@@ -2,9 +2,12 @@
 @section('content')
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Список товаров</h2>
-        <a href="{{ route('admin.product.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            + Добавить товар
-        </a>
+        @can('create-coupons')
+            <a href="{{ route('admin.product.create') }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                + Добавить товар
+            </a>
+        @endcan
     </div>
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -30,12 +33,19 @@
                     </td>
 
                     <td class="px-5 py-5 text-right text-sm">
-                        <a href="{{ route('admin.product.edit', $product) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
-                        <form method="POST" action="{{ route('admin.product.destroy', $product->getKey()) }}">
-                            @csrf
-                            @method('delete')
-                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
-                        </form>
+                        @can('edit-coupons')
+                            <a href="{{ route('admin.product.edit', $product) }}"
+                               class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                        @endcan
+                        @can('delete-coupons')
+                            <form method="POST" action="{{ route('admin.product.destroy', $product->getKey()) }}">
+                                @csrf
+                                @method('delete')
+                                <button class="text-red-600 hover:text-red-900"
+                                        onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
+                                </button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

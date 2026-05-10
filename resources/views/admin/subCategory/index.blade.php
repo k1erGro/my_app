@@ -1,11 +1,13 @@
 @extends('layouts.admin')
 @section('content')
-
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Список подкатегорий</h2>
-        <a href="{{ route('admin.subCategory.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            + Добавить подкатегорию
-        </a>
+        @can('create-categories')
+            <a href="{{ route('admin.subCategory.create') }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                + Добавить подкатегорию
+            </a>
+        @endcan
     </div>
     @if (session('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -31,7 +33,8 @@
 
                     @if($subCategory->hasMedia('subCategory_images'))
                         <td class="w-10 px-5 py-5">
-                            <img src="{{ $subCategory->getFirstMediaUrl('subCategory_images') }}" alt="{{ $subCategory->getName() }}">
+                            <img src="{{ $subCategory->getFirstMediaUrl('subCategory_images') }}"
+                                 alt="{{ $subCategory->getName() }}">
                         </td>
                     @endif
 
@@ -46,12 +49,20 @@
                     @endif
 
                     <td class="px-5 py-5 text-right text-sm">
-                        <a href="{{ route('admin.subCategory.edit', $subCategory->getSlug()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
-                        <form method="POST" action="{{ route('admin.subCategory.destroy', $subCategory->getKey()) }}">
-                            @csrf
-                            @method('delete')
-                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
-                        </form>
+                        @can('edit-categories')
+                            <a href="{{ route('admin.subCategory.edit', $subCategory->getSlug()) }}"
+                               class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                        @endcan
+                        @can('delete-categories')
+                            <form method="POST"
+                                  action="{{ route('admin.subCategory.destroy', $subCategory->getKey()) }}">
+                                @csrf
+                                @method('delete')
+                                <button class="text-red-600 hover:text-red-900"
+                                        onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
+                                </button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

@@ -2,9 +2,12 @@
 @section('content')
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Список пользователей</h2>
-        <a href="{{ route('admin.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-            + Добавить пользователя
-        </a>
+        @can('create-users')
+            <a href="{{ route('admin.create') }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                + Добавить пользователя
+            </a>
+        @endcan
     </div>
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -28,17 +31,25 @@
                     </td>
                     <td class="px-5 py-5 text-sm">{{ $user->getPhone() ?? 'Не указано' }}</td>
                     <td class="px-5 py-5 text-sm">
-                    <span class="px-2 py-1 rounded text-xs {{ $user->hasrole('Admin') ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700' }}">
+                    <span
+                        class="px-2 py-1 rounded text-xs {{ $user->hasrole('Admin') ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700' }}">
                         {{ $user->hasrole('Admin') ? 'Администратор' : 'Пользователь' }}
                     </span>
                     </td>
                     <td class="px-5 py-5 text-right text-sm">
-                        <a href="{{ route('admin.edit', $user->getKey()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
-                        <form method="POST" action="{{ route('admin.destroy', $user->getKey()) }}">
-                            @csrf
-                            @method('delete')
-                            <button class="text-red-600 hover:text-red-900" onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить</button>
-                        </form>
+                        @can('edit-users')
+                            <a href="{{ route('admin.edit', $user->getKey()) }}"
+                               class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                        @endcan
+                        @can('delete-users')
+                            <form method="POST" action="{{ route('admin.destroy', $user->getKey()) }}">
+                                @csrf
+                                @method('delete')
+                                <button class="text-red-600 hover:text-red-900"
+                                        onclick="return confirm('Вы уверены что хотите удалить данные?')">Удалить
+                                </button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

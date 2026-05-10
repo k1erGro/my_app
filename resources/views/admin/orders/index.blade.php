@@ -40,8 +40,10 @@
                     </td>
 
                     <td class="px-5 py-5 text-right text-sm">
-                        <a href="{{ route('admin.orders.edit', $order->getKey()) }}" class="text-blue-600 hover:text-blue-900 ">Изменить</a>
-
+                        @can('edit-orders')
+                            <a href="{{ route('admin.orders.edit', $order->getKey()) }}"
+                               class="text-blue-600 hover:text-blue-900 ">Изменить</a>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
