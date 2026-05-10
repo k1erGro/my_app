@@ -22,6 +22,11 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'type_delivery' => 'required|string|in:pickup,delivery',
+            'warehouse_id' => 'nullable|integer|exists:addresses,id,is_warehouse,1',
+            'delivery_date' => 'nullable|date|after_or_equal:today',
+            'saved_address_id' => 'nullable|integer|exists:addresses,id',
+            'delivery_address' => 'nullable|string|max:255',
         ];
     }
 }
