@@ -14,7 +14,11 @@ class DeleteAnswerController extends Controller
      */
     public function __invoke(Request $request, Answer $answer)
     {
-        $answer->delete();
-        return redirect()->route('admin.answer.list');
+        try {
+            $answer->delete();
+            return back()->with('success', 'Ответ успешно удален');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
+        }
     }
 }

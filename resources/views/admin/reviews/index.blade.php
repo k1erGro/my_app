@@ -3,7 +3,18 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-semibold text-gray-800">Список отзывов</h2>
     </div>
-
+    @if ($errors->any())
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-sm">
+            <div class="flex items-center mb-2">
+                <span class="font-bold">Внимание!</span>
+            </div>
+            <ul class="list-disc pl-5 text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>

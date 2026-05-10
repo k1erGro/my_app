@@ -82,4 +82,14 @@ class SubCategory extends Model implements HasMedia
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
     }
+
+    protected static function booted()
+    {
+        static::deleting(function ($subCategory) {
+            if ($subCategory->products()->exists()) {
+                throw new \Exception("Нельзя удалить категорию «{$subCategory->getName()}», пока в ней есть товары.");
+            }
+        });
+    }
+
 }

@@ -16,10 +16,9 @@ class DeleteAddressController extends Controller
     {
         try {
             $address->delete();
-        } catch (QueryException) {
-            return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
+            return back()->with('success', 'Адрес успешно удален');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
         }
-
-        return redirect()->route('admin.address.index');
     }
 }

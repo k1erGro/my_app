@@ -16,14 +16,10 @@ class DeleteCategoryController extends Controller
     public function __invoke(Request $request, Category $category)
     {
         try {
-            DB::beginTransaction();
             $category->delete();
-            DB::commit();
-        } catch (QueryException) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
+            return back()->with('success', 'Категория успешно удалена');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
         }
-
-        return redirect()->back();
     }
 }

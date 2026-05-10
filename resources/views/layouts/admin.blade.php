@@ -30,7 +30,7 @@
                     Товары
                 </a>
             @endcan
-            @can('view-sub-category')
+            @can('view-categories')
                 <a href="{{ route('admin.subCategory.index') }}"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
                     Подкатегории

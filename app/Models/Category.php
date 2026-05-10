@@ -71,4 +71,13 @@ class Category extends Model implements HasMedia
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
     }
+
+    protected static function booted()
+    {
+        static::deleting(function ($category) {
+            if ($category->products()->exists()) {
+                throw new \Exception("Нельзя удалить категорию «{$category->getName()}», пока в ней есть товары.");
+            }
+        });
+    }
 }

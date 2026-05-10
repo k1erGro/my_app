@@ -13,7 +13,11 @@ class DeleteQuestionController extends Controller
      */
     public function __invoke(Request $request, Question $question)
     {
-        $question->delete();
-        return redirect()->route('admin.question.list');
+        try {
+            $question->delete();
+            return back()->with('success', 'Вопрос успешно удален');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
+        }
     }
 }

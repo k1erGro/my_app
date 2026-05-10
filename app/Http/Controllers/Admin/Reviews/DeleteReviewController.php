@@ -13,7 +13,11 @@ class DeleteReviewController extends Controller
      */
     public function __invoke(Request $request, Review $review)
     {
-        $review->delete();
-        return redirect()->route('admin.reviews.index');
+        try {
+            $review->delete();
+            return back()->with('success', 'Отзыв успешно удален');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
+        }
     }
 }

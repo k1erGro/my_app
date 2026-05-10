@@ -16,10 +16,9 @@ class DeletePropertyController extends Controller
     {
         try {
             $property->delete();
-        } catch (QueryException) {
-            return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
+            return back()->with('success', 'Характеристика успешно удалена');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
         }
-
-        return redirect()->route('admin.property.index');
     }
 }

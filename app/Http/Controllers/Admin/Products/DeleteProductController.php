@@ -13,11 +13,15 @@ class DeleteProductController extends Controller
      */
     public function __invoke(Product $product)
     {
-        $product->propertyValues()->delete();
-        foreach ($product->getReviews() as $review) {
-            $review->delete();
+        try {
+            $product->propertyValues()->delete();
+            foreach ($product->getReviews() as $review) {
+                $review->delete();
+            }
+            $product->delete();
+            return back()->with('success', 'Товар успешно удален');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
         }
-        $product->delete();
-        return redirect()->back();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\ProductInterface;
 use App\Traits\SlugTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -160,6 +161,13 @@ class Product extends Model implements ProductInterface, HasMedia
             ->addMediaConversion('preview')
             ->fit(Fit::Contain, 300, 300)
             ->nonQueued();
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('activeCategory', function (Builder $builder) {
+            $builder->whereHas('subCategories');
+        });
     }
 
 }

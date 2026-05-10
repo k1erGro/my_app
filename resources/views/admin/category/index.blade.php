@@ -9,9 +9,16 @@
             </a>
         @endcan
     </div>
-    @if (session('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {{ session('error') }}
+    @if ($errors->any())
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-sm">
+            <div class="flex items-center mb-2">
+                <span class="font-bold">Внимание!</span>
+            </div>
+            <ul class="list-disc pl-5 text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -38,7 +45,7 @@
                     @endif
 
 
-                    <td class="px-5 py-5 text-right text-sm">\
+                    <td class="px-5 py-5 text-right text-sm">
                         @can('edit-categories')
                             <a href="{{ route('admin.category.edit', $category->getSlug()) }}"
                                class="text-blue-600 hover:text-blue-900 ">Изменить</a>

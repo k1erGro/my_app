@@ -16,9 +16,9 @@ class DeleteSubcategoryController extends Controller
     {
         try {
             $subCategory->delete();
-        } catch (QueryException) {
-            return redirect()->back()->with('error', 'Произошла ошибка при удалении. Возможно есть связанные данные');
+            return back()->with('success', 'Подкатегория успешно удалена');
+        } catch (\Exception $e) {
+            return back()->withErrors([$e->getMessage()]);
         }
-        return redirect()->route('admin.subCategory.index');
     }
 }
