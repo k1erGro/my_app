@@ -62,7 +62,7 @@ class UpdateOrderController extends Controller
                 $available = $addressProduct ? $addressProduct->getProductQuantity() : 0;
 
                 if ($item->getQuantity() > $available) {
-                   throw new \Exception("Товар «{$item->getProduct()->getName()}» доступен на складе в количестве {$available} шт. Вы заказали {$item->getQuantity()}.");
+                    throw new \Exception("Товар «{$item->getProduct()->getName()}» доступен на складе в количестве {$available} шт. Вы заказали {$item->getQuantity()}.");
                 }
             }
 
@@ -96,9 +96,7 @@ class UpdateOrderController extends Controller
 
             DB::commit();
 
-            return Auth::user()->hasRole('Admin')
-                ? redirect()->route('admin.orders.index')
-                : redirect()->route('orders.index');
+            return redirect()->route('orders.index');
 
         } catch (\Exception $e) {
             DB::rollBack();
