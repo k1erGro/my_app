@@ -54,6 +54,16 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->reviews;
     }
 
+    public function coupons(): BelongsToMany
+    {
+        return $this->belongsToMany(Coupon::class);
+    }
+
+    public function getCoupons(): Collection
+    {
+        return $this->coupons;
+    }
+
     public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');

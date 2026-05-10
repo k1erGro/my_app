@@ -16,6 +16,12 @@ use App\Http\Controllers\Admin\Categories\EditCategoryController;
 use App\Http\Controllers\Admin\Categories\IndexCategoryController;
 use App\Http\Controllers\Admin\Categories\StoreCategoryController;
 use App\Http\Controllers\Admin\Categories\UpdateCategoryController;
+use App\Http\Controllers\Admin\Coupons\CreateCouponsController;
+use App\Http\Controllers\Admin\Coupons\DeleteCouponsController;
+use App\Http\Controllers\Admin\Coupons\EditCouponsController;
+use App\Http\Controllers\Admin\Coupons\ListCouponsController;
+use App\Http\Controllers\Admin\Coupons\StoreCouponsController;
+use App\Http\Controllers\Admin\Coupons\UpdateCouponsController;
 use App\Http\Controllers\Admin\Orders\AdminEditOrderController;
 use App\Http\Controllers\Admin\Orders\AdminIndexOrderController;
 use App\Http\Controllers\Admin\Orders\AdminUpdateOrderController;
@@ -62,6 +68,7 @@ use App\Http\Controllers\Cart\CartUpdateController;
 use App\Http\Controllers\Catalog\CategoryController;
 use App\Http\Controllers\Catalog\CategoryShowController;
 use App\Http\Controllers\Catalog\SubCategoryController;
+use App\Http\Controllers\Coupons\ApplyCouponController;
 use App\Http\Controllers\Favourites\DeleteFavoriteController;
 use App\Http\Controllers\Favourites\ListFavoriteController;
 use App\Http\Controllers\Favourites\StoreFavoriteController;
@@ -170,14 +177,22 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/destroy-review/{review}', DeleteReviewController::class)->name('admin.reviews.destroy');
 
     //Вопросы
-    Route::get('/list-questions', ListQuestionController::class)->name('admin.questions.list');
+    Route::get('/questions', ListQuestionController::class)->name('admin.questions.list');
     Route::get('/show-question/{question}', ShowQuestionController::class)->name('admin.question.show');
     Route::delete('/delete-question/{question}', DeleteQuestionController::class)->name('admin.question.destroy');
 
     //Ответы
-    Route::get('/list-answers', ListAnswerController::class)->name('admin.answers.list');
+    Route::get('/answers', ListAnswerController::class)->name('admin.answers.list');
     Route::get('/show-answers/{answer}', ShowAnswerController::class)->name('admin.answer.show');
     Route::delete('/delete-answer/{answer}', DeleteAnswerController::class)->name('admin.answer.destroy');
+
+    // Купоны
+    Route::get('/coupons', ListCouponsController::class)->name('admin.coupons.list');
+    Route::get('/create-coupons', CreateCouponsController::class)->name('admin.coupons.create');
+    Route::post('/store-coupons', StoreCouponsController::class)->name('admin.coupons.store');
+    Route::get('/edit-coupons/{coupon}', EditCouponsController::class)->name('admin.coupons.edit');
+    Route::patch('/update-coupons/{coupon}', UpdateCouponsController::class)->name('admin.coupons.update');
+    Route::delete('/delete-coupons/{coupon}', DeleteCouponsController::class)->name('admin.coupons.delete');
 
 });
 
@@ -213,6 +228,7 @@ Route::prefix('shop')->group(function () {
     Route::post('/store-favorite/{product}', StoreFavoriteController::class)->name('favourites.store');
     Route::delete('/delete-favorite/{favorite}', DeleteFavoriteController::class)->name('favourites.delete');
 
+    Route::post('/update-order/{order}/apply-coupon', ApplyCouponController::class)->name('coupon.apply');
 });
 
 Route::post('/cart/add', CartAddController::class)->name('cart.add');

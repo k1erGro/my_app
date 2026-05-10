@@ -96,6 +96,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AddressSeeder::class);
         $this->call(OrderSeeder::class);
         $this->call(ReviewSeeder::class);
+        $this->call(CouponSeeder::class);
         Review::factory(50)->create();
 
 

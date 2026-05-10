@@ -13,6 +13,7 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
+        'coupon_id',
         'total_price',
         'address_id',
         'type_delivery',
@@ -23,6 +24,16 @@ class Order extends Model
     protected $casts = [
         'total_price' => 'decimal:2',
     ];
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
+    public function getCoupon(): Coupon
+    {
+        return $this->coupon;
+    }
 
     public function user(): BelongsTo
     {

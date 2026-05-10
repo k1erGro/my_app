@@ -8,6 +8,7 @@ use App\Enums\RoleEnum;
 use App\Traits\UserTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -157,6 +158,16 @@ class User extends Authenticatable implements HasMedia, UserInterface
     public function getReviews(): Collection
     {
         return $this->reviews;
+    }
+
+    public function coupons(): BelongsToMany
+    {
+        return $this->belongsToMany(Coupon::class, 'coupons_users');
+    }
+
+    public function getCoupons(): Collection
+    {
+        return $this->coupons;
     }
 
     public function registerMediaConversions(?Media $media = null): void

@@ -72,6 +72,12 @@
                     Ответы
                 </a>
             @endcan
+            @can('view-answers')
+                <a href="{{ route('admin.coupons.list') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Купоны
+                </a>
+            @endcan
         </nav>
         <div class="">
             <a href="{{ route('shop.index') }}"

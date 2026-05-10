@@ -65,6 +65,16 @@ class SubCategory extends Model implements HasMedia
         return $this->products;
     }
 
+    public function coupons(): BelongsToMany
+    {
+        return $this->belongsToMany(Coupon::class);
+    }
+
+    public function getCoupons(): Collection
+    {
+        return $this->coupons;
+    }
+
     public function registerMediaConversions(?Media $media = null): void
     {
         $this

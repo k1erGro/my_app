@@ -17,7 +17,7 @@
             </div>
         @endif
         <div class="bg-white shadow-md rounded-lg p-8">
-            <form action="{{ route('orders.update', $order->getKey()) }}" method="POST" class="space-y-4"
+            <form action="{{ route('orders.update', $order->getKey()) }}" method="POST" class="space-y-4" id="order-form"
                   enctype="multipart/form-data">
                 @csrf
                 @method('patch')
@@ -103,14 +103,27 @@
                         @endforeach
                     </div>
                 </div>
-
-                <div class="pt-4">
-                    <button type="submit"
-                            class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-bold shadow-lg">
-                        Оформить заказ
-                    </button>
-                </div>
             </form>
+
+            <form class="mt-5" action="{{ route('coupon.apply', $order->getKey()) }}" method="POST">
+                @csrf
+                <input type="text" name="coupon" placeholder="Введите купон" class="...">
+
+                <button type="submit">Применить</button>
+            </form>
+
+            <div class="flex justify-between text-lg font-bold">
+                <span>Итого:</span>
+                <span>{{ $order->getTotalPrice() }} ₽</span>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" form="order-form"
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-bold shadow-lg">
+                    Оформить заказ
+                </button>
+            </div>
+
         </div>
     </div>
     <script src="{{ asset('/js/script.js') }}"></script>
