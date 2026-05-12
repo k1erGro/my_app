@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Cart;
 
+use App\Enums\ActionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\UpdateCartRequest;
 use App\Models\Cart;
@@ -16,15 +17,14 @@ class CartUpdateController extends Controller
     public function __invoke(UpdateCartRequest $request, $id)
     {
         $cart = Cart::where('user_id', Auth::id())->first();
-
         if ($cart) {
             $item = $cart->cartItems()->where('id', $id)->first();
             if ($item) {
-                if($request->string('action') == 'minus' && $item->quantity > 1)
+                if($request->integer('action') == ActionEnum::MINUS->value && $item->quantity > 1)
                 {
                     $item->decrement('quantity');
                 }
-                elseif ($request->string('action') == 'plus')
+                elseif ($request->integer('action') == ActionEnum::PLUS->value)
                 {
                     $item->increment('quantity');
                 }

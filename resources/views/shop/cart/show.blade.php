@@ -37,14 +37,14 @@
                                             <form action="{{ route('cart.update', $item->getKey()) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <input type="hidden" name="action" value="minus">
+                                                <input type="hidden" name="action" value="0">
                                                 <button type="submit" class="px-3 py-1 hover:bg-gray-100">-</button>
                                             </form>
                                             <span class="px-4 py-1 border-x">{{ $item->getQuantity() }}</span>
                                             <form action="{{ route('cart.update', $item->getKey()) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
-                                                <input type="hidden" name="action" value="plus">
+                                                <input type="hidden" name="action" value="1">
                                                 <button type="submit" class="px-3 py-1 hover:bg-gray-100">+</button>
                                             </form>
                                         </div>
