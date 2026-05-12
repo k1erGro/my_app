@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin\Users;
+namespace App\Http\Controllers\Admin\Users;
 
 use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;

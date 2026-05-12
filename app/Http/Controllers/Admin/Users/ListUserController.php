@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\admin\Users;
+namespace App\Http\Controllers\Admin\Users;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class ListUserController extends Controller
 {
     /**
      * Handle the incoming request.

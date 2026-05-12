@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Property;
 use Illuminate\Http\Request;
 
-class IndexPropertyController extends Controller
+class ListPropertyController extends Controller
 {
     /**
      * Handle the incoming request.

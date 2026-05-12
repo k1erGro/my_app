@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
-class IndexSubcategoryController extends Controller
+class ListSubcategoryController extends Controller
 {
     /**
      * Handle the incoming request.

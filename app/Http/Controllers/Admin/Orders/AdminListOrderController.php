@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class AdminIndexOrderController extends Controller
+class AdminListOrderController extends Controller
 {
     /**
      * Handle the incoming request.
