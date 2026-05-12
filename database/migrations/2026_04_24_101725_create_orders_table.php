@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('coupon_id')->nullable()->constrained('coupons')->nullOnDelete();
             $table->decimal('total_price', 10, 2);
-            $table->string('type_delivery')->default('pickup');
+            $table->string('delivery_type')->default('pickup');
             $table->date('delivery_date')->nullable();
             $table->foreignId('address_id')->nullable()->constrained('addresses');
             $table->string('status')->default('draft');

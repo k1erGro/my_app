@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Orders;
 
+use App\Enums\DeliveryTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Models\Address;
@@ -21,7 +22,7 @@ class UpdateOrderController extends Controller
         if ($order->getOrderProducts()->isEmpty()) {
             return back()->withErrors(['order' => 'Заказ не содержит товаров']);
         }
-        if ($request->string('type_delivery') == 'pickup') {
+        if ($request->string('delivery_type') == DeliveryTypeEnum::pickup) {
             $warehouseId = $request->integer('warehouse_id');
             if (!$warehouseId) return back()->withErrors(['warehouse_id' => 'Выберите склад самовывоза']);
         } else {
@@ -53,7 +54,6 @@ class UpdateOrderController extends Controller
             return back()->withErrors(['order' => 'Заказ не содержит товаров']);
         }
 
-        DB::beginTransaction();
         try {
             foreach ($orderProducts as $item) {
                 $addressProduct = AddressProduct::where('address_id', $warehouseId)
@@ -73,7 +73,7 @@ class UpdateOrderController extends Controller
             }
 
             $addressId = null;
-            if ($request->string('type_delivery') == 'pickup') {
+            if ($request->string('delivery_type') == DeliveryTypeEnum::pickup) {
                 $addressId = $warehouseId;
             } else {
                 if ($request->filled('saved_address_id')) {
@@ -89,17 +89,13 @@ class UpdateOrderController extends Controller
 
             $order->update([
                 'address_id' => $addressId,
-                'delivery_date' => $request->string('type_delivery') == 'delivery' ? $request->date('delivery_date') : null,
-                'type_delivery' => $request->string('type_delivery'),
+                'delivery_date' => $request->string('delivery_type') == DeliveryTypeEnum::delivery ? $request->date('delivery_date') : null,
+                'delivery_type' => $request->string('delivery_type'),
                 'status' => 'in progress',
             ]);
 
-            DB::commit();
-
             return redirect()->route('orders.index');
-
         } catch (\Exception $e) {
-            DB::rollBack();
             return back()->withErrors(['stock' => $e->getMessage()]);
         }
     }

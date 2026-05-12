@@ -24,7 +24,7 @@ class AdminOrderRequest extends FormRequest
     {
         return [
             'total_price' => 'nullable|numeric',
-            'type_delivery' => 'nullable|string',
+            'delivery_type' => 'nullable|integer|between:0,1',
             'delivery_date' => 'nullable|date|date_format:Y-m-d',
             'status' => 'required|string|max:255',
             'address_id' => 'required|integer',
