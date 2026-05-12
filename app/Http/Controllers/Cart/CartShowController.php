@@ -19,8 +19,8 @@ class CartShowController extends Controller
             ->first();
 
         if ($cart) {
-            foreach ($cart->cartItems as $item) {
-                if (!$item->product) {
+            foreach ($cart->cartItems() as $item) {
+                if (!$item->product()) {
                     $item->delete();
                 }
             }

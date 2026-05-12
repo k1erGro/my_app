@@ -23,7 +23,7 @@ class EditProductController extends Controller
         $subCategories = SubCategory::all();
         $propertyValues = PropertyValue::with('property')->get();
         $properties = Property::all();
-        $addresses = Address::all();
+        $addresses = Address::where('is_warehouse', 1)->get();
         return view('admin.product.edit', compact('product', 'categories', 'propertyValues', 'properties', 'subCategories', 'addresses'));
     }
 }

@@ -16,9 +16,8 @@ class CartDeleteController extends Controller
     public function __invoke(Request $request, $id)
     {
         if (Auth::check()) {
-            $cart = Cart::where('user_id', Auth::id())->first();
+            $cart = Cart::where('user_id', Auth::user()->getKey())->first();
         }
-
 
         if ($cart) {
             $cart->cartItems()->where('id', $id)->delete();

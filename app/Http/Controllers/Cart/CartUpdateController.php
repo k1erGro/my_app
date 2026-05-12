@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cart\UpdateCartRequest;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,24 +13,18 @@ class CartUpdateController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, $id)
+    public function __invoke(UpdateCartRequest $request, $id)
     {
-        $data = $request->validate([
-            'action' => 'required|in:plus,minus',
-        ]);
-
         $cart = Cart::where('user_id', Auth::id())->first();
-
-
 
         if ($cart) {
             $item = $cart->cartItems()->where('id', $id)->first();
             if ($item) {
-                if($data['action'] === 'minus' && $item->quantity > 1)
+                if($request->string('action') == 'minus' && $item->quantity > 1)
                 {
                     $item->decrement('quantity');
                 }
-                elseif ($data['action'] === 'plus')
+                elseif ($request->string('action') == 'plus')
                 {
                     $item->increment('quantity');
                 }

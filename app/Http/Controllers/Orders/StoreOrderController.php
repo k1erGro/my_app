@@ -20,16 +20,21 @@ class StoreOrderController extends Controller
      */
     public function __invoke(StoreOrderRequest $request)
     {
-        $cart = Auth::user()->getCart();
+        $user = Auth::user();
+        $cart = $user->getCart();
         if (!$cart || $cart->getCartItems()->isEmpty()) {
             return redirect()->route('cart.show')->with('error', 'Корзина пуста');
         }
 
-        if (filled($request->cart_item_id)){
-            $cart_item = Auth::user()->getCart()->getCartItems()->where('id', $request->integer('cart_item_id'))->first();
+        if (filled($request->cart_item_id)) {
+            $cart_item = $user
+                        ->getCart()
+                        ->getCartItems()
+                        ->where('id', $request->integer('cart_item_id'))
+                        ->first();
             $order = Order::create([
-                'user_id' => Auth::user()->getKey(),
-                'total_price' => $request->integer('price')*$request->integer('quantity'),
+                'user_id' => $user->getKey(),
+                'total_price' => $request->integer('price') * $request->integer('quantity'),
             ]);
 
             OrderProduct::create([
@@ -42,14 +47,14 @@ class StoreOrderController extends Controller
             $cart_item->delete();
 
         } else {
-            $total_price = array_sum(array_map(function ($quantity, $price) {
+            $totalPrice = array_sum(array_map(function ($quantity, $price) {
                 return $quantity * $price;
             }, $request->input('quantity'), $request->input('price')));
-            $cart = Auth::user()->getCart();
+            $cart = $user->getCart();
 
             $order = Order::create([
-                'user_id' => Auth::user()->getKey(),
-                'total_price' => $total_price,
+                'user_id' => $user->getKey(),
+                'total_price' => $totalPrice,
             ]);
 
             foreach ($cart->getCartItems() as $orders_products) {
