@@ -30,7 +30,7 @@ class Order extends Model
         return $this->belongsTo(Coupon::class);
     }
 
-    public function getCoupon(): Coupon
+    public function getCoupon(): ?Coupon
     {
         return $this->coupon;
     }

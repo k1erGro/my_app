@@ -42,7 +42,7 @@ class PropertyValue extends Model
         return $this->belongsTo(Property::class);
     }
 
-    public function getProperty(): Property
+    public function getProperty(): ?Property
     {
         return $this->property;
     }

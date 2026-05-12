@@ -141,11 +141,11 @@
                                     <select name="properties[]"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm"
                                             required>
-                                        <option value="{{ $propertyValue->getProperty()->getKey() }}">
-                                            {{ $propertyValue->getProperty()->getName() }}
+                                        <option value="{{ $propertyValue->getProperty()?->getKey() }}">
+                                            {{ $propertyValue->getProperty()?->getName() }}
                                         </option>
                                         @foreach($properties as $property)
-                                            @if($property->getKey() !== $propertyValue->getProperty()->getKey())
+                                            @if($property->getKey() !== $propertyValue->getProperty()?->getKey())
                                                 <option
                                                     value="{{ $property->getKey() }}">{{ $property->getName() }}</option>
                                             @endif
