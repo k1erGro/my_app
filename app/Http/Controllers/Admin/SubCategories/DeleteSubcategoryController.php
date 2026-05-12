@@ -17,9 +17,7 @@ class DeleteSubcategoryController extends Controller
     public function __invoke(Subcategory $subCategory)
     {
         try {
-            DB::transaction(function () use ($subCategory) {
             $subCategory->delete();
-            });
             return back()->with('success', 'Подкатегория успешно удалена');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

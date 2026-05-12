@@ -16,9 +16,7 @@ class DeleteQuestionController extends Controller
     public function __invoke(Request $request, Question $question)
     {
         try {
-            DB::transaction(function () use ($request, $question) {
-                $question->delete();
-            });
+            $question->delete();
             return back()->with('success', 'Вопрос успешно удален');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

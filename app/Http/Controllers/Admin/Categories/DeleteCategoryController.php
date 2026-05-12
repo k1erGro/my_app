@@ -16,9 +16,7 @@ class DeleteCategoryController extends Controller
     public function __invoke(Request $request, Category $category)
     {
         try {
-            DB::transaction(function () use ($category) {
-                $category->delete();
-            });
+            $category->delete();
             return back()->with('success', 'Категория успешно удалена');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

@@ -16,9 +16,7 @@ class DeletePropertyController extends Controller
     public function __invoke(Request $request, Property $property)
     {
         try {
-            DB::transaction(function () use ($request, $property) {
-                $property->delete();
-            });
+            $property->delete();
             return back()->with('success', 'Характеристика успешно удалена');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

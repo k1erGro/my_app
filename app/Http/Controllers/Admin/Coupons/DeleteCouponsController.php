@@ -16,9 +16,7 @@ class DeleteCouponsController extends Controller
     public function __invoke(Request $request, Coupon $coupon)
     {
         try {
-            DB::transaction(function () use ($request, $coupon) {
-                $coupon->delete();
-            });
+            $coupon->delete();
             return back()->with('success', 'Купон успешно удален');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

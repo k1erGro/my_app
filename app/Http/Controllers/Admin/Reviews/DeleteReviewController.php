@@ -16,9 +16,7 @@ class DeleteReviewController extends Controller
     public function __invoke(Request $request, Review $review)
     {
         try {
-            DB::transaction(function () use ($request, $review) {
-                $review->delete();
-            });
+            $review->delete();
             return back()->with('success', 'Отзыв успешно удален');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);
