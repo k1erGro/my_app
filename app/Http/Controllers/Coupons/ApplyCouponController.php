@@ -30,7 +30,7 @@ class ApplyCouponController extends Controller
         }
         $usedCoupon = $order->getUser()->coupons()->where('coupon_id', $coupon->getKey())->exists();
 
-        if ($coupon->getIsDisposable() && $usedCoupon) {
+        if ($coupon->isDisposable() && $usedCoupon) {
             return back()->withErrors('Вы уже использовали этот купон');
         }
 

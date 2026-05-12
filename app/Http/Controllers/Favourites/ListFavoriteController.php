@@ -14,7 +14,7 @@ class ListFavoriteController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $favourites = Favorite::where('user_id', Auth::user()->getKey())->paginate(10);
+        $favourites = Favorite::where('user_id', Auth::user()?->getKey())->paginate(10);
         return view('shop.favourites.list', compact('favourites'));
     }
 }

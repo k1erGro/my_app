@@ -86,7 +86,7 @@ class Coupon extends Model
         return $this->min_order_amount;
     }
 
-    public function getIsDisposable(): bool
+    public function isDisposable(): bool
     {
         return $this->is_disposable;
     }

@@ -22,11 +22,13 @@ class StoreOrderController extends Controller
     {
         $user = Auth::user();
         $cart = $user->getCart();
+        $requestPrice = $request->integer('price');
+        $requestQuantity = $request->integer('quantity');
         if (!$cart || $cart->getCartItems()->isEmpty()) {
             return redirect()->route('cart.show')->with('error', 'Корзина пуста');
         }
 
-        if (filled($request->cart_item_id)) {
+        if ($request->integer('cart_item_id')) {
             $cart_item = $user
                         ->getCart()
                         ->getCartItems()
@@ -34,7 +36,7 @@ class StoreOrderController extends Controller
                         ->first();
             $order = Order::create([
                 'user_id' => $user->getKey(),
-                'total_price' => $request->integer('price') * $request->integer('quantity'),
+                'total_price' => $requestPrice * $requestQuantity,
             ]);
 
             OrderProduct::create([
@@ -57,12 +59,12 @@ class StoreOrderController extends Controller
                 'total_price' => $totalPrice,
             ]);
 
-            foreach ($cart->getCartItems() as $orders_products) {
+            foreach ($cart->getCartItems() as $ordersProducts) {
                 OrderProduct::create([
                     'order_id' => $order->getKey(),
-                    'product_id' => $orders_products->getProduct()->getKey(),
-                    'quantity' => $orders_products->getQuantity(),
-                    'price' => $orders_products->getProduct()->getPrice(),
+                    'product_id' => $ordersProducts->getProduct()->getKey(),
+                    'quantity' => $ordersProducts->getQuantity(),
+                    'price' => $ordersProducts->getProduct()->getPrice(),
                 ]);
             }
 
