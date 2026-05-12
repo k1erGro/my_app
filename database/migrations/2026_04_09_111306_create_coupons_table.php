@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('value', 10, 2);
             $table->decimal('min_order_amount', 10, 2);
             $table->boolean('is_disposable');
-            $table->unsignedInteger('usage_limit')->nullable();
+            $table->unsignedInteger('usage_limit')->default(9999);
             $table->unsignedInteger('used_count')->default(0);
             $table->timestamps();
         });
