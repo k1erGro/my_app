@@ -4,7 +4,7 @@
 use App\Http\Controllers\Admin\Address\CreateAddressController;
 use App\Http\Controllers\Admin\Address\DeleteAddressController;
 use App\Http\Controllers\Admin\Address\EditAddressController;
-use App\Http\Controllers\Admin\Address\IndexAddressController;
+use App\Http\Controllers\Admin\Address\ListAddressController;
 use App\Http\Controllers\Admin\Address\StoreAddressController;
 use App\Http\Controllers\Admin\Address\UpdateAddressController;
 use App\Http\Controllers\Admin\Answer\DeleteAnswerController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\Answer\ShowAnswerController;
 use App\Http\Controllers\Admin\Categories\CreateCategoryController;
 use App\Http\Controllers\Admin\Categories\DeleteCategoryController;
 use App\Http\Controllers\Admin\Categories\EditCategoryController;
-use App\Http\Controllers\Admin\Categories\IndexCategoryController;
+use App\Http\Controllers\Admin\Categories\ListCategoryController;
 use App\Http\Controllers\Admin\Categories\StoreCategoryController;
 use App\Http\Controllers\Admin\Categories\UpdateCategoryController;
 use App\Http\Controllers\Admin\Coupons\CreateCouponsController;
@@ -23,30 +23,30 @@ use App\Http\Controllers\Admin\Coupons\ListCouponsController;
 use App\Http\Controllers\Admin\Coupons\StoreCouponsController;
 use App\Http\Controllers\Admin\Coupons\UpdateCouponsController;
 use App\Http\Controllers\Admin\Orders\AdminEditOrderController;
-use App\Http\Controllers\Admin\Orders\AdminIndexOrderController;
+use App\Http\Controllers\Admin\Orders\AdminListOrderController;
 use App\Http\Controllers\Admin\Orders\AdminUpdateOrderController;
 use App\Http\Controllers\Admin\Products\CreateProductController;
 use App\Http\Controllers\Admin\Products\DeleteProductController;
 use App\Http\Controllers\Admin\Products\EditProductController;
-use App\Http\Controllers\Admin\Products\IndexProductController;
+use App\Http\Controllers\Admin\Products\ListProductController;
 use App\Http\Controllers\Admin\Products\ShowProductController;
 use App\Http\Controllers\Admin\Products\StoreProductController;
 use App\Http\Controllers\Admin\Products\UpdateProductController;
 use App\Http\Controllers\Admin\Property\CreatePropertyController;
 use App\Http\Controllers\Admin\Property\DeletePropertyController;
 use App\Http\Controllers\Admin\Property\EditPropertyController;
-use App\Http\Controllers\Admin\Property\IndexPropertyController;
+use App\Http\Controllers\Admin\Property\ListPropertyController;
 use App\Http\Controllers\Admin\Property\StorePropertyController;
 use App\Http\Controllers\Admin\Property\UpdatePropertyController;
 use App\Http\Controllers\Admin\Question\DeleteQuestionController;
 use App\Http\Controllers\Admin\Question\ListQuestionController;
 use App\Http\Controllers\Admin\Reviews\DeleteReviewController;
-use App\Http\Controllers\Admin\Reviews\IndexReviewController;
+use App\Http\Controllers\Admin\Reviews\ListReviewController;
 use App\Http\Controllers\Admin\Reviews\ShowReviewController;
 use App\Http\Controllers\Admin\SubCategories\CreateSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\DeleteSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\EditSubcategoryController;
-use App\Http\Controllers\Admin\SubCategories\IndexSubcategoryController;
+use App\Http\Controllers\Admin\SubCategories\ListSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\StoreSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\UpdateSubcategoryController;
 use App\Http\Controllers\Admin\Users\CreateUserController;
@@ -57,7 +57,7 @@ use App\Http\Controllers\Admin\Users\ShowUserController;
 use App\Http\Controllers\Admin\Users\StoreUserController;
 use App\Http\Controllers\Admin\Users\UpdatePasswordUserController;
 use App\Http\Controllers\Admin\Users\UpdateUserController;
-use App\Http\Controllers\Admin\Users\UsersController;
+use App\Http\Controllers\Admin\Users\ListUserController;
 use App\Http\Controllers\Answer\StoreAnswerController;
 use App\Http\Controllers\Answer\UpdateAnswerController;
 use App\Http\Controllers\Auth\DashboardController;
@@ -114,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Director', 'Manager']))->prefix('admin')->group(function () {
     // Пользователи
-    Route::get('/index', UsersController::class)->name('admin.index');
+    Route::get('/index', ListUserController::class)->name('admin.index');
     Route::get('/show/{user}', ShowUserController::class)->name('admin.show');
     Route::get('/create', CreateUserController::class)->name('admin.create');
     Route::post('/store', StoreUserController::class)->name('admin.store');
@@ -125,7 +125,7 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/admin/destroy/{user}', DeleteUserController::class)->name('admin.destroy');
 
     // Категории
-    Route::get('/category', IndexCategoryController::class)->name('admin.category.index');
+    Route::get('/category', ListCategoryController::class)->name('admin.category.index');
     Route::get('/create-category', CreateCategoryController::class)->name('admin.category.create');
     Route::post('/store-category', StoreCategoryController::class)->name('admin.category.store');
     Route::get('/edit-category/{category:slug}', EditCategoryController::class)->name('admin.category.edit');
@@ -134,7 +134,7 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
 
     //Подкатегории
 
-    Route::get('/subcategory', IndexSubcategoryController::class)->name('admin.subCategory.index');
+    Route::get('/subcategory', ListSubcategoryController::class)->name('admin.subCategory.index');
     Route::get('/create-subcategory', CreateSubcategoryController::class)->name('admin.subCategory.create');
     Route::post('/store-subcategory', StoreSubcategoryController::class)->name('admin.subCategory.store');
     Route::get('/edit-subcategory/{subCategory:slug}', EditSubcategoryController::class)->name('admin.subCategory.edit');
@@ -142,7 +142,7 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/destroy-subcategory/{subCategory}', DeleteSubcategoryController::class)->name('admin.subCategory.destroy');
 
     // Товары
-    Route::get('/product', IndexProductController::class)->name('admin.product.index');
+    Route::get('/product', ListProductController::class)->name('admin.product.index');
     Route::get('/create-product', CreateProductController::class)->name('admin.product.create');
     Route::post('/store-product', StoreProductController::class)->name('admin.product.store');
     Route::get('/product/{product:slug}', ShowProductController::class)->name('admin.product.show');
@@ -151,7 +151,7 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/destroy/{product}', DeleteProductController::class)->name('admin.product.destroy');
 
     // Характеристики
-    Route::get('/property', IndexPropertyController::class)->name('admin.property.index');
+    Route::get('/property', ListPropertyController::class)->name('admin.property.index');
     Route::get('/create-property', CreatePropertyController::class)->name('admin.property.create');
     Route::post('/store-property', StorePropertyController::class)->name('admin.property.store');
     Route::get('/edit-property/{property:slug}', EditPropertyController::class)->name('admin.property.edit');
@@ -159,7 +159,7 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/destroy-property/{property}', DeletePropertyController::class)->name('admin.property.destroy');
 
     // Адреса
-    Route::get('/address', IndexAddressController::class)->name('admin.address.index');
+    Route::get('/address', ListAddressController::class)->name('admin.address.index');
     Route::get('/create-address', CreateAddressController::class)->name('admin.address.create');
     Route::post('/store-address', StoreAddressController::class)->name('admin.address.store');
     Route::get('/edit-address/{address:slug}', EditAddressController::class)->name('admin.address.edit');
@@ -167,12 +167,12 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::delete('/destroy-address/{address}', DeleteAddressController::class)->name('admin.address.destroy');
 
     // Заказы
-    Route::get('/orders', AdminIndexOrderController::class)->name('admin.orders.index');
+    Route::get('/orders', AdminListOrderController::class)->name('admin.orders.index');
     Route::get('/edit-orders/{order}', AdminEditOrderController::class)->name('admin.orders.edit');
     Route::patch('/update-orders/{order}', AdminUpdateOrderController::class)->name('admin.orders.update');
 
     // Отзывы
-    Route::get('/reviews', IndexReviewController::class)->name('admin.reviews.index');
+    Route::get('/reviews', ListReviewController::class)->name('admin.reviews.index');
     Route::get('/show-review/{review}', ShowReviewController::class)->name('admin.reviews.show');
     Route::delete('/destroy-review/{review}', DeleteReviewController::class)->name('admin.reviews.destroy');
 
