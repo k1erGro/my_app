@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Reviews;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class DeleteReviewController extends Controller
 {
@@ -14,7 +16,9 @@ class DeleteReviewController extends Controller
     public function __invoke(Request $request, Review $review)
     {
         try {
-            $review->delete();
+            DB::transaction(function () use ($request, $review) {
+                $review->delete();
+            });
             return back()->with('success', 'Отзыв успешно удален');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);

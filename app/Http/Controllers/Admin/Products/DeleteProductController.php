@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Products;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class DeleteProductController extends Controller
 {
@@ -14,11 +16,13 @@ class DeleteProductController extends Controller
     public function __invoke(Product $product)
     {
         try {
-            $product->propertyValues()->delete();
-            foreach ($product->getReviews() as $review) {
-                $review->delete();
-            }
-            $product->delete();
+            DB::transaction(function () use ($product) {
+                $product->propertyValues()->delete();
+                foreach ($product->getReviews() as $review) {
+                    $review->delete();
+                }
+                $product->delete();
+            });
             return back()->with('success', 'Товар успешно удален');
         } catch (\Exception $e) {
             return back()->withErrors([$e->getMessage()]);
