@@ -95,6 +95,23 @@
                         </div>
                     @endif
 
+                    @if($isSubscribed)
+                        <form action="{{ route('product.cancel-subscribe', $product) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                                Отписаться от уведомлений
+                            </button>
+                        </form>
+                    @elseif(!$isSubscribed)
+                        <form action="{{ route('product.subscribe', $product) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Уведомить о поступлении
+                            </button>
+                        </form>
+                    @endif
+
                     <div class="mt-10 flex sm:flex-col1">
                         <form method="POST" action="{{ route('cart.add') }}">
                             @csrf

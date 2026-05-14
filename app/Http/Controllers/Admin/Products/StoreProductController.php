@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Products;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ProductRequest;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\EntranceNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -45,6 +47,12 @@ class StoreProductController extends Controller
         if ($request->hasFile('product_image')) {
             $product->addMediaFromRequest('product_image')->toMediaCollection('products');
         }
+
+        $users = User::where('is_subscribed', true)->get();
+        foreach ($users as $user) {
+            $user->notify(new EntranceNotification($product));
+        }
+
         return redirect()->route('admin.product.index');
 
     }

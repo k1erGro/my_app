@@ -18,7 +18,8 @@ class ProductController extends Controller
     {
         $data = [];
         $hasReview = false;
-
+        $user = Auth::user();
+        $isSubscribed = false;
         if (!$product->getPropertyValues()->isEmpty()) {
             foreach ($product->getPropertyValues() as $propertyValue) {
                 $values[] = $propertyValue->getValue();
@@ -31,10 +32,10 @@ class ProductController extends Controller
             $data = array_combine($property, $values);
         }
         if (Auth::check()) {
-            $hasReview = Review::where('user_id', Auth::user()->getKey())->where('product_id', $product->getKey())->exists();
+            $hasReview = Review::where('user_id', $user->getKey())->where('product_id', $product->getKey())->exists();
+            $isSubscribed = $user->productSubscriptions()->where('product_id', $product->getKey())->exists();
         }
 
-
-        return view('shop.products.product', compact('product', 'data', 'hasReview'));
+        return view('shop.products.product', compact('product', 'data', 'hasReview', 'isSubscribed'));
     }
 }

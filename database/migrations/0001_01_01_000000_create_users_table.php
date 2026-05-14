@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->boolean('is_subscribed')->default(false);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -12,6 +13,7 @@ class ProfileController extends Controller
      */
     public function __invoke()
     {
-        return view('profile.profile');
+        $user = Auth::user();
+        return view('profile.profile', compact('user'));
     }
 }

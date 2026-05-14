@@ -72,6 +72,11 @@ use App\Http\Controllers\Coupons\ApplyCouponController;
 use App\Http\Controllers\Favourites\DeleteFavoriteController;
 use App\Http\Controllers\Favourites\ListFavoriteController;
 use App\Http\Controllers\Favourites\StoreFavoriteController;
+use App\Http\Controllers\Notifications\DeleteNotificationController;
+use App\Http\Controllers\Notifications\ListNotifications;
+use App\Http\Controllers\Notifications\MarkAsReadController;
+use App\Http\Controllers\Notifications\ShowNotification;
+use App\Http\Controllers\Notifications\SubscribeController;
 use App\Http\Controllers\Orders\CancelOrderController;
 use App\Http\Controllers\Orders\EditOrderController;
 use App\Http\Controllers\Orders\OrdersController;
@@ -79,8 +84,10 @@ use App\Http\Controllers\Orders\ShowOrderController;
 use App\Http\Controllers\Orders\StoreOrderController;
 use App\Http\Controllers\Orders\UpdateOrderController;
 use App\Http\Controllers\Product\AllProductController;
+use App\Http\Controllers\Product\CancelSubscriptionController;
 use App\Http\Controllers\Product\CatalogProductController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\SubscriptionController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Question\ShowQuestionController;
 use App\Http\Controllers\Question\StoreQuestionController;
@@ -197,7 +204,6 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
 });
 
 
-
 Route::prefix('shop')->group(function () {
 
     Route::get('/catalog', CategoryController::class)->name('catalog.index');
@@ -229,6 +235,16 @@ Route::prefix('shop')->group(function () {
     Route::delete('/delete-favorite/{favorite}', DeleteFavoriteController::class)->name('favourites.delete');
 
     Route::post('/update-order/{order}/apply-coupon', ApplyCouponController::class)->name('coupon.apply');
+
+    Route::get('/notifications', ListNotifications::class)->name('notifications.list');
+    Route::get('/notification/{notification}', ShowNotification::class)->name('notification.show');
+    Route::post('/notification-mark-read/{notification}', MarkAsReadController::class)->name('notification.mark-read');
+    Route::patch('/subscribe-notification/{user}', SubscribeController::class)->name('profile.subscribe-notifications');
+    Route::delete('/notifications-delete/{notification}', DeleteNotificationController::class)->name('notifications.delete');
+
+    Route::post('/subscribe/{product}', SubscriptionController::class)->name('product.subscribe');
+    Route::post('/subscribe/{product}', SubscriptionController::class)->name('product.subscribe');
+    Route::delete('/cancel-subscription/{product}', CancelSubscriptionController::class)->name('product.cancel-subscribe');
 });
 
 Route::post('/cart/add', CartAddController::class)->name('cart.add');

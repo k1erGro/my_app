@@ -86,6 +86,23 @@
                                     проживания</label>
                                 <p class="text-gray-800 font-medium">{{ Auth::user()->getAddress() ?? 'Не указано' }}</p>
                             </div>
+                            <form action="{{ route('profile.subscribe-notifications', $user) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+
+                                <div class="mb-4 flex items-start gap-3">
+                                    <input type="checkbox" name="is_subscribed" id="subscribe" value="1"
+                                           @checked($user->isSubscribed())
+                                           class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded">
+                                    <label for="subscribe" class="text-gray-700">
+                                        <span class="font-medium">Я согласен получать рассылку о новых поступлениях товаров</span><br>
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+                                    Сохранить настройки
+                                </button>
+                            </form>
                         </div>
                     </div>
 

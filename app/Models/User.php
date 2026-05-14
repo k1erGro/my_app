@@ -43,6 +43,7 @@ class User extends Authenticatable implements HasMedia, UserInterface
         'phone',
         'address',
         'role',
+        'is_subscribed',
     ];
 
     /**
@@ -68,6 +69,11 @@ class User extends Authenticatable implements HasMedia, UserInterface
             'password' => 'hashed',
             'role' => RoleEnum::class,
         ];
+    }
+
+    public function isSubscribed():bool
+    {
+        return $this->is_subscribed;
     }
 
     public function getLastName(): string
@@ -168,6 +174,16 @@ class User extends Authenticatable implements HasMedia, UserInterface
     public function getCoupons(): Collection
     {
         return $this->coupons;
+    }
+
+    public function productSubscriptions(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'products_subscriptions', 'user_id', 'product_id');
+    }
+
+    public function getProductSubscriptions(): Collection
+    {
+        return $this->productSubscriptions;
     }
 
     public function registerMediaConversions(?Media $media = null): void

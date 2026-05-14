@@ -65,6 +65,16 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->coupons;
     }
 
+    public function subscribedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'products_subscriptions', 'product_id', 'user_id');
+    }
+
+    public function getSubscribedUsers(): Collection
+    {
+        return $this->subscribedUsers;
+    }
+
     public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');

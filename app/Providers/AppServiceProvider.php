@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\AddressProduct;
 use App\Models\Cart;
+use App\Models\Product;
+use App\Observers\AddressesProductsObserver;
+use App\Observers\AddressProductObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
@@ -23,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        View::composer('layouts.main', function ($view) {
+            $unreadCount = Auth::check() ? Auth::user()->unreadNotifications->count() : 0;
+            $view->with('globalUnreadCount', $unreadCount);
+        });
+
         View::composer('layouts.main', function ($view) {
             $cartCount = 0;
 
