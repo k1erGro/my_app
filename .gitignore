@@ -35,3 +35,4 @@ Thumbs.db
 /resources/views/errors/
 /resources/views/vendor
 /sail
+/bootstrap/app.php
