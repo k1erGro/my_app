@@ -94,7 +94,7 @@ class UpdateOrderController extends Controller
                 'status' => 'in progress',
             ]);
 
-            return redirect()->route('orders.index');
+            return redirect()->route('orders.pay', $order);
         } catch (\Exception $e) {
             return back()->withErrors(['stock' => $e->getMessage()]);
         }

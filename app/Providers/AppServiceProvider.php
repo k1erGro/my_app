@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Observers\AddressesProductsObserver;
 use App\Observers\AddressProductObserver;
+use App\Service\PaymentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
@@ -19,7 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(PaymentService::class, function ($app) {
+            return new PaymentService();
+        });
     }
 
     /**

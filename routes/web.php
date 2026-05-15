@@ -83,6 +83,7 @@ use App\Http\Controllers\Orders\OrdersController;
 use App\Http\Controllers\Orders\ShowOrderController;
 use App\Http\Controllers\Orders\StoreOrderController;
 use App\Http\Controllers\Orders\UpdateOrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Product\AllProductController;
 use App\Http\Controllers\Product\CancelSubscriptionController;
 use App\Http\Controllers\Product\CatalogProductController;
@@ -251,3 +252,6 @@ Route::post('/cart/add', CartAddController::class)->name('cart.add');
 Route::get('/cart', CartShowController::class)->name('cart.show');
 Route::patch('/cart/update/{id}', CartUpdateController::class)->name('cart.update');
 Route::delete('/cart/delete/{id}', CartDeleteController::class)->name('cart.destroy');
+
+Route::get('/order/{order}/pay', [PaymentController::class, 'pay'])->name('orders.pay')->middleware('auth');
+Route::match(['GET', 'POST'], '/payments/callback', [PaymentController::class, 'callback'])->name('payment.callback');
