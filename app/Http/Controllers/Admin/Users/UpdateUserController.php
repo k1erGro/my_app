@@ -15,21 +15,28 @@ class UpdateUserController extends Controller
      */
     public function __invoke(UpdateRequest $request, User $user)
     {
-
+        // 1. Проверяем права текущего авторизованного админа (твоя стандартная политика)
         $this->authorize('update', $user);
-        if ($request->hasFile('avatar')) {
-            $user->clearMediaCollection('avatars')->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+
+        $chosenRole = $request->validated()['role'];
+
+        // 2. Защита от "самоубийства" прав: не даем текущему админу снять с себя управляющую роль
+        if (auth()->id() === $user->getKey() && $chosenRole === 'User') {
+            return redirect()->back()->withErrors([
+                'role' => 'Вы не можете перевести в статус обычного пользователя самого себя!'
+            ]);
         }
-        $user->update([
-            'f_name' => $request->string('f_name'),
-            'l_name' => $request->string('l_name'),
-            'm_name' => $request->string('m_name'),
-            'email' => $request->string('email'),
-            'avatar' => $request->file('avatar'),
-            'birthday' => $request->date('birthday'),
-            'phone' => $request->string('phone'),
-            'address' => $request->string('address'),
-        ]);
-        return redirect()->route('profile');
+
+        // 3. Синхронизируем роль в Spatie Permission
+        if ($chosenRole === 'User') {
+            // Если выбран дефолтный пользователь, просто очищаем все спец-роли из Spatie
+            $user->syncRoles([]);
+        } else {
+            // Если выбрана конкретная роль (Director, Manager, TechnicalSpecialist), привязываем её
+            $user->syncRoles([$chosenRole]);
+        }
+
+        // 4. Редирект обратно на список пользователей в админке с красивым уведомлением
+        return redirect()->route('admin.index')->with('message', 'Роль пользователя успешно обновлена!');
     }
 }

@@ -25,6 +25,7 @@
             </div>
         @else
             <div class="grid gap-6">
+                <a href="{{ route('order-report.index') }}">Мои вопросы по заказам</a>
                 @foreach($orders as $order)
                     <a href="{{ route('orders.show', $order->getKey()) }}" class="block group">
                         <div

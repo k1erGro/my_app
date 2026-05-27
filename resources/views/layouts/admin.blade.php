@@ -54,6 +54,12 @@
                     Заказы
                 </a>
             @endcan
+            @can('view-orders')
+                <a href="{{ route('admin.order-reports.index') }}"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
+                    Вопросы по заказам
+                </a>
+            @endcan
             @can('view-reviews')
                 <a href="{{ route('admin.reviews.index') }}"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">

@@ -49,7 +49,6 @@ use App\Http\Controllers\Admin\SubCategories\EditSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\ListSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\StoreSubcategoryController;
 use App\Http\Controllers\Admin\SubCategories\UpdateSubcategoryController;
-use App\Http\Controllers\Admin\Users\CreateUserController;
 use App\Http\Controllers\Admin\Users\DeleteUserController;
 use App\Http\Controllers\Admin\Users\EditPasswordController;
 use App\Http\Controllers\Admin\Users\EditUserController;
@@ -120,13 +119,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit-password/{user}', EditPasswordController::class)->name('profile.edit.password');
     Route::patch('/profile/update-password/{user}', UpdatePasswordUserController::class)->name('profile.update_password');
     Route::delete('/profile/destroy/{user}', DeleteUserController::class)->name('profile.destroy');
+
+    Route::get('/shop/orders/{order}/report', [OrderReportController::class, 'create'])->name('order-report.create');
+    Route::post('/shop/order-report', [OrderReportController::class, 'store'])->name('order-report.store');
+    Route::get('/shop/my-questions', [OrderReportController::class, 'index'])->name('order-report.index');
+    Route::get('/shop/order-report/{report}/edit', [OrderReportController::class, 'edit'])->name('order-report.edit');
+    Route::put('/shop/order-report/{report}', [OrderReportController::class, 'update'])->name('order-report.update');
 });
 
 Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Director', 'Manager']))->prefix('admin')->group(function () {
     // Пользователи
     Route::get('/index', ListUserController::class)->name('admin.index');
     Route::get('/show/{user}', ShowUserController::class)->name('admin.show');
-    Route::get('/create', CreateUserController::class)->name('admin.create');
     Route::post('/store', StoreUserController::class)->name('admin.store');
     Route::get('/edit/{user}', EditUserController::class)->name('admin.edit');
     Route::patch('/admin/update/{user}', UpdateUserController::class)->name('admin.update');
@@ -204,6 +208,9 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::patch('/update-coupons/{coupon}', UpdateCouponsController::class)->name('admin.coupons.update');
     Route::delete('/delete-coupons/{coupon}', DeleteCouponsController::class)->name('admin.coupons.delete');
 
+    Route::get('/order-reports', [OrderReportController::class, 'adminIndex'])->name('admin.order-reports.index');
+    Route::patch('/order-reports/{report}/answer', [OrderReportController::class, 'adminAnswer'])->name('admin.order-reports.answer');
+
 });
 
 
@@ -258,5 +265,3 @@ Route::delete('/cart/delete/{id}', CartDeleteController::class)->name('cart.dest
 Route::get('/order/{order}/pay', [PaymentController::class, 'pay'])->name('orders.pay')->middleware('auth');
 Route::match(['GET', 'POST'], '/payments/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 Route::get('/search', SearchController::class)->name('search.page');
-Route::get('/order-report', [OrderReportController::class, 'create'])->name('order-report.create');
-Route::post('/order-report', [OrderReportController::class, 'store'])->name('order-report.store');

@@ -14,16 +14,19 @@ class CartShowController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $cart = Cart::where('user_id', Auth::user()?->getKey())
-            ->with(['cartItems.product'])
-            ->first();
+        $cart = Cart::where('user_id', Auth::id())->first();
 
         if ($cart) {
-            foreach ($cart->cartItems() as $item) {
-                if (!$item->has('product')) {
+            $cart = $cart->fresh(['cartItems.product']);
+
+            $items = $cart->cartItems;
+
+            foreach ($items as $item) {
+                if (!$item->product) {
                     $item->delete();
                 }
             }
+
             $items = $cart->cartItems()->with('product')->get();
         } else {
             $items = collect();

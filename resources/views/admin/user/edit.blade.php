@@ -1,219 +1,84 @@
-@extends($checkRole === true ? 'layouts.admin' : 'layouts.main')
+@extends('layouts.admin')
+
 @section('content')
-    @if($checkRole === true)
-        <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Редактировать пользователя</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Управление пользователем</h2>
             <a href="{{ route('admin.index') }}" class="text-gray-500 hover:text-gray-700 flex items-center">
                 <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
                 Назад к списку
             </a>
         </div>
 
-        <div class="bg-white shadow-md rounded-lg p-8">
-            <form action="{{ route('admin.update', $user->getKey()) }}" method="POST" class="space-y-4"
-                  enctype="multipart/form-data">
+        <div class="bg-white shadow-md rounded-lg p-8 space-y-6">
+            <div class="bg-gray-50 p-4 rounded-md border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                <div>
+                    <span class="block font-medium text-gray-400">ФИО пользователя:</span>
+                    <span class="text-gray-900 font-semibold">{{ $user->getLastName() }} {{ $user->getFirstName() }} {{ $user->getMiddleName() }}</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-400">Email (Логин):</span>
+                    <span class="text-gray-900 font-semibold">{{ $user->getEmail() }}</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-400">Телефон:</span>
+                    <span class="text-gray-900 font-semibold">{{ $user->getPhone() ?? 'Не указан' }}</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-400">Дата рождения:</span>
+                    <span class="text-gray-900 font-semibold">{{ $user->getBirthday() ?? 'Не указана' }}</span>
+                </div>
+                <div class="md:col-span-2">
+                    <span class="block font-medium text-gray-400">Адрес доставки:</span>
+                    <span class="text-gray-900 font-semibold">{{ $user->getAddress() ?? 'Не указан' }}</span>
+                </div>
+            </div>
+
+            <hr class="border-gray-200">
+
+            <form action="{{ route('admin.update', $user->getKey()) }}" method="POST" class="space-y-4">
                 @csrf
                 @method('patch')
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Фамилия</label>
-                    <input type="text" name="l_name" value="{{ $user->getLastName() }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
-                    @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Имя</label>
-                    <input type="text" name="f_name" value="{{ $user->getFirstName() }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('first_name') border-red-500 @enderror">
-                    @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Роль пользователя в системе</label>
+                    <select name="role" required class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <option value="" disabled>Выберите роль</option>
+
+
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                                @if($role->name === 'Director') Директор
+                                @elseif($role->name === 'Manager') Менеджер
+                                @elseif($role->name === 'TechnicalSpecialist') Технический специалист
+                                @elseif($role->name === 'Admin') Администратор
+                                @else {{ $role->name }}
+                                @endif
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('role') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Отчество</label>
-                    <input type="text" name="m_name" value="{{ $user->getMiddleName() ?? 'Не указано' }}"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('m_name') border-red-500 @enderror">
-                    @error('m_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" value="{{ $user->getEmail() }}" required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('email') border-red-500 @enderror">
-                    @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    @if(Auth::user()->hasMedia('avatars'))
-                        <label class="block text-sm font-medium text-gray-700">Аватар</label>
-                        <div class="relative inline-block">
-                            <img class="h-24 w-24 rounded-full object-cover" src="{{ Auth::user()->getFirstMediaUrl('avatars', 'preview') }}" alt="Аватар">
-                        </div>
-                        <input type="file" name="avatar" value="{{ old('avatar') }}"
-                               accept="image/jpeg,image/png,image/jpg"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    @else
-                        <label class="block text-sm font-medium text-gray-700">Аватар</label>
-                        <input type="file" name="avatar" value="{{ old('avatar') }}"
-                               accept="image/jpeg,image/png,image/jpg"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    @endif
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Телефон</label>
-                        <input type="text" name="phone" value="{{ $user->getPhone() ?? 'Не указано' }}"
-                               placeholder="+7 (000) 000-00-00" x-mask="+7 (999) 999-99-99" x-data
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Роль</label>
-                        <select name="role"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                            @if($user->hasrole('Admin'))
-                                <option value="Admin" selected>Администратор</option>
-                                <option value="User">Пользователь</option>
-                            @else
-                                <option value="User" selected>Пользователь</option>
-                                <option value="Admin">Администратор</option>
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Дата рождения</label>
-                        <input type="date" name="birthday" value="{{ $user->getBirthday() ?? 'Не указано' }}"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('birthday') border-red-500 @enderror">
-                        @error('birthday') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                        <input type="text" name="address" value="{{ $user->getAddress() ?? 'Не указано' }}"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('address') border-red-500 @enderror">
-                        @error('address') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-                </div>
-
-                <div class="pt-4">
-                    <button type="submit"
-                            class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-bold shadow-lg">
-                        Редактировать пользователя
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2.5 px-4 rounded-md hover:bg-blue-700 transition font-bold shadow">
+                        Обновить роль
                     </button>
                 </div>
-                <a href="{{ route('admin.edit_password', $user) }}">Редактировать пароль?</a>
-
             </form>
-        </div>
-    </div>
-    @else
-        <div class="max-w-2xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Редактировать персональные данные</h2>
-                <a href="{{ route('profile') }}" class="text-gray-500 hover:text-gray-700 flex items-center">
-                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+
+            <hr class="border-gray-200">
+
+            <div class="text-center">
+                <a href="{{ route('admin.edit_password', $user->getKey()) }}" class="inline-flex items-center text-sm font-semibold text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 px-4 py-2 rounded-md transition">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
                     </svg>
-                    Назад
+                    Изменить пароль пользователя
                 </a>
             </div>
-            <div class="bg-white shadow-md rounded-lg p-8">
-                <form action="{{ route('profile.update', Auth::user()->getKey()) }}" method="POST" class="space-y-4"
-                      enctype="multipart/form-data">
-                    @csrf
-                    @method('patch')
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Фамилия</label>
-                        <input type="text" name="l_name" value="{{ Auth::user()->getLastName() }}" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
-                        @error('last_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Имя</label>
-                        <input type="text" name="f_name" value="{{ Auth::user()->getFirstName() }}" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('first_name') border-red-500 @enderror">
-                        @error('first_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Отчество</label>
-                        <input type="text" name="m_name" value="{{ Auth::user()->getMiddleName() ?? 'Не указано' }}"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('m_name') border-red-500 @enderror">
-                        @error('m_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" value="{{ Auth::user()->getEmail() }}" required
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('email') border-red-500 @enderror">
-                        @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
-                        @if(Auth::user()->hasMedia('avatars'))
-                            <label class="block text-sm font-medium text-gray-700">Аватар</label>
-                            <div class="relative inline-block">
-                                <img class="h-24 w-24 rounded-full object-cover" src="{{ Auth::user()->getFirstMediaUrl('avatars', 'preview') }}" alt="Аватар">
-                            </div>
-                            <input type="file" name="avatar" value="{{ old('avatar') }}"
-                                   accept="image/jpeg,image/png,image/jpg"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        @else
-                            <label class="block text-sm font-medium text-gray-700">Аватар</label>
-                            <input type="file" name="avatar" value="{{ old('avatar') }}"
-                                   accept="image/jpeg,image/png,image/jpg"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        @endif
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Телефон</label>
-                            <input type="text" name="phone" value="{{ Auth::user()->getPhone() ?? 'Не указано' }}"
-                                   placeholder="+7 (000) 000-00-00" x-mask="+7 (999) 999-99-99" x-data
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                        </div>
-                        <div class="hidden">
-                            <label class="block text-sm font-medium text-gray-700">Роль</label>
-                            <select name="role"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                                @role('User')
-                                    <option value="1" {{ old('role') == '1' ? 'selected' : '' }}>Пользователь</option>
-                                @elserole('Admin')
-                                    <option value="2" {{ old('role') == '2' ? 'selected' : '' }}>Администратор</option>
-                                @endrole
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Дата рождения</label>
-                                <input type="date" name="birthday" value="{{ Auth::user()->getBirthday()  }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('birthday') border-red-500 @enderror">
-                                @error('birthday') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                                <input type="text" name="address" value="{{ Auth::user()->getAddress() ?? 'Не указано' }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('address') border-red-500 @enderror">
-                                @error('address') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                            </div>
-                        </div>
-
-                        <div class="pt-4">
-                            <button type="submit"
-                                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition duration-200 font-bold shadow-lg">
-                                Редактировать пользователя
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-    @endif
+        </div>
+    </div>
 @endsection

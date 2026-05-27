@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('description');
+            $table->text('admin_answer')->nullable();
+            $table->unique(['user_id', 'order_id']);
             $table->timestamps();
         });
     }

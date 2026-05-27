@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class EditUserController extends Controller
 {
@@ -14,7 +14,7 @@ class EditUserController extends Controller
      */
     public function __invoke(Request $request, User $user)
     {
-        $checkRole = Auth::user()->hasRole('Admin');
-        return view('admin.user.edit', compact('user', 'checkRole'));
+        $roles = Role::all();
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 }

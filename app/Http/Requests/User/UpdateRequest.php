@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\Permission\Models\Role;
 
 class UpdateRequest extends FormRequest
 {
@@ -21,18 +22,23 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user')?->id ?? $this->user;
+        $existingRoles = Role::pluck('name')->toArray();
+
+        $existingRoles[] = 'User';
+
         return [
-            'l_name' => 'string|required|max:50',
-            'f_name' => 'string|required|max:50',
-            'm_name' => 'string|nullable|max:50',
-            'email' => 'string|required|email|max:255|unique:users,email,' . $userId,
-            'password' => 'string|nullable',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'birthday' => 'nullable|date|before:today',
-            'phone' => 'string|nullable',
-            'address' => 'string|nullable',
-            'role' => 'string',
+            'role' => 'required|string|in:' . implode(',', $existingRoles),
+        ];
+    }
+
+    /**
+     * Кастомные сообщения об ошибках
+     */
+    public function messages(): array
+    {
+        return [
+            'role.required' => 'Вы должны выбрать роль для пользователя.',
+            'role.in' => 'Выбранная роль не существует в системе.',
         ];
     }
 }

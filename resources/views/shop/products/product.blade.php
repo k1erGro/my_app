@@ -99,14 +99,16 @@
                         <form action="{{ route('product.cancel-subscribe', $product) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                            <button type="submit"
+                                    class="mt-4 inline-flex items-center px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
                                 Отписаться от уведомлений
                             </button>
                         </form>
                     @elseif(!$isSubscribed)
                         <form action="{{ route('product.subscribe', $product) }}" method="POST">
                             @csrf
-                            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            <button type="submit"
+                                    class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                                 Уведомить о поступлении
                             </button>
                         </form>
@@ -172,80 +174,82 @@
                 @endif
             </section>
 
-            <section aria-labelledby="reviews-heading" class="mt-12 border-t border-gray-200 pt-8">
-                <h2 id="reviews-heading" class="text-sm font-bold text-gray-900 uppercase tracking-widest mb-6">
-                    Отзывы покупателей
-                </h2>
+            <section class="mt-12 pt-12 border-t border-gray-200">
 
-                @if(!$product->getReviews()->isEmpty())
-                    <div class="space-y-6 mb-10">
-                        @foreach($product->getReviews()->sortByDesc('updated_at') as $review)
-                            <div class="bg-white p-6 border border-gray-100 rounded-2xl shadow-sm review-item"
-                                 data-review-id="{{ $review->getKey() }}">
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-gray-100">
+                    <h2 class="text-2xl font-bold text-gray-900">
+                        Отзывы покупателей
+                        <span class="text-lg font-normal text-gray-400">({{ $reviews->count() }})</span>
+                    </h2>
+
+                    <form action="{{ url()->current() }}" method="GET" id="reviews-sort-form"
+                          class="flex items-center gap-2">
+                        @foreach(request()->except('sort_reviews') as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
+
+                        <label for="sort_reviews" class="text-sm font-medium text-gray-500 whitespace-nowrap">Сортировать:</label>
+                        <select name="sort_reviews" id="sort_reviews"
+                                onchange="document.getElementById('reviews-sort-form').submit();"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 p-2.5 pr-8 cursor-pointer font-medium">
+                            <option value="newest" {{ $currentSort == 'newest' ? 'selected' : '' }}>Сначала новые
+                            </option>
+                            <option value="oldest" {{ $currentSort == 'oldest' ? 'selected' : '' }}>Сначала старые
+                            </option>
+                            <option value="rating_high" {{ $currentSort == 'rating_high' ? 'selected' : '' }}>С высокой
+                                оценкой
+                            </option>
+                            <option value="rating_low" {{ $currentSort == 'rating_low' ? 'selected' : '' }}>С низкой
+                                оценкой
+                            </option>
+                        </select>
+                    </form>
+                </div>
+
+                @if($reviews->isEmpty())
+                    <div
+                        class="text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200 text-gray-500 mb-8">
+                        <span class="text-3xl block mb-2">⭐</span>
+                        У этого товара пока нет отзывов. Станьте первым, кто оставит свое мнение!
+                    </div>
+                @else
+                    <div class="grid grid-cols-1 gap-4 mb-8">
+                        @foreach($reviews as $review)
+                            <div
+                                class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm transition hover:shadow-md">
                                 <div class="flex justify-between items-start mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div>
-                                            <span
-                                                class="block text-gray-900 font-bold">{{ $review->getUser()->getFirstName() }}</span>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 text-base">
+                                            {{ $review->user->name ?? 'Анонимный покупатель' }}
+                                        </h4>
+
+                                        <div class="flex items-center text-yellow-400 mt-1 space-x-0.5">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= $review->rating)
+                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path
+                                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                    </svg>
+                                                @else
+                                                    <svg class="w-4 h-4 text-gray-200" fill="currentColor"
+                                                         viewBox="0 0 20 20">
+                                                        <path
+                                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                    </svg>
+                                                @endif
+                                            @endfor
                                         </div>
-                                        @if(Auth::check() && Auth::user()->getKey() === $review->getUser()->getKey())
-                                            <button class="edit-review-btn text-gray-400 hover:text-blue-600 transition"
-                                                    title="Редактировать">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2"
-                                                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                                                </svg>
-                                            </button>
-                                        @endif
                                     </div>
-                                    <div class="flex items-center bg-blue-50 px-3 py-1 rounded-full">
-                                        <span
-                                            class="text-blue-700 font-bold text-sm">{{ $review->getRating() }} ★</span>
-                                    </div>
+
+                                    <span class="text-xs text-gray-400 font-medium">
+                                        {{ $review->created_at->format('d.m.Y') }}
+                                    </span>
                                 </div>
 
-                                <div class="review-text text-gray-700 italic">{{ $review->getReview() }}</div>
-
-                                @if(Auth::check() && Auth::user()->getKey() === $review->getUser()->getKey())
-                                    <div class="edit-review-form hidden mt-4 pt-4 border-t border-gray-200">
-                                        <form action="{{ route('review.update', $review->getKey()) }}" method="POST"
-                                              class="space-y-4">
-                                            @csrf
-                                            @method('patch')
-                                            <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
-                                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                                <div class="md:col-span-1">
-                                                    <select name="rating"
-                                                            class="w-full rounded-xl border-gray-300 py-2">
-                                                        @for($i = 5; $i >= 1; $i--)
-                                                            <option
-                                                                value="{{ $i }}" {{ $review->getRating() == $i ? 'selected' : '' }}>{{ $i }}
-                                                                звезд
-                                                            </option>
-                                                        @endfor
-                                                    </select>
-                                                </div>
-                                                <div class="md:col-span-3">
-                                                    <textarea name="review"
-                                                              class="w-full rounded-xl border-gray-300 p-4 border"
-                                                              rows="3">{{ $review->getReview() }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="flex space-x-3">
-                                                <button type="submit"
-                                                        class="bg-blue-600 text-white rounded-xl py-2 px-6 font-bold hover:bg-blue-700 transition text-sm">
-                                                    Сохранить
-                                                </button>
-                                                <button type="button"
-                                                        class="cancel-edit-review-btn text-gray-500 hover:text-gray-700 font-medium text-sm">
-                                                    Отмена
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                @endif
+                                <p class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                                    {{ $review->review }}
+                                </p>
                             </div>
                         @endforeach
                     </div>
@@ -254,30 +258,47 @@
                 @if(Auth::check())
                     @if(!$hasReview)
                         <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
-                            <h3 class="text-lg font-bold text-gray-900 mb-4">Написать отзыв</h3>
+                            <h3 class="text-lg font-bold text-gray-900 mb-4">Оставить отзыв</h3>
                             <form action="{{ route('review.store') }}" method="POST" class="space-y-4">
                                 @csrf
                                 <input name="product_id" type="hidden" value="{{ $product->getKey() }}">
-                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                                    <div class="md:col-span-1">
-                                        <select name="rating" class="w-full rounded-xl border-gray-200 py-3">
-                                            @for($i = 5; $i >= 1; $i--)
-                                                <option value="{{ $i }}">{{ $i }}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="md:col-span-3">
-                                        <textarea required name="review" placeholder="Ваш отзыв..."
-                                                  class="w-full rounded-xl border-gray-200 p-4 border"></textarea>
-                                    </div>
+
+                                <div class="flex items-center gap-4">
+                                    <label class="text-sm font-medium text-gray-700">Ваша оценка:</label>
+                                    <select name="rating" required
+                                            class="bg-white border border-gray-200 rounded-xl p-2 text-sm focus:ring-blue-500">
+                                        <option value="5">5 звезд</option>
+                                        <option value="4">4 звезды</option>
+                                        <option value="3">3 звезды</option>
+                                        <option value="2">2 звезды</option>
+                                        <option value="1">1 звезда</option>
+                                    </select>
                                 </div>
+
+                                <textarea required name="review"
+                                          placeholder="Поделитесь вашими впечатлениями от использования товара..."
+                                          rows="4"
+                                          class="w-full rounded-xl border-gray-200 p-4 border text-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+
                                 <button type="submit"
                                         class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest">
-                                    Опубликовать
+                                    Опубликовать отзыв
                                 </button>
                             </form>
                         </div>
+                    @else
+                        <div
+                            class="p-4 bg-blue-50 text-blue-700 text-sm font-medium rounded-2xl border border-blue-100 text-center">
+                            Вы уже оставили отзыв к этому товару. Спасибо за ваше мнение!
+                        </div>
                     @endif
+                @else
+                    <div
+                        class="p-4 bg-yellow-50 text-yellow-800 text-sm font-medium rounded-2xl border border-yellow-100 text-center">
+                        Чтобы оставить отзыв, пожалуйста, <a href="{{ route('show.login') }}"
+                                                             class="text-blue-600 underline hover:text-blue-800">войдите
+                            в свой аккаунт</a>.
+                    </div>
                 @endif
             </section>
 

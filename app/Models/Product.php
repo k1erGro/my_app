@@ -45,6 +45,29 @@ class Product extends Model implements ProductInterface, HasMedia
         return $this->questions;
     }
 
+    public function getSortedReviews(string $sortType = 'newest')
+    {
+        $query = $this->reviews()->with('user');
+
+        switch ($sortType) {
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'rating_high':
+                $query->orderBy('rating', 'desc')->latest();
+                break;
+            case 'rating_low':
+                $query->orderBy('rating', 'asc')->latest();
+                break;
+            case 'newest':
+            default:
+                $query->latest();
+                break;
+        }
+
+        return $query->get();
+    }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -192,7 +215,6 @@ class Product extends Model implements ProductInterface, HasMedia
 
     public function scopeFilterProducts($builder, array $selectedProperties, $priceFrom = null, $priceTo = null)
     {
-        // 1. Фильтр по цене
         if (!empty($priceFrom)) {
             $builder->where('price', '>=', $priceFrom);
         }
@@ -200,7 +222,6 @@ class Product extends Model implements ProductInterface, HasMedia
             $builder->where('price', '<=', $priceTo);
         }
 
-        // 2. Фильтр по динамическим свойствам
         if (!empty($selectedProperties)) {
             foreach ($selectedProperties as $propertyId => $values) {
 
@@ -210,19 +231,15 @@ class Product extends Model implements ProductInterface, HasMedia
 
                 $cleanValues = [];
 
-                // Если пришел массив (Livewire может прислать либо ['8 ГБ'], либо ['8 ГБ' => true])
                 if (is_array($values)) {
                     foreach ($values as $key => $val) {
                         if ($val === true || $val === 'true') {
-                            // Если формат ['8 ГБ' => true], то значение — это $key
                             $cleanValues[] = $key;
                         } elseif (!empty($val) && !is_bool($val)) {
-                            // Если формат ['8 ГБ'], то значение — это $val
                             $cleanValues[] = $val;
                         }
                     }
                 }
-                // Если пришло одиночное значение
                 unset($key, $val);
 
                 $cleanValues = array_filter($cleanValues);

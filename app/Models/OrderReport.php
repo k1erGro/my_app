@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderReport extends Model
 {
-    protected $fillable = ['order_id', 'user_id', 'title', 'description'];
+    protected $fillable = ['order_id', 'user_id', 'title', 'description', 'admin_answer'];
 
     public function user(): BelongsTo
     {
@@ -27,5 +27,10 @@ class OrderReport extends Model
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getAdminAnswer(): ?string
+    {
+        return $this->admin_answer;
     }
 }

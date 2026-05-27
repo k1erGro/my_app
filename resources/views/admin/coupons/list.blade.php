@@ -55,7 +55,7 @@
                     </td>
 
                     <td class="px-5 py-5">
-                        <p class="font-medium">{{ $coupon->getIsDisposable() ? 'Одноразовый' : 'Многоразовый' }}</p>
+                        <p class="font-medium">{{ $coupon->isDisposable() ? 'Одноразовый' : 'Многоразовый' }}</p>
                     </td>
 
                     <td class="px-5 py-5">

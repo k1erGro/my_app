@@ -26,6 +26,9 @@
                         заказ
                     </button>
                 </form>
+                <a href="{{ route('order-report.create', $order->id) }}" class="p-2 bg-yellow-500 text-white rounded-md">
+                    Задать вопрос по заказу
+                </a>
             </div>
 
             <div class="p-6">
