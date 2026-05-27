@@ -18,6 +18,9 @@
                 Сначала низкий рейтинг
             </a>
         </div>
+        <div>
+            <livewire:catalog-component :subCategory="$subCategory"/>
+        </div>
         <div class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
             @foreach($products as $product)

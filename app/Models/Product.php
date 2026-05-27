@@ -180,4 +180,62 @@ class Product extends Model implements ProductInterface, HasMedia
         });
     }
 
+    public function scopeSearch(Builder $builder, string $term): Builder
+    {
+        if (empty($term)) {
+            return $builder;
+        }
+        return $builder->whereRaw("MATCH(name, description) AGAINST(? IN BOOLEAN MODE)",
+            [$term . '*']
+        );
+    }
+
+    public function scopeFilterProducts($builder, array $selectedProperties, $priceFrom = null, $priceTo = null)
+    {
+        // 1. Фильтр по цене
+        if (!empty($priceFrom)) {
+            $builder->where('price', '>=', $priceFrom);
+        }
+        if (!empty($priceTo)) {
+            $builder->where('price', '<=', $priceTo);
+        }
+
+        // 2. Фильтр по динамическим свойствам
+        if (!empty($selectedProperties)) {
+            foreach ($selectedProperties as $propertyId => $values) {
+
+                if (empty($values)) {
+                    continue;
+                }
+
+                $cleanValues = [];
+
+                // Если пришел массив (Livewire может прислать либо ['8 ГБ'], либо ['8 ГБ' => true])
+                if (is_array($values)) {
+                    foreach ($values as $key => $val) {
+                        if ($val === true || $val === 'true') {
+                            // Если формат ['8 ГБ' => true], то значение — это $key
+                            $cleanValues[] = $key;
+                        } elseif (!empty($val) && !is_bool($val)) {
+                            // Если формат ['8 ГБ'], то значение — это $val
+                            $cleanValues[] = $val;
+                        }
+                    }
+                }
+                // Если пришло одиночное значение
+                unset($key, $val);
+
+                $cleanValues = array_filter($cleanValues);
+
+                if (!empty($cleanValues)) {
+                    $builder->whereHas('propertyValues', function ($query) use ($propertyId, $cleanValues) {
+                        $query->where('property_id', $propertyId)
+                            ->whereIn('value', $cleanValues);
+                    });
+                }
+            }
+        }
+
+        return $builder;
+    }
 }

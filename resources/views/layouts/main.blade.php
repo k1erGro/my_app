@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>My App</title>
 </head>
@@ -86,7 +87,11 @@
         </div>
     </div>
 </nav>
+
 <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4">
+        <livewire:header-search/>
+    </div>
     @yield('content')
 </main>
 <footer class="bg-white border-t border-gray-200 mt-7">
@@ -126,5 +131,6 @@
 
     </div>
 </footer>
+@livewireScripts
 </body>
 </html>

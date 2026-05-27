@@ -77,6 +77,7 @@ use App\Http\Controllers\Notifications\ListNotifications;
 use App\Http\Controllers\Notifications\MarkAsReadController;
 use App\Http\Controllers\Notifications\ShowNotification;
 use App\Http\Controllers\Notifications\SubscribeController;
+use App\Http\Controllers\OrderReportController;
 use App\Http\Controllers\Orders\CancelOrderController;
 use App\Http\Controllers\Orders\EditOrderController;
 use App\Http\Controllers\Orders\OrdersController;
@@ -95,6 +96,7 @@ use App\Http\Controllers\Question\StoreQuestionController;
 use App\Http\Controllers\Question\UpdateQuestionController;
 use App\Http\Controllers\Review\StoreReviewController;
 use App\Http\Controllers\Review\UpdateReviewController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
@@ -255,3 +257,6 @@ Route::delete('/cart/delete/{id}', CartDeleteController::class)->name('cart.dest
 
 Route::get('/order/{order}/pay', [PaymentController::class, 'pay'])->name('orders.pay')->middleware('auth');
 Route::match(['GET', 'POST'], '/payments/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+Route::get('/search', SearchController::class)->name('search.page');
+Route::get('/order-report', [OrderReportController::class, 'create'])->name('order-report.create');
+Route::post('/order-report', [OrderReportController::class, 'store'])->name('order-report.store');

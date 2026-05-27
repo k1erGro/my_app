@@ -11,6 +11,7 @@ class PaymentService
         $client = new Client();
         $client->setAuth(config('yookassa.shop_id'), config('yookassa.secret_key'));
         return $client;
+//        Мне надо сделать уведомление админу от пользователя заказавшего товар по вопросам по заказу. Я хочу сделать форму которую заполняет пользователь
     }
 
     public function createPayment(float $amount, string $description, array $options = [])
