@@ -25,6 +25,17 @@ class PropertySeeder extends Seeder
             ['name' => 'Процессор'],
             ['name' => 'Разрешение экрана'],
             ['name' => 'ОЗУ'],
+
+            ['name' => 'Класс энергоэффективности'],
+            ['name' => 'Общий полезный объем'],
+            ['name' => 'Энергопотребление'],
+
+            ['name' => 'Загрузка для стирки'],
+            ['name' => 'Отжим'],
+
+            ['name' => 'Дисплей'],
+            ['name' => 'Камера'],
+            ['name' => 'Питание']
         ];
         foreach ($properties as $property) {
             Property::create(['name' => $property['name']]);

@@ -25,6 +25,16 @@ class Order extends Model
         'total_price' => 'decimal:2',
     ];
 
+    public function transaction(): BelongsTo
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
+    public function getTransaction(): ?Transaction
+    {
+        return $this->transaction;
+    }
+
     public function coupon(): BelongsTo
     {
         return $this->belongsTo(Coupon::class);

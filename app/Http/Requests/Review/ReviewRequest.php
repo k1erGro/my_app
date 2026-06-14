@@ -24,7 +24,7 @@ class ReviewRequest extends FormRequest
         return [
             'product_id' => 'required|integer|exists:products,id',
             'review' => 'required|string|max:2048',
-            'rating' => 'required|integer|between:1,5',
+            'rating' => 'required|between:1,5',
         ];
     }
 }

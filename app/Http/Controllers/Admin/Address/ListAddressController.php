@@ -13,7 +13,7 @@ class ListAddressController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $addresses = Address::paginate(10);
+        $addresses = Address::where('is_warehouse', 1)->paginate(10);
         return view('admin.address.index', compact('addresses'));
     }
 }

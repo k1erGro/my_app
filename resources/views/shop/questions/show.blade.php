@@ -1,89 +1,121 @@
 @extends(Auth::user()->hasRole('Admin') ? 'layouts.admin' : 'layouts.main')
 @section('content')
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto px-6 py-12">
         <div class="flex items-center justify-between mb-8">
-            <div class="flex space-x-3">
-                <a href="{{ route('product.show', $question->getProduct()->getSlug()) }}"
-                   class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition">
-                    Назад
-                </a>
-            </div>
+            <a href="{{ route('product.show', $question->getProduct()->getSlug()) }}"
+               class="inline-flex items-center gap-2 text-gray-500 hover:text-indigo-600 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Назад к товару
+            </a>
         </div>
 
-        <div class="bg-white shadow-xl rounded-lg overflow-hidden">
-            <div class="p-6">
-                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8">
-                    <div class="sm:col-span-1">
-                        <dt class="font-bold text-gray-900 text-3xl tracking-wide">{{ $question->getTitle() }}</dt>
-                        <dd class="mt-1 text-xl text-gray-900">{{ $question->getDescription() }}</dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
-
-        <div class="mt-5 mb-5">
-            <form action="{{ route('answer.store') }}" method="POST">
-                @csrf
-                <input name="product_id" type="hidden" value="{{ $question->getProduct()->getKey() }}">
-                <input name="question_id" type="hidden" value="{{ $question->getKey() }}">
-
-                <div class="md:col-span-3">
-                    <textarea required name="description" placeholder="Ваш ответ..."
-                              class="w-full rounded-xl border-gray-200 p-4 border"></textarea>
+        <!-- Карточка вопроса -->
+        <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 overflow-hidden mb-8">
+            <div class="p-6 md:p-8">
+                <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-4">
+                    {{ $question->getTitle() }}
+                </h1>
+                <div class="text-gray-700 dark:text-gray-300 text-base leading-relaxed">
+                    {{ $question->getDescription() }}
                 </div>
-
-                <button type="submit"
-                        class="bg-blue-600 text-white rounded-xl py-3 px-8 font-bold hover:bg-blue-700 transition uppercase text-xs tracking-widest">
-                    Опубликовать
-                </button>
-            </form>
+                <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                    Вопрос от {{ $question->getUser()->getFirstName() }} • {{ $question->created_at->format('d.m.Y H:i') }}
+                </div>
+            </div>
         </div>
 
-        <h1 class="my-5">Ответы</h1>
-        @foreach($question->getAnswers() as $answer)
-            <div class="bg-white mt-4 shadow-xl rounded-lg overflow-hidden answer-item"
-                 data-answer-id="{{ $answer->getKey() }}">
-                <div class="sm:col-span-1 p-4">
-                    <div class="flex justify-between items-start">
-                        <dt class="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                            Ответ от {{ $answer->getUser()->getFirstName() }}
-                        </dt>
-                        @if(Auth::check() && Auth::user()->getKey() === $answer->getUser()->getKey())
-                            <button class="edit-answer-btn text-gray-400 hover:text-blue-600 transition"
-                                    title="Редактировать">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Форма отправки ответа (доступна всем авторизованным) -->
+        @auth
+            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 mb-8">
+                <h3 class="text-lg font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-4">Ваш ответ</h3>
+                <form action="{{ route('answer.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input name="product_id" type="hidden" value="{{ $question->getProduct()->getKey() }}">
+                    <input name="question_id" type="hidden" value="{{ $question->getKey() }}">
+                    <textarea required name="description" placeholder="Напишите ответ..."
+                              class="w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-4 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"></textarea>
+                    <button type="submit"
+                            class="inline-flex items-center px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest rounded-xl hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition shadow-md">
+                        Опубликовать ответ
+                    </button>
+                </form>
+            </div>
+        @endauth
+
+        <!-- Список ответов -->
+        <h2 class="text-2xl font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-6">Ответы ({{ $question->getAnswers()->count() }})</h2>
+        <div class="space-y-5">
+            @foreach($question->answers as $answer) {{-- Убедитесь, что связь называется так, либо замените на ваш метод получения ответов --}}
+            {{-- Инициализируем изолированную область данных Alpine для каждого ответа --}}
+            <div x-data="{ editing: false, answerDesc: '{{ addslashes($answer->getDescription()) }}' }"
+                 class="bg-gray-50 dark:bg-gray-800/40 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 transition-all">
+
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-3">
+                        <img class="h-8 w-8 rounded-full object-cover border border-gray-200 dark:border-gray-700"
+                             src="{{ $answer->getUser()->getFirstMediaUrl('avatars', 'preview') }}"
+                             alt="Аватар">
+                        <span class="text-sm font-bold text-gray-900 dark:text-white">
+                    {{ $answer->getUser()->getFirstName() }}
+                </span>
+
+                        {{-- Показываем бейдж, если ответил администратор --}}
+                        @if($answer->getUser()->hasRole('Admin'))
+                            <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full border border-indigo-100 dark:border-indigo-900/50">
+                        Администрация
+                    </span>
+                        @endif
+
+                        {{-- Кнопка редактирования (карандашик) --}}
+                        @if(Auth::user() && Auth::user()->getKey() === $answer->getUser()->getKey())
+                            <button @click="editing = !editing"
+                                    class="text-gray-400 hover:text-indigo-600 transition"
+                                    title="Редактировать ответ">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                                 </svg>
                             </button>
                         @endif
                     </div>
-                    <div class="answer-text mt-1 text-base text-gray-900">{{ $answer->getDescription() }}</div>
+                </div>
 
-                    <div class="edit-answer-form hidden mt-4 pt-4 border-t border-gray-200">
-                        <form action="{{ route('answer.update', $answer->getKey()) }}" method="POST" class="space-y-4">
-                            @csrf
-                            @method('patch')
-                            <input name="product_id" type="hidden" value="{{ $question->getProduct()->getKey() }}">
-                            <input name="question_id" type="hidden" value="{{ $question->getKey() }}">
-                            <textarea name="description" class="w-full rounded-xl border-gray-300 p-4 border"
-                                      rows="3">{{ $answer->getDescription() }}</textarea>
-                            <div class="flex space-x-3">
-                                <button type="submit"
-                                        class="bg-blue-600 text-white rounded-xl py-2 px-6 font-bold hover:bg-blue-700 transition text-sm">
-                                    Сохранить
-                                </button>
-                                <button type="button"
-                                        class="cancel-edit-answer-btn text-gray-500 hover:text-gray-700 font-medium text-sm">
-                                    Отмена
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                {{-- Отображение текста ответа (скрывается при редактировании) --}}
+                <div x-show="!editing" class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {{ $answer->getDescription() }}
+                </div>
+
+                {{-- Форма редактирования ответа (показывается при editing === true) --}}
+                <div x-show="editing" class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700" style="display: none;">
+                    {{-- Предполагаю, что роут называется answer.update. Если это не так, замените на ваш --}}
+                    <form action="{{ route('answer.update', $answer->getKey()) }}" method="POST" class="space-y-4">
+                        @csrf
+                        @method('patch')
+
+                        <input name="product_id" type="hidden" value="{{ $question->getProduct()->getKey() }}">
+                        <input name="question_id" type="hidden" value="{{ $question->getKey() }}">
+
+                        <textarea name="description" rows="3" required x-model="answerDesc"
+                                  class="w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white p-4 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+
+                        <div class="flex gap-3">
+                            <button type="submit"
+                                    class="bg-indigo-600 text-white rounded-xl py-2 px-6 font-bold hover:bg-indigo-700 transition text-sm">
+                                Сохранить
+                            </button>
+                            {{-- Кнопка отмены скрывает форму и сбрасывает текст к исходному --}}
+                            <button type="button"
+                                    @click="editing = false; answerDesc = '{{ addslashes($answer->getDescription()) }}'"
+                                    class="text-gray-500 hover:text-gray-700 font-medium text-sm">
+                                Отмена
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        @endforeach
-
+            @endforeach
+        </div>
     </div>
-    <script src="{{ asset('js/script.js') }}"></script>
 @endsection

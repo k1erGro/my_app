@@ -15,28 +15,32 @@ class UpdateUserController extends Controller
      */
     public function __invoke(UpdateRequest $request, User $user)
     {
-        // 1. Проверяем права текущего авторизованного админа (твоя стандартная политика)
         $this->authorize('update', $user);
 
-        $chosenRole = $request->validated()['role'];
+        $authenticated_user = Auth::user();
+        $data = $request->validated();
+        if ($authenticated_user)
+            if ($authenticated_user->hasRole(RoleEnum::ADMIN)) {
+                $user->syncRoles($request->role);
 
-        // 2. Защита от "самоубийства" прав: не даем текущему админу снять с себя управляющую роль
-        if (auth()->id() === $user->getKey() && $chosenRole === 'User') {
-            return redirect()->back()->withErrors([
-                'role' => 'Вы не можете перевести в статус обычного пользователя самого себя!'
-            ]);
-        }
+            }
+            else {
+                $user->update([
+                    'f_name' => $data['f_name'],
+                    'l_name' => $data['l_name'],
+                    'm_name' => $data['m_name'] ?? null,
+                    'email' => $data['email'],
+                    'birthday' => $data['birthday'] ?? null,
+                    'phone' => $data['phone'] ?? null,
+                    'address' => $data['address'] ?? null,
+                ]);
 
-        // 3. Синхронизируем роль в Spatie Permission
-        if ($chosenRole === 'User') {
-            // Если выбран дефолтный пользователь, просто очищаем все спец-роли из Spatie
-            $user->syncRoles([]);
-        } else {
-            // Если выбрана конкретная роль (Director, Manager, TechnicalSpecialist), привязываем её
-            $user->syncRoles([$chosenRole]);
-        }
+                if ($request->hasFile('avatar')) {
+                    $user->clearMediaCollection('avatars');
+                    $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+                }
+            }
 
-        // 4. Редирект обратно на список пользователей в админке с красивым уведомлением
-        return redirect()->route('admin.index')->with('message', 'Роль пользователя успешно обновлена!');
+        return redirect()->back()->with('success', 'Профиль успешно обновлен!');
     }
 }

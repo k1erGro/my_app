@@ -18,11 +18,11 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'price' => $this->faker->numberBetween(1000, 999999),
-            'description' => $this->faker->text(),
-            'category_id' => $this->faker->numberBetween(1, 10),
-            'sub_category_id' => $this->faker->numberBetween(1, 53),
+//            'name' => $this->faker->name(),
+//            'price' => $this->faker->numberBetween(1000, 999999),
+//            'description' => $this->faker->text(),
+//            'category_id' => $this->faker->numberBetween(1, 5),
+//            'sub_category_id' => $this->faker->numberBetween(1, 17),
         ];
     }
 }

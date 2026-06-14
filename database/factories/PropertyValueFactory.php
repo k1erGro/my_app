@@ -18,9 +18,9 @@ class PropertyValueFactory extends Factory
     public function definition(): array
     {
         return [
-            'property_id' => $this->faker->numberBetween(1, 100),
-            'product_id' => $this->faker->numberBetween(1, 200),
-            'value' => $this->faker->name(),
+//            'property_id' => $this->faker->numberBetween(1, 100),
+//            'product_id' => $this->faker->numberBetween(1, 3),
+//            'value' => $this->faker->name(),
         ];
     }
 }

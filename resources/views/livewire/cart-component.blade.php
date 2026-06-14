@@ -1,80 +1,84 @@
-<div class="max-w-7xl mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Ваша корзина</h1>
+<div class="max-w-[1600px] mx-auto px-6 py-12">
+    <h1 class="text-4xl font-black uppercase tracking-tighter mb-8 text-gray-900 dark:text-white">Ваша корзина</h1>
 
     @if($items->isEmpty())
-        <div class="text-center py-12">
-            <p class="text-xl text-gray-500">В корзине пока пусто...</p>
-            <a href="{{ route('catalog.index') }}" class="mt-4 inline-block text-blue-600 hover:underline">Перейти к покупкам</a>
+        <div class="text-center py-20 bg-gray-50 dark:bg-gray-900 rounded-3xl">
+            <p class="text-xl text-gray-500 dark:text-gray-400">В корзине пока пусто...</p>
+            <a href="{{ route('catalog.index') }}" class="mt-6 inline-block px-8 py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition">
+                Перейти к покупкам
+            </a>
         </div>
     @else
         <div class="flex flex-col lg:flex-row gap-8">
-            <div class="lg:w-2/3">
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <table class="w-full text-left">
-                        <thead class="bg-gray-50 border-b">
-                        <tr>
-                            <th class="px-6 py-4 w-12 text-center">
-                                <input type="checkbox" wire:model.live="selectAll" class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer">
-                            </th>
-                            <th class="px-6 py-4 font-semibold text-gray-700">Товар</th>
-                            <th class="px-6 py-4 font-semibold text-gray-700">Кол-во</th>
-                            <th class="px-6 py-4 font-semibold text-gray-700">Цена</th>
-                            <th class="px-6 py-4"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                        @foreach($items as $item)
-                            <tr wire:key="item-{{ $item->getKey() }}">
-                                <td class="px-6 py-4 text-center">
-                                    <input type="checkbox" wire:model.live="selectedItems" value="{{ $item->getKey() }}" class="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer">
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <img src="{{ $item->getProduct()->getFirstMediaUrl('product_images') }}" class="w-16 h-16 object-cover rounded mr-4" alt="">
-                                        <div>
-                                            <p class="font-bold text-gray-800">{{ $item->getProduct()->getName() }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center border rounded-lg w-max">
-                                        <button wire:click="decrement({{ $item->getKey() }})" class="px-3 py-1 hover:bg-gray-100" {{ $item->getQuantity() <= 1 ? 'disabled' : '' }}>-</button>
-                                        <span class="px-4 py-1 border-x">{{ $item->getQuantity() }}</span>
-                                        <button wire:click="increment({{ $item->getKey() }})" class="px-3 py-1 hover:bg-gray-100">+</button>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 font-medium">
-                                    {{ $item->getProduct()->getPrice() * $item->getQuantity() }} ₽
-                                </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button wire:click="delete({{ $item->getKey() }})" class="text-red-500 hover:text-red-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+            <!-- Список товаров -->
+            <div class="lg:w-2/3 space-y-4">
+                @foreach($items as $item)
+                    <div wire:key="item-{{ $item->getKey() }}" class="bg-white dark:bg-gray-900 rounded-2xl shadow-md hover:shadow-xl transition-shadow p-4 md:p-6">
+                        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                            <!-- Чекбокс -->
+                            <div class="flex-shrink-0">
+                                <input type="checkbox" wire:model.live="selectedItems" value="{{ $item->getKey() }}" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-5 w-5 cursor-pointer">
+                            </div>
+
+                            <!-- Изображение -->
+                            <div class="flex-shrink-0">
+                                <img src="{{ $item->getProduct()->getFirstMediaUrl('products') }}" class="w-20 h-20 object-cover rounded-xl bg-gray-100 dark:bg-gray-800" alt="">
+                            </div>
+
+                            <!-- Информация о товаре -->
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-lg text-gray-900 dark:text-white">{{ $item->getProduct()->getName() }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Артикул: {{ $item->getProduct()->getKey() }}</p>
+                            </div>
+
+                            <!-- Количество + цена + удаление -->
+                            <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap">
+                                <div class="flex items-center border border-gray-200 dark:border-gray-700 rounded-full overflow-hidden">
+                                    <button wire:click="decrement({{ $item->getKey() }})" class="px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-600 dark:text-gray-300" {{ $item->getQuantity() <= 1 ? 'disabled' : '' }}>-</button>
+                                    <span class="px-4 py-1.5 border-x border-gray-200 dark:border-gray-700 font-medium text-gray-900 dark:text-white">{{ $item->getQuantity() }}</span>
+                                    <button wire:click="increment({{ $item->getKey() }})" class="px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-600 dark:text-gray-300">+</button>
+                                </div>
+
+                                <div class="font-black text-xl text-indigo-600 dark:text-indigo-400 min-w-[100px] text-right">
+                                    {{ number_format($item->getProduct()->getPrice() * $item->getQuantity(), 0, ',', ' ') }} ₽
+                                </div>
+
+                                <button wire:click="delete({{ $item->getKey() }})" class="text-red-500 hover:text-red-700 transition p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
+            <!-- Блок итого -->
             <div class="lg:w-1/3">
-                <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
-                    <h2 class="text-xl font-bold mb-4">Итого</h2>
-                    <div class="flex justify-between mb-2">
-                        <span>Выбрано товаров ({{ $totalQuantity }})</span>
-                        <span>{{ $totalPrice }} ₽</span>
+                <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 sticky top-24 border border-gray-200 dark:border-gray-800">
+                    <h2 class="text-2xl font-black uppercase tracking-tighter mb-4 text-gray-900 dark:text-white">Итого</h2>
+
+                    <div class="space-y-2 text-gray-600 dark:text-gray-300">
+                        <div class="flex justify-between">
+                            <span>Выбрано товаров:</span>
+                            <span class="font-medium">{{ $totalQuantity }} шт.</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Сумма:</span>
+                            <span class="font-medium">{{ number_format($totalPrice, 0, ',', ' ') }} ₽</span>
+                        </div>
+                        <div class="flex justify-between text-green-600 dark:text-green-400">
+                            <span>Доставка:</span>
+                            <span class="font-medium">Бесплатно</span>
+                        </div>
                     </div>
-                    <div class="flex justify-between mb-4">
-                        <span>Доставка</span>
-                        <span class="text-green-600 font-medium">Бесплатно</span>
-                    </div>
-                    <hr class="mb-4">
-                    <div class="flex justify-between text-lg font-bold mb-6">
-                        <span>К оплате</span>
-                        <span>{{ $totalPrice }} ₽</span>
+
+                    <div class="border-t border-gray-200 dark:border-gray-700 my-4"></div>
+
+                    <div class="flex justify-between text-xl font-black mb-6 text-gray-900 dark:text-white">
+                        <span>К оплате:</span>
+                        <span class="text-indigo-600 dark:text-indigo-400">{{ number_format($totalPrice, 0, ',', ' ') }} ₽</span>
                     </div>
 
                     <form action="{{ route('orders.store') }}" method="post">
@@ -90,10 +94,14 @@
 
                         <button type="submit"
                                 @if(empty($selectedItems)) disabled @endif
-                                class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest rounded-full transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
                             Оформить заказ
                         </button>
                     </form>
+
+                    <p class="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
+                        Нажимая «Оформить заказ», вы соглашаетесь с условиями
+                    </p>
                 </div>
             </div>
         </div>

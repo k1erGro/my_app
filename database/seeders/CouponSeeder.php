@@ -15,6 +15,7 @@ class CouponSeeder extends Seeder
     {
         $coupons = [
             ['code' => 'disc20', 'type' => 'percent', 'value' => '20', 'min_order_amount' => 1000, 'is_disposable' => 1],
+            ['code' => 'summer2026', 'type' => 'percent', 'value' => '30', 'min_order_amount' => 10000, 'is_disposable' => 1],
         ];
 
         foreach ($coupons as $coupon) {

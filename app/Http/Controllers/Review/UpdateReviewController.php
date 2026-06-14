@@ -20,7 +20,7 @@ class UpdateReviewController extends Controller
             'user_id' => Auth::user()->getKey(),
             'product_id' => $request->integer('product_id'),
             'review' => $request->string('review'),
-            'rating' => $request->float('rating'),
+            'rating' => $request->integer('rating'),
         ]);
         return redirect()->back();
     }

@@ -1,89 +1,93 @@
 @extends('layouts.main')
 
 @section('content')
-    <div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative min-h-[calc(100vh-96px)] flex items-center py-12 overflow-hidden">
+        <div class="max-w-6xl mx-auto text-center w-full px-6">
+            <h1 class="text-[clamp(3rem,8vw,6rem)] font-black uppercase leading-[0.9] tracking-tighter">
+                <span class="text-gray-900 dark:text-white">Техника, которая </span>
+                <span class="text-indigo-600">не тормозит</span>
+            </h1>
+            <p class="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mt-6 leading-relaxed">
+                От мощных ПК и геймерских девайсов до умной бытовой техники.<br>
+                Только оригинал, гарантия 3 года, кэшбек 10% и регулярные купоны на скидку.
+            </p>
 
-            <div class="flex flex-col-reverse lg:flex-row items-center gap-10 py-12 lg:py-20">
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium">Комплектующие</span>
+                <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium">Гейминг</span>
+                <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium">Смартфоны</span>
+                <span class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium">Бытовая техника</span>
+            </div>
 
-                <div class="w-full lg:w-1/2 text-center lg:text-left">
-                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                        <span class="block">Обновите свой</span>
-                        <span class="block text-blue-600">цифровой мир</span>
-                    </h1>
+            <div class="flex flex-wrap gap-4 pt-8 justify-center">
+                <a href="{{ route('catalog.index') }}"
+                   class="group relative px-10 py-5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-black uppercase tracking-widest rounded-full overflow-hidden transition-all hover:scale-105">
+                    <span class="relative z-10">Смотреть каталог</span>
+                    <div class="absolute inset-0 bg-indigo-600 dark:bg-indigo-500 translate-y-full group-hover:translate-y-0 transition-transform"></div>
+                </a>
 
-                    <p class="mt-4 text-base text-gray-500 sm:text-lg md:text-xl">
-                        Лучшие комплектующие, периферия и готовые решения для геймеров и профессионалов.
-                        Прямые поставки и официальная гарантия.
-                    </p>
+            </div>
 
-                    <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-start">
-                        <a href="{{ route('catalog.index') }}"
-                           class="px-8 py-3 text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition md:py-4 md:text-lg md:px-10 text-center">
-                            В каталог
-                        </a>
-
-                        <a href="{{ route('product.index') }}"
-                           class="px-8 py-3 text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition md:py-4 md:text-lg md:px-10 text-center">
-                            Товары
-                        </a>
-                    </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+                <div>
+                    <div class="text-2xl font-black text-indigo-600">5000+</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Товаров</div>
                 </div>
-
-                <div class="w-full lg:w-1/2 flex justify-center">
-                    <img
-                        class="w-full max-w-md sm:max-w-lg lg:max-w-full h-auto object-contain"
-                        src="{{ asset('img/hero-img.png') }}"
-                        alt="Gaming Setup"
-                    >
+                <div>
+                    <div class="text-2xl font-black text-indigo-600">3 года</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Гарантии</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-indigo-600">10%</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Кэшбек</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-black text-indigo-600">24/7</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Поддержка</div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="py-12 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <div class="flex items-start space-x-4">
-                    <div class="bg-blue-500 p-3 rounded-lg text-white">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Гарантия качества</h3>
-                        <p class="text-sm text-gray-500">Только оригинальная продукция</p>
-                    </div>
+    </section>
+    <div class="bg-white dark:bg-gray-900 rounded-3xl mx-6 mb-6 overflow-hidden">
+        <section class="py-20 px-6">
+            <div class="max-w-[1600px] mx-auto">
+                <h2 class="text-4xl font-black uppercase mb-12 tracking-tighter text-gray-900 dark:text-white">Популярные категории</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach($categories as $category)
+                        <a href="{{ route('catalog.show', $category->getSlug()) }}" class="group relative block h-64 rounded-3xl overflow-hidden shadow-lg">
+                            <img src="{{ $category->getFirstMediaUrl('category_images', 'preview') ?: asset('img/placeholder-category.jpg') }}" alt="Картинка"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-6 flex flex-col justify-end">
+                                <span class="text-white font-black text-xl">{{ $category->getName() }}</span>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="bg-blue-500 p-3 rounded-lg text-white">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Быстрая доставка</h3>
-                        <p class="text-sm text-gray-500">Отправка в день заказа</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="bg-blue-500 p-3 rounded-lg text-white">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Выгодные цены</h3>
-                        <p class="text-sm text-gray-500">Бонусная программа для своих</p>
-                    </div>
-                </div>
-
             </div>
-        </div>
+        </section>
     </div>
 
+    <!-- Features секция с таким же фоном и скруглением (опционально) -->
+    <div class="bg-white dark:bg-gray-900 rounded-3xl mx-6">
+        <section class="py-20 px-6">
+            <div class="max-w-[1600px] mx-auto">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @php
+                        $features = [
+                            ['title' => 'Оригинал', 'desc' => 'Без подделок'],
+                            ['title' => 'Скорость', 'desc' => 'Молниеносная доставка'],
+                            ['title' => 'Гарантия', 'desc' => '3 года сервиса'],
+                            ['title' => 'Бонусы', 'desc' => 'Кэшбек 10%']
+                        ];
+                    @endphp
+                    @foreach($features as $f)
+                        <div class="group p-8 bg-gray-50 dark:bg-gray-800 rounded-[2rem] transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                            <h3 class="text-2xl font-black uppercase tracking-tight mb-2 text-gray-900 dark:text-white">{{ $f['title'] }}</h3>
+                            <p class="text-gray-500 dark:text-gray-400">{{ $f['desc'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection

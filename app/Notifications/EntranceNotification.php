@@ -11,6 +11,7 @@ class EntranceNotification extends Notification implements ShouldQueue
     use Queueable;
 
     private $product;
+
     public function __construct($product)
     {
         $this->product = $product;
@@ -21,9 +22,9 @@ class EntranceNotification extends Notification implements ShouldQueue
         return ['database'];
     }
 
-    public function toDatabase($notifiable): array
+    public function toDatabase(object $notifiable): array
     {
-        return[
+        return [
             'type' => 'product_entrance',
             'product_id' => $this->product->id,
             'product_slug' => $this->product->slug,

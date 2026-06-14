@@ -96,12 +96,12 @@ use App\Http\Controllers\Question\UpdateQuestionController;
 use App\Http\Controllers\Review\StoreReviewController;
 use App\Http\Controllers\Review\UpdateReviewController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WelcomePageController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
-Route::get('/', function () {
-    return view('shop.welcome');
-})->name('shop.index');
+Route::get('/', [WelcomePageController::class, 'welcome'])->name('shop.index');
+
 
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
     Route::get('/register', ShowRegisterController::class)->name('show.register');

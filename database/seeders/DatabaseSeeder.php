@@ -87,12 +87,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(SubCategorySeeder::class);
         $this->call(PropertySeeder::class);
-        Property::factory(100)->create();
         $this->call(ProductSeeder::class);
-
-        Product::factory(200)->create();
-        PropertyValue::factory(100)->create();
-
         $this->call(AddressSeeder::class);
         $this->call(OrderSeeder::class);
         $this->call(ReviewSeeder::class);

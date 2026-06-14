@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
@@ -25,7 +26,7 @@ class RegisterController extends Controller
             'birthday' => $request->date('birthday'),
             'phone' => $request->string('phone'),
             'address' => $request->string('address'),
-        ])->assignRole('User'));
+        ])->assignRole(RoleEnum::USER));
         return redirect()->route('shop.index');
     }
 }
