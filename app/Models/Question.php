@@ -21,7 +21,7 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }

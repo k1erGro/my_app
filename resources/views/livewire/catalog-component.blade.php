@@ -3,14 +3,6 @@
         Каталог: {{ $subCategory->name }}
     </h1>
 
-    @can('create-categories')
-        <div class="mb-6">
-            <a href="{{ route('admin.category.create') }}"
-               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition inline-block">
-                + Добавить категорию
-            </a>
-        </div>
-    @endcan
 
     <div class="flex gap-4 mb-6 mt-5">
         <button wire:click="$set('sort', 'rating_desc')"
@@ -108,31 +100,8 @@
                                         <p class="text-xl font-extrabold text-blue-600 whitespace-nowrap">
                                             {{ number_format($product->getPrice(), 0, '.', ' ') }} ₽
                                         </p>
-                                        <form action="{{ route('cart.add') }}" method="POST" wire:submit.prevent onclick="event.stopPropagation();">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $product->getKey() }}">
-                                            <button class="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-md
-                                                    hover:bg-blue-700 active:scale-95 transition duration-200 shadow-sm">
-                                                Купить
-                                            </button>
-                                        </form>
-                                    </div>
 
-                                    @if(auth()->user() && (auth()->user()->can('edit-categories') || auth()->user()->can('delete-categories')))
-                                        <div class="flex gap-4 mt-3 pt-2 border-t border-gray-50 text-xs font-medium" onclick="event.stopPropagation(); event.preventDefault();">
-                                            @can('edit-categories')
-                                                <a href="{{ route('admin.product.edit', $product->getSlug()) }}"
-                                                   class="text-blue-600 hover:text-blue-900">Изменить</a>
-                                            @endcan
-                                            @can('delete-categories')
-                                                <form method="POST" action="{{ route('admin.product.destroy', $product->getKey()) }}" class="inline">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="text-red-600 hover:text-red-900">Удалить</button>
-                                                </form>
-                                            @endcan
-                                        </div>
-                                    @endif
+                                    </div>
                                 </div>
                             </a>
                         </div>

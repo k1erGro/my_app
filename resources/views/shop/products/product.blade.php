@@ -382,14 +382,16 @@
 
                                     <div class="flex justify-between items-start mb-4">
                                         <div class="flex items-center gap-3">
+                                            @if(\Illuminate\Support\Facades\Auth::user())
                                             <img
                                                 class="h-10 w-10 rounded-full object-cover border border-gray-200 dark:border-gray-700"
-                                                src="{{ $question->getUser()->getFirstMediaUrl('avatars', 'preview') }}"
+                                                src="{{ $question->getUser()?->getFirstMediaUrl('avatars', 'preview') }}"
                                                 alt="Аватар">
+                                            @endif
                                             <span
-                                                class="text-gray-900 dark:text-white font-bold">{{ $question->getUser()->getFirstName() }}</span>
+                                                class="text-gray-900 dark:text-white font-bold">{{ $question->getUser()?->getFirstName() }}</span>
 
-                                            @if(Auth::user() && Auth::user()->getKey() === $question->getUser()->getKey())
+                                            @if(Auth::user() && Auth::user()->getKey() === $question->getUser()?->getKey())
                                                 {{-- По клику переключаем режим редактирования --}}
                                                 <button @click="editing = !editing"
                                                         class="edit-question-btn text-gray-400 hover:text-indigo-600 transition"

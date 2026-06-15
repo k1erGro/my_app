@@ -21,7 +21,7 @@
                     {{ $question->getDescription() }}
                 </div>
                 <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                    Вопрос от {{ $question->getUser()->getFirstName() }} • {{ $question->created_at->format('d.m.Y H:i') }}
+                    Вопрос от {{ $question->getUser()?->getFirstName() }} • {{ $question->created_at->format('d.m.Y H:i') }}
                 </div>
             </div>
         </div>

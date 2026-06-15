@@ -13,7 +13,7 @@
                 {{ $category->getName() }}
             </h1>
             @can('create-categories')
-                <a href="{{ route('admin.category.create') }}"
+                <a href="{{ route('admin.subCategory.create') }}"
                    class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition shadow-md hover:shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
