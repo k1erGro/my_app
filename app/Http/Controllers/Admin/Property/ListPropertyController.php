@@ -13,6 +13,22 @@ class ListPropertyController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $query = Property::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        $properties = $query->paginate(10);
+        $properties->appends($request->only('search'));
+
+        return view('admin.property.index', compact('properties'));
+
+
+
         $properties = Property::paginate(10);
         return view('admin.property.index', compact('properties'));
     }

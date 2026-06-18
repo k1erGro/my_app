@@ -12,6 +12,7 @@ class Answer extends Model
         'product_id',
         'question_id',
         'description',
+        'is_approved'
     ];
 
     public function user(): BelongsTo
@@ -52,5 +53,15 @@ class Answer extends Model
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getIsApproved(): bool
+    {
+        return $this->is_approved;
+    }
+
+    public function setIsApproved(bool $isApproved): void
+    {
+        $this->is_approved = $isApproved;
     }
 }

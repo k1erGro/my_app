@@ -36,6 +36,7 @@
             <p class="mt-6 text-center text-xs font-bold uppercase tracking-widest text-gray-400">
                 Нет аккаунта? <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-500 dark:hover:text-indigo-400 underline transition">Регистрация</a>
             </p>
+            <a href="{{ route('password.request') }}" class="text-xs text-indigo-600 hover:underline dark:text-indigo-400">Забыли пароль?</a>
         </div>
     </div>
 @endsection

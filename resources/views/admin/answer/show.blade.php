@@ -6,7 +6,7 @@
                 <h2 class="text-3xl font-bold text-gray-800">ID ответа пользователя: {{ $answer->getKey() }}</h2>
             </div>
             <div class="flex space-x-3">
-                <a href="{{ route('admin.answer.list') }}"
+                <a href="{{ route('admin.answers.list') }}"
                    class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition">
                     К списку
                 </a>

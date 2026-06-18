@@ -13,7 +13,7 @@ class AdminListOrderController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $orders = Order::paginate(10);
+        $orders = Order::whereNot('status', 'draft')->paginate(10);
         return view('admin.orders.index', compact('orders'));
     }
 }

@@ -13,6 +13,7 @@ class CatalogComponent extends Component
     use WithPagination;
 
     public SubCategory $subCategory;
+    public $showFilters = false;
 
     public $priceFrom;
     public $priceTo;

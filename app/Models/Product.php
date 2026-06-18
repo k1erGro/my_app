@@ -47,7 +47,7 @@ class Product extends Model implements ProductInterface, HasMedia
 
     public function getSortedReviews(string $sortType = 'newest')
     {
-        $query = $this->reviews()->with('user');
+        $query = $this->reviews()->where('is_approved', 1)->with('user');
 
         switch ($sortType) {
             case 'oldest':

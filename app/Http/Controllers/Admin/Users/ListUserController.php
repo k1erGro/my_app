@@ -13,7 +13,32 @@ class ListUserController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $users = User::paginate(8);
+        $query = User::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('l_name', 'like', "%{$search}%")
+                    ->orWhere('f_name', 'like', "%{$search}%")
+                    ->orWhere('m_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        $sortField = $request->get('sort', 'id');
+        $sortDirection = $request->get('direction', 'desc');
+
+        $allowedSorts = ['id', 'l_name', 'email', 'phone', 'created_at'];
+        if (!in_array($sortField, $allowedSorts)) {
+            $sortField = 'id';
+        }
+
+        $query->orderBy($sortField, $sortDirection);
+
+        $users = $query->paginate(8);
+        $users->appends($request->only(['search', 'sort', 'direction']));
+
         return view('admin.user.index', compact('users'));
     }
 }

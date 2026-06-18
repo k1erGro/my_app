@@ -17,6 +17,7 @@ class Address extends Model
     protected $fillable = [
         'name',
         'slug',
+        'is_warehouse'
     ];
 
     public function products(): BelongsToMany

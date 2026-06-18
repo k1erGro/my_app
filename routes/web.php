@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Address\StoreAddressController;
 use App\Http\Controllers\Admin\Address\UpdateAddressController;
 use App\Http\Controllers\Admin\Answer\DeleteAnswerController;
 use App\Http\Controllers\Admin\Answer\ListAnswerController;
+use App\Http\Controllers\Admin\Answer\ModerateAnswerController;
 use App\Http\Controllers\Admin\Answer\ShowAnswerController;
 use App\Http\Controllers\Admin\Categories\CreateCategoryController;
 use App\Http\Controllers\Admin\Categories\DeleteCategoryController;
@@ -40,6 +41,8 @@ use App\Http\Controllers\Admin\Property\StorePropertyController;
 use App\Http\Controllers\Admin\Property\UpdatePropertyController;
 use App\Http\Controllers\Admin\Question\DeleteQuestionController;
 use App\Http\Controllers\Admin\Question\ListQuestionController;
+use App\Http\Controllers\Admin\Question\ModerateQuestionController;
+use App\Http\Controllers\Admin\Reviews\ApproveReviewController;
 use App\Http\Controllers\Admin\Reviews\DeleteReviewController;
 use App\Http\Controllers\Admin\Reviews\ListReviewController;
 use App\Http\Controllers\Admin\Reviews\ShowReviewController;
@@ -60,6 +63,7 @@ use App\Http\Controllers\Admin\Users\ListUserController;
 use App\Http\Controllers\Answer\StoreAnswerController;
 use App\Http\Controllers\Answer\UpdateAnswerController;
 use App\Http\Controllers\Auth\DashboardController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Cart\CartAddController;
 use App\Http\Controllers\Cart\CartDeleteController;
 use App\Http\Controllers\Cart\CartShowController;
@@ -109,7 +113,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
     Route::get('/login', ShowLoginController::class)->name('show.login');
     Route::post('/login', LoginController::class)->name('login');
     Route::post('/logout', LogoutController::class)->name('logout');
+
 });
+
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// 2. Форма ввода нового пароля (сюда переходят из письма)
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
@@ -119,6 +131,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/edit-password/{user}', EditPasswordController::class)->name('profile.edit.password');
     Route::patch('/profile/update-password/{user}', UpdatePasswordUserController::class)->name('profile.update_password');
     Route::delete('/profile/destroy/{user}', DeleteUserController::class)->name('profile.destroy');
+
+
 
     Route::get('/shop/orders/{order}/report', [OrderReportController::class, 'create'])->name('order-report.create');
     Route::post('/shop/order-report', [OrderReportController::class, 'store'])->name('order-report.store');
@@ -189,16 +203,19 @@ Route::middleware(RoleMiddleware::using(['Admin', 'TechnicalSpecialist', 'Direct
     Route::get('/reviews', ListReviewController::class)->name('admin.reviews.index');
     Route::get('/show-review/{review}', ShowReviewController::class)->name('admin.reviews.show');
     Route::delete('/destroy-review/{review}', DeleteReviewController::class)->name('admin.reviews.destroy');
+    Route::patch('/approve-review/{review}', ApproveReviewController::class)->name('admin.reviews.approve');
 
     //Вопросы
     Route::get('/questions', ListQuestionController::class)->name('admin.questions.list');
     Route::get('/show-question/{question}', ShowQuestionController::class)->name('admin.question.show');
     Route::delete('/delete-question/{question}', DeleteQuestionController::class)->name('admin.question.destroy');
+    Route::patch('/moderate-question/{question}', ModerateQuestionController::class)->name('admin.question.moderate');
 
     //Ответы
     Route::get('/answers', ListAnswerController::class)->name('admin.answers.list');
     Route::get('/show-answers/{answer}', ShowAnswerController::class)->name('admin.answer.show');
     Route::delete('/delete-answer/{answer}', DeleteAnswerController::class)->name('admin.answer.destroy');
+    Route::patch('/admin/answers/{answer}/moderate', ModerateAnswerController::class)->name('admin.answer.moderate');
 
     // Купоны
     Route::get('/coupons', ListCouponsController::class)->name('admin.coupons.list');

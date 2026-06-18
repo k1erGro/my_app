@@ -69,7 +69,7 @@
             @can('view-questions')
                 <a href="{{ route('admin.questions.list') }}"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-slate-700 bg-slate-700">
-                    Вопросы
+                    Вопросы по товарам
                 </a>
             @endcan
             @can('view-answers')

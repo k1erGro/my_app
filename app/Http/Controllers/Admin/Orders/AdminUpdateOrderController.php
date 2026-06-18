@@ -16,8 +16,6 @@ class AdminUpdateOrderController extends Controller
     public function __invoke(AdminOrderRequest $request, Order $order)
     {
         $order->update([
-            'delivery_date' => $request->date('delivery_date'),
-            'address_id' => $request->integer('address_id'),
             'status' => $request->string('status'),
         ]);
 

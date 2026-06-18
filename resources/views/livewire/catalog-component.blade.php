@@ -3,21 +3,30 @@
         Каталог: {{ $subCategory->name }}
     </h1>
 
+    <div class="flex flex-wrap items-center gap-4 mb-6 mt-5">
+        <div class="flex flex-wrap gap-2">
+            <button wire:click="$set('sort', 'rating_desc')"
+                    class="px-4 py-2 {{ $sort == 'rating_desc' ? 'bg-blue-100 text-blue-700 border-blue-300 font-semibold' : 'bg-white text-gray-700 border-gray-300' }} border rounded shadow-sm hover:bg-gray-50 transition">
+                Сначала высокий рейтинг
+            </button>
+            <button wire:click="$set('sort', 'rating_asc')"
+                    class="px-4 py-2 {{ $sort == 'rating_asc' ? 'bg-blue-100 text-blue-700 border-blue-300 font-semibold' : 'bg-white text-gray-700 border-gray-300' }} border rounded shadow-sm hover:bg-gray-50 transition">
+                Сначала низкий рейтинг
+            </button>
+        </div>
 
-    <div class="flex gap-4 mb-6 mt-5">
-        <button wire:click="$set('sort', 'rating_desc')"
-                class="px-4 py-2 {{ $sort == 'rating_desc' ? 'bg-blue-100 text-blue-700 border-blue-300 font-semibold' : 'bg-white text-gray-700 border-gray-300' }} border rounded shadow-sm hover:bg-gray-50 transition">
-            Сначала высокий рейтинг
-        </button>
-        <button wire:click="$set('sort', 'rating_asc')"
-                class="px-4 py-2 {{ $sort == 'rating_asc' ? 'bg-blue-100 text-blue-700 border-blue-300 font-semibold' : 'bg-white text-gray-700 border-gray-300' }} border rounded shadow-sm hover:bg-gray-50 transition">
-            Сначала низкий рейтинг
+        <button wire:click="$toggle('showFilters')" class="lg:hidden px-4 py-2 bg-gray-200 text-gray-700 rounded shadow hover:bg-gray-300 transition flex justify-start items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            Фильтры
         </button>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-8 items-start">
 
-        <aside class="w-full lg:w-1/4 bg-white border border-gray-200 rounded-xl p-5 shadow-sm sticky top-4">
+        <aside class="w-full lg:w-1/4 bg-white border border-gray-200 rounded-xl p-5 shadow-sm sticky top-4
+                      {{ $showFilters ? 'block' : 'hidden' }} lg:block">
             <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center justify-between">
                 <span>Фильтры</span>
                 <button wire:click="$set('selectedProperties', []); $set('priceFrom', ''); $set('priceTo', '');"

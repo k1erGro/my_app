@@ -16,37 +16,24 @@
             <form action="{{ route('admin.orders.update', $order->getKey()) }}" method="POST" class="space-y-4">
                 @csrf
                 @method('patch')
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Дата доставки</label>
-                    <input type="date" name="delivery_date" value="{{ $order->getDeliveryDate() }}"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border @error('last_name') border-red-500 @enderror">
-                    @error('delivery_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Адрес</label>
-                    <select name="address_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-
-                    <option value="{{ $order->getAddress()?->getKey() }}">{{ $order->getAddress()?->getName() }}</option>
-
-                    @foreach($addresses as $address)
-                            <option value="{{ $address->getKey() }}">{{ $address->getName() }}</option>
-                        @endforeach
-
-                    </select>
-                </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Статус</label>
                     <select name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-
-                        <option value="{{ $order->getStatus() }}">{{ $order->getStatus() === 'completed' ? 'Завершен' : ($order->getStatus() === 'draft' ? 'Черновик' : 'В процессе') }}</option>
-
-
-                        <option value="draft">Черновик</option>
-                        <option value="in_progress">В процессе</option>
-                        <option value="completed">Завершен</option>
-
+                        @switch($order->getStatus())
+                            @case('completed')
+                                <option value="completed" selected>Завершен</option>
+                                <option value="in_progress">В процессе</option>
+                                @break
+                            @case('in_progress')
+                                <option value="in_progress" selected>В процессе</option>
+                                <option value="completed">Завершен</option>
+                                @break
+                            @default
+                                <option value="">-- Нет статуса --</option>
+                                <option value="in_progress">В процессе</option>
+                                <option value="completed">Завершен</option>
+                        @endswitch
                     </select>
                 </div>
 

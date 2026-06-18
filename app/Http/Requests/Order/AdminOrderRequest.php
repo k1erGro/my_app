@@ -23,11 +23,7 @@ class AdminOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'total_price' => 'nullable|numeric',
-            'delivery_type' => 'nullable|integer|between:0,1',
-            'delivery_date' => 'nullable|date|date_format:Y-m-d',
             'status' => 'required|string|max:255',
-            'address_id' => 'required|integer',
         ];
     }
 }

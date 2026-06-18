@@ -1,4 +1,4 @@
-@extends(Auth::user()->hasRole('Admin') ? 'layouts.admin' : 'layouts.main')
+@extends('layouts.main')
 @section('content')
     <div class="max-w-4xl mx-auto px-6 py-12">
         <div class="flex items-center justify-between mb-8">

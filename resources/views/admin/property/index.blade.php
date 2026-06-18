@@ -21,6 +21,24 @@
             </ul>
         </div>
     @endif
+
+    <div class="mb-4 flex flex-wrap items-center gap-3">
+        <form method="GET" action="{{ route('admin.property.index') }}" class="flex items-center gap-2 flex-1 max-w-md">
+            <input type="text" name="search" placeholder="Поиск..."
+                   value="{{ request('search') }}"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition">
+                Найти
+            </button>
+            @if(request('search'))
+                <a href="{{ route('admin.property.index') }}"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition">
+                    Сбросить
+                </a>
+            @endif
+        </form>
+    </div>
+
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>

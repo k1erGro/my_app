@@ -52,11 +52,11 @@
         <section class="py-20 px-6">
             <div class="max-w-[1600px] mx-auto">
                 <h2 class="text-4xl font-black uppercase mb-12 tracking-tighter text-gray-900 dark:text-white">Популярные категории</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     @foreach($categories as $category)
-                        <a href="{{ route('catalog.show', $category->getSlug()) }}" class="group relative block h-64 rounded-3xl overflow-hidden shadow-lg">
-                            <img src="{{ $category->getFirstMediaUrl('category_images', 'preview') ?: asset('img/placeholder-category.jpg') }}" alt="Картинка"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <a href="{{ route('catalog.show', $category->getSlug()) }}" class="group flex justify-center relative h-64 rounded-3xl overflow-hidden shadow-lg">
+                            <img src="{{ $category->getFirstMediaUrl('category_images', 'preview') }}" alt="Картинка"
+                                 class="h-full  object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-6 flex flex-col justify-end">
                                 <span class="text-white font-black text-xl">{{ $category->getName() }}</span>
                             </div>

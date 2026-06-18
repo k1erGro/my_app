@@ -14,7 +14,25 @@ class Question extends Model
         'product_id',
         'title',
         'description',
+        'is_approved',
     ];
+
+    public function isApproved(): bool
+    {
+        return $this->is_approved;
+    }
+
+    public function approve(): void
+    {
+        $this->is_approved = true;
+        $this->save();
+    }
+
+    public function reject(): void
+    {
+        $this->is_approved = false;
+        $this->save();
+    }
 
     public function user(): BelongsTo
     {

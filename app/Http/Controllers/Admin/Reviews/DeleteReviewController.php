@@ -17,9 +17,9 @@ class DeleteReviewController extends Controller
     {
         try {
             $review->delete();
-            return back()->with('success', 'Отзыв успешно удален');
+            return redirect()->route('admin.reviews.index')->with('success', 'Отзыв успешно удален');
         } catch (\Exception $e) {
-            return back()->withErrors([$e->getMessage()]);
+            return redirect()->route('admin.reviews.index')->withErrors([$e->getMessage()]);
         }
     }
 }

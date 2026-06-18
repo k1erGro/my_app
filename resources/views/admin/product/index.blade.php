@@ -21,14 +21,56 @@
             </ul>
         </div>
     @endif
+    <div class="mb-4 flex flex-wrap items-center gap-3">
+        <form method="GET" action="{{ route('admin.product.index') }}" class="flex items-center gap-2 flex-1 max-w-md">
+            <input type="text" name="search" placeholder="Поиск..."
+                   value="{{ request('search') }}"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition">
+                Найти
+            </button>
+            @if(request('search'))
+                <a href="{{ route('admin.product.index', ['sort' => request('sort'), 'direction' => request('direction')]) }}"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition">
+                    Сбросить
+                </a>
+            @endif
+        </form>
+    </div>
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>
+            <thead>
             <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 text-left text-sm uppercase font-semibold">
-                <th class="px-5 py-3">Название товара</th>
-                <th class="px-5 py-3">Цена</th>
-                <th class="px-5 py-3 text-right">Действия</th>
+                <th class="px-5 py-3">
+                    <a href="{{ route('admin.product.index', array_merge(request()->only(['search']), ['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}"
+                       class="flex items-center gap-1 hover:text-blue-700">
+                        Название товара
+                        @if(request('sort') == 'name')
+                            <span>{{ request('direction') == 'asc' ? '↑' : '↓' }}</span>
+                        @endif
+                    </a>
+                </th>
+                <th class="px-5 py-3">
+                    <a href="{{ route('admin.product.index', array_merge(request()->only(['search']), ['sort' => 'price', 'direction' => request('sort') == 'price' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}"
+                       class="flex items-center gap-1 hover:text-blue-700">
+                        Цена
+                        @if(request('sort') == 'price')
+                            <span>{{ request('direction') == 'asc' ? '↑' : '↓' }}</span>
+                        @endif
+                    </a>
+                </th>
+                <th class="px-5 py-3 text-right">
+                    <a href="{{ route('admin.product.index', array_merge(request()->only(['search']), ['sort' => 'id', 'direction' => request('sort') == 'id' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}"
+                       class="flex items-center justify-end gap-1 hover:text-blue-700">
+                        Действия
+                        @if(request('sort') == 'id')
+                            <span>{{ request('direction') == 'asc' ? '↑' : '↓' }}</span>
+                        @endif
+                    </a>
+                </th>
             </tr>
+            </thead>
             </thead>
             <tbody class="text-gray-700">
             @foreach($products as $product)

@@ -41,7 +41,6 @@ class ProductController extends Controller
         $currentSort = $request->input('sort_reviews', 'newest');
 
         $reviews = $product->getSortedReviews($currentSort);
-
         return view('shop.products.product', compact('product', 'data', 'hasReview', 'isSubscribed', 'reviews', 'currentSort'));
     }
 }

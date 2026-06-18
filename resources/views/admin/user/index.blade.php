@@ -14,16 +14,41 @@
             </ul>
         </div>
     @endif
+    <div class="mb-4 flex flex-wrap items-center gap-3">
+        <form method="GET" action="{{ route('admin.index') }}" class="flex items-center gap-2 flex-1 max-w-md">
+            <input type="text" name="search" placeholder="Поиск по имени, email или телефону..."
+                   value="{{ request('search') }}"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <button type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition">
+                Найти
+            </button>
+            @if(request('search'))
+                <a href="{{ route('admin.index', ['sort' => request('sort'), 'direction' => request('direction')]) }}"
+                   class="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition">
+                    Сбросить
+                </a>
+            @endif
+        </form>
+    </div>
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>
-            <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 text-left text-sm uppercase font-semibold">
-                <th class="px-5 py-3">Имя / Email</th>
-                <th class="px-5 py-3">Телефон</th>
-                <th class="px-5 py-3">Роль</th>
-                <th class="px-5 py-3 text-right">Действия</th>
-            </tr>
+                <tr class="bg-gray-50 border-b border-gray-200 text-gray-600 text-left text-sm uppercase font-semibold">
+                    <th class="px-5 py-3">
+                        <a href="{{ route('admin.index', array_merge(request()->only(['search']), ['sort' => 'l_name', 'direction' => request('sort') == 'l_name' && request('direction') == 'asc' ? 'desc' : 'asc'])) }}"
+                           class="flex items-center gap-1 hover:text-blue-700">
+                            Имя / Email
+                            @if(request('sort') == 'l_name')
+                                <span>{{ request('direction') == 'asc' ? '↑' : '↓' }}</span>
+                            @endif
+                        </a>
+                    </th>
+                    <th class="px-5 py-3">Телефон</th>
+                    <th class="px-5 py-3">Роль</th>
+                    <th class="px-5 py-3 text-right">Действия</th>
+                </tr>
             </thead>
             <tbody class="text-gray-700">
             @foreach($users as $user)
@@ -59,7 +84,8 @@
                                     @csrf
                                     @method('delete')
                                     <button class="text-red-600 hover:text-red-900 font-semibold"
-                                            onclick="return confirm('Вы уверены, что хотите удалить пользователя?')">Удалить
+                                            onclick="return confirm('Вы уверены, что хотите удалить пользователя?')">
+                                        Удалить
                                     </button>
                                 </form>
                             @endcan

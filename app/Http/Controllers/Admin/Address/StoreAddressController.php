@@ -15,7 +15,8 @@ class StoreAddressController extends Controller
     public function __invoke(AddressRequest $request)
     {
         Address::create([
-           'name' => $request->string('name'),
+            'name' => $request->string('name'),
+            'is_warehouse' => 1,
         ]);
         return redirect()->route('admin.address.index');
     }

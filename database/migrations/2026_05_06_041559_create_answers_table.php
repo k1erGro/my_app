@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
             $table->text('description');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }
