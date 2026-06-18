@@ -15,7 +15,6 @@ class ForgotPasswordController extends Controller
         return view('auth.forgot-password');
     }
 
-    // Отправка ссылки на почту
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email|exists:users,email']);
