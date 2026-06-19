@@ -55,7 +55,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     @foreach($categories as $category)
                         <a href="{{ route('catalog.show', $category->getSlug()) }}" class="group flex justify-center relative h-64 rounded-3xl overflow-hidden shadow-lg">
-                            <img src="{{ $category->getFirstMediaUrl('category_images', 'preview') }}" alt="Картинка"
+                            <img src="{{ $category->getFirstMediaUrl('category_images') }}" alt="Картинка"
                                  class="h-full  object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent p-6 flex flex-col justify-end">
                                 <span class="text-white font-black text-xl">{{ $category->getName() }}</span>

@@ -2,7 +2,7 @@
     <form wire:submit.prevent="searchPage" class="relative">
         <input type="text"
                wire:model.live.debounce.300ms="search"
-               placeholder="Поиск электроники (например, iPhone)..."
+               placeholder="Поиск электроники..."
                class="w-full px-5 py-3 pr-12 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition">
         <button type="submit"
                 class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition">

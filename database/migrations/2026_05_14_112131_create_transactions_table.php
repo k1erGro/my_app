@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount', 10,2)->default(0);
+            $table->integer('amount')->default(0);
             $table->string('description', 255)->nullable();
             $table->string('status')->default(PaymentStatusEnum::CREATED);
             $table->foreignId('user_id')->constrained('users');
