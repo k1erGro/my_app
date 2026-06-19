@@ -42,11 +42,11 @@
                             <label class="block text-sm font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-3">Способ получения</label>
                             <div class="flex flex-wrap gap-6">
                                 <label class="inline-flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="type_delivery" value="pickup" x-model="deliveryType" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                                    <input type="radio" name="delivery_type" value="pickup" x-model="deliveryType" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                                     <span class="text-gray-700 dark:text-gray-300 font-medium">Самовывоз</span>
                                 </label>
                                 <label class="inline-flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="type_delivery" value="delivery" x-model="deliveryType" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                                    <input type="radio" name="delivery_type" value="delivery" x-model="deliveryType" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4">
                                     <span class="text-gray-700 dark:text-gray-300 font-medium">Доставка</span>
                                 </label>
                             </div>
@@ -110,7 +110,7 @@
                                         </div>
                                         <div>
                                             <p class="font-bold text-gray-900 dark:text-white">{{ $product->getName() }}</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">Кол-во: 1 шт.</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">Кол-во: {{ $product->pivot->quantity }} шт.</p>
                                         </div>
                                     </div>
                                     <div class="text-lg font-black text-indigo-600 dark:text-indigo-400">

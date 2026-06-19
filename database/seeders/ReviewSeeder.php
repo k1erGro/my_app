@@ -17,9 +17,9 @@ class ReviewSeeder extends Seeder
     public function run(): void
     {
         $reviews = [
-            ['user_id' => 11, 'product_id' => 1, 'review' => 'blablabla', 'rating' => 5],
-            ['user_id' => 11, 'product_id' => 2, 'review' => 'blablabla', 'rating' => 4],
-            ['user_id' => 11, 'product_id' => 3, 'review' => 'blablabla', 'rating' => 3],
+            ['user_id' => 5, 'product_id' => 1, 'review' => 'blablabla', 'rating' => 5],
+            ['user_id' => 5, 'product_id' => 2, 'review' => 'blablabla', 'rating' => 4],
+            ['user_id' => 5, 'product_id' => 3, 'review' => 'blablabla', 'rating' => 3],
             ['user_id' => 1, 'product_id' => 1, 'review' => 'blablabla', 'rating' => 1],
             ['user_id' => 1, 'product_id' => 2, 'review' => 'blablabla', 'rating' => 2],
             ['user_id' => 1, 'product_id' => 3, 'review' => 'blablabla', 'rating' => 5],

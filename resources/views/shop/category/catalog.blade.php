@@ -21,7 +21,7 @@
                     class="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
                     <a href="{{ route('catalog.show', $category->getSlug()) }}" class="block">
                         <div
-                            class="aspect-square bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden p-4">
+                            class="aspect-square bg-white dark:bg-gray-800 flex items-center justify-center overflow-hidden p-4">
                             @if($category->hasMedia('category_images'))
                                 <img src="{{ $category->getFirstMediaUrl('category_images') }}"
                                      alt="{{ $category->getName() }}"

@@ -71,9 +71,8 @@ class UpdateOrderController extends Controller
                     ->where('product_id', $item->getProductId())
                     ->decrement('product_quantity', $item->getQuantity());
             }
-
             $addressId = null;
-            if ($request->string('delivery_type') == DeliveryTypeEnum::pickup) {
+            if ($request->string('delivery_type') == 'pickup') {
                 $addressId = $warehouseId;
             } else {
                 if ($request->filled('saved_address_id')) {

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        User::factory()->create([
+        User::create([
             'l_name' => 'Никитин',
             'f_name' => 'Кирилл',
             'm_name' => 'Анатольевич',
@@ -33,9 +33,9 @@ class DatabaseSeeder extends Seeder
             'birthday' => '2006-07-28',
             'phone' => '+7 (123) 123-45-67',
             'address' => 'ул. Пархоменко 105'
-        ])->assignRole(RoleEnum::TECHNICALSPECIALIST);
+        ])->assignRole(RoleEnum::USER);
 
-        User::factory()->create([
+        User::create([
             'l_name' => 'Балакин',
             'f_name' => 'Сергей',
             'm_name' => 'Михайлович',
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'ул. Ленина 28'
         ])->assignRole(RoleEnum::MANAGER);
 
-        User::factory()->create([
+        User::create([
             'l_name' => 'Алленов',
             'f_name' => 'Антон',
             'm_name' => 'Алексеевич',
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'пр. Мира 53'
         ])->assignRole(RoleEnum::DIRECTOR);
 
-        User::factory()->create([
+        User::create([
             'l_name' => 'Калинин',
             'f_name' => 'Максим',
             'm_name' => 'Владимирович',
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'ул. Ленина 76'
         ])->assignRole(RoleEnum::USER);
 
-        User::factory()->create([
+        User::create([
             'l_name' => 'Admin',
             'f_name' => 'Admin',
             'email' => 'admin@example.com',
@@ -78,11 +78,6 @@ class DatabaseSeeder extends Seeder
             'address' => 'test address',
         ])->assignRole(RoleEnum::ADMIN);
 
-        $users = User::factory(10)->create();
-
-        foreach ($users as $user) {
-            $user->assignRole(RoleEnum::USER);
-        }
 
         $this->call(CategorySeeder::class);
         $this->call(SubCategorySeeder::class);
@@ -92,7 +87,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OrderSeeder::class);
         $this->call(ReviewSeeder::class);
         $this->call(CouponSeeder::class);
-        Review::factory(50)->create();
 
 
     }
